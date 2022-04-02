@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Battleships/v16
+/src/Battleships.Domain/bin/Debug/net5.0
+/src/Battleships.Domain/obj
+/src/Battleships.UI/obj
+/test/UnitTests/obj
+/src/Battleships.UI/bin/Debug/net5.0
+/test/UnitTests/bin/Debug/net5.0
