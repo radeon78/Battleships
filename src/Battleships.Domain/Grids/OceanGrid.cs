@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Domain.Grids
 {
     using Battleships.Domain.Common;
+    using Battleships.Domain.Players;
     using Battleships.Domain.Ships;
     using System.Collections.Generic;
 
@@ -21,7 +22,7 @@
 
         public Result TryPlaceShip(StartPoint startPoint, Ship ship)
         {
-            if (StartPointIsOutOfRange(startPoint))
+            if (PointIsOutOfRange(startPoint.Point))
                 return Result.Failure(string.Format(Resource.ErrorStartingPoint, ship, startPoint.Point));
 
             var pointsToSelect = new List<Point>();
@@ -44,12 +45,19 @@
             return Result.Success();
         }
 
-        private bool StartPointIsOutOfRange(StartPoint startPoint)
+        public Result<Answer> TryHit(Point point)
         {
-            return startPoint.Point.Column > Size - 1 ||
-                    startPoint.Point.Column < 0 ||
-                    startPoint.Point.Row > Size - 1 ||
-                    startPoint.Point.Row < 0;
+            return PointIsOutOfRange(point) == true
+                ? Result.Failure<Answer>(string.Format(Resource.ErrorPointIsOffGrid, point))
+                : Result.Success(_oceanPoints[point.Column, point.Row].TryHit());
+        }
+
+        public bool PointIsOutOfRange(Point point)
+        {
+            return point.Column > Size - 1 ||
+                point.Column < 0 ||
+                point.Row > Size - 1 ||
+                point.Row < 0;
         }
 
         private bool CanSelectPoint(Point currentPoint)
@@ -79,7 +87,7 @@
                 : new Point(currentPoint.Column, currentPoint.Row + 1);
 
             return nextPoint.Column > Size - 1 || nextPoint.Row > Size - 1
-                ? Result.Failure<Point>(string.Format(Resource.ErrorNextPointOutOfRange, nextPoint))
+                ? Result.Failure<Point>(string.Format(Resource.ErrorNextPointIsOffGrid, nextPoint))
                 : Result.Success(nextPoint);
         }
     }

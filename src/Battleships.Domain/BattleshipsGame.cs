@@ -28,10 +28,29 @@
 
             _printMessage(Resource.WelcomeGame);
 
-            firstPlayer.PlaceShipsOnGrid();
-            secondPlayer.PlaceShipsOnGrid();
+            firstPlayer.PlaceShipsOnOceanGrid(cancellationToken);
+            secondPlayer.PlaceShipsOnOceanGrid(cancellationToken);
 
             _printMessage(Resource.ShipsOnGrid);
+
+            PlayGame(firstPlayer, secondPlayer, cancellationToken);
+        }
+
+        private void PlayGame(
+            IPlayer attacker,
+            IPlayer defender,
+            CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested) return;
+
+            var attackerPoint = attacker.CallOutPointOnTargetingGrid();
+            var defenderAnswer = defender.AnswerToAttacker(attackerPoint);
+            attacker.SetDefenderAnswer(attackerPoint, defenderAnswer.Data!);
+
+            var endGame = defender.AllShipsSunk();
+
+            if (endGame) _printMessage(string.Format(Resource.GameEnded, attacker.PlayerName));
+            else PlayGame(defender, attacker, cancellationToken);
         }
     }
 }

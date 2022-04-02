@@ -52,5 +52,40 @@ namespace UnitTests.Ships
             // assert
             ship.ToString().Should().Be(expectedResult);
         }
+
+        [Fact]
+        public void ShouldHitShipAndNotThrow()
+        {
+            // arrange
+            var ship = new Ship(2);
+
+            // act
+            Action action = () => 
+            {
+                ship.Hit();
+                ship.Hit();
+            };
+
+            // assert
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void ShouldHitShipAndThrow()
+        {
+            // arrange
+            var ship = new Ship(2);
+
+            // act
+            Action action = () =>
+            {
+                ship.Hit();
+                ship.Hit();
+                ship.Hit();
+            };
+
+            // assert
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>();
+        }
     }
 }

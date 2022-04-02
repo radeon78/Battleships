@@ -3,7 +3,7 @@
     using Battleships.Domain;
     using Battleships.Domain.Players;
     using Battleships.Domain.PlayRules;
-    using Battleships.UI.UserInterfaces;
+    using Battleships.UI.UserInterface;
     using System;
     using System.Threading;
 
@@ -21,8 +21,9 @@
             game.StartGame(
                 new HumanPlayer(
                     "Zbyszko z Bogdanca",
-                    (message) => PlaceShip.GetPlaceShipStartPoint(message),
-                    (message) => PlaceShip.PlaceShipNotAllowed(message)),
+                    (message) => OceanGrid.GetPlaceShipStartPoint(message),
+                    (message) => TargetingGrid.CallOutPointOnTargetingGrid(message),
+                    (message) => Common.PrintErrorMessage(message)),
                 new ComputerPlayer("Computer"),
                 token);
         }

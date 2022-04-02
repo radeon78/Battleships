@@ -3,18 +3,22 @@
     using Battleships.Domain.Extensions;
     using Battleships.Domain.Grids;
     using System;
+    using System.Threading;
 
     public class ComputerPlayer : Player
     {
         public ComputerPlayer(string playerName) : base(playerName) { }
 
-        public override void PlaceShipsOnGrid()
+        public override void PlaceShipsOnOceanGrid(CancellationToken cancellationToken)
         {
             _allowedShips.ForEach(ship =>
             {
                 var startPoint = GenerateRandomPlaceShipStartPoint();
                 while (_oceanGrid.TryPlaceShip(startPoint, ship).IsFailure)
+                {
+                    if (cancellationToken.IsCancellationRequested) return;
                     startPoint = GenerateRandomPlaceShipStartPoint();
+                }
             });
         }
 
@@ -30,5 +34,7 @@
 
             return new StartPoint(point, direction);
         }
+
+        public override Point CallOutPointOnTargetingGrid() => throw new NotImplementedException();
     }
 }

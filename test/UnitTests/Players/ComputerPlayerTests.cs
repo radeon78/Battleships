@@ -4,6 +4,7 @@
     using Battleships.Domain.PlayRules;
     using FluentAssertions;
     using System;
+    using System.Threading;
     using Xunit;
 
     public class ComputerPlayerTests
@@ -31,7 +32,22 @@
             player.ApplyGameRule(rule);
 
             // act
-            Action action = () => player.PlaceShipsOnGrid();
+            Action action = () => player.PlaceShipsOnOceanGrid(CancellationToken.None);
+
+            // assert
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void ShouldCancelPlaceShipsOnGrid()
+        {
+            // arrange
+            var rule = new ThreeShipsPlayRule();
+            var player = new ComputerPlayer("computer");
+            player.ApplyGameRule(rule);
+
+            // act
+            Action action = () => player.PlaceShipsOnOceanGrid(CancellationToken.None);
 
             // assert
             action.Should().NotThrow();

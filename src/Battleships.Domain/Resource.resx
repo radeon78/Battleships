@@ -117,20 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CallOutPositionOnTargetingGrid" xml:space="preserve">
+    <value>{0}, call out a position on your targeting grid.</value>
+  </data>
   <data name="ErrorFieldMustBeBetween" xml:space="preserve">
     <value>Field must be beetwen {0} and {1}.</value>
   </data>
   <data name="ErrorGetNextPoint" xml:space="preserve">
     <value>You will have to try choose different starting point or direction for {0}. {1}</value>
   </data>
-  <data name="ErrorNextPointOutOfRange" xml:space="preserve">
-    <value>The next point {0} is out of range.</value>
+  <data name="ErrorNextPointIsOffGrid" xml:space="preserve">
+    <value>The next point {0} is off the grid.</value>
+  </data>
+  <data name="ErrorPointIsOffGrid" xml:space="preserve">
+    <value>The point {0} is off the grid.</value>
   </data>
   <data name="ErrorSelectPoint" xml:space="preserve">
     <value>You will have to try choose different starting point or direction for {0}. The point {1} is already selected or next to a different ship.</value>
   </data>
   <data name="ErrorStartingPoint" xml:space="preserve">
     <value>You will have to try choose different starting point or direction for {0}. The point {1} is not allowed.</value>
+  </data>
+  <data name="ErrorToManyHitsOnShip" xml:space="preserve">
+    <value>To many hits on ship {0}.</value>
+  </data>
+  <data name="GameEnded" xml:space="preserve">
+    <value>Game ended. {0} won.</value>
   </data>
   <data name="PlaceShipMessage" xml:space="preserve">
     <value>{0}, place the {1} on the ocean grid. Choose starting point and direction horizontal or vertical.</value>

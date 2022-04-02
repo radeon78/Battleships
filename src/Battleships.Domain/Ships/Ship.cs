@@ -7,8 +7,9 @@
     {
         private const int _minLength = 1;
         private const int _maxLength = 5;
+        private int _hits = 0;
 
-        private Ship() => Length = 0;
+        private Ship() { }
 
         public Ship(int length)
         {
@@ -21,7 +22,15 @@
             Length = length;
         }
 
-        public int Length { get; }
+        public int Length { get; } = 0;
+
+        public void Hit()
+        {
+            if (_hits < Length) _hits++;
+            else throw new ArgumentOutOfRangeException(string.Format(Resource.ErrorToManyHitsOnShip, this));
+        }
+
+        public bool IsSunk() => _hits == Length;
 
         public override string ToString() => $"{Length} length ship";
 

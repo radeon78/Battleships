@@ -61,6 +61,15 @@ namespace Battleships.Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}, call out a position on your targeting grid..
+        /// </summary>
+        internal static string CallOutPositionOnTargetingGrid {
+            get {
+                return ResourceManager.GetString("CallOutPositionOnTargetingGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Field must be beetwen {0} and {1}..
         /// </summary>
         internal static string ErrorFieldMustBeBetween {
@@ -79,11 +88,20 @@ namespace Battleships.Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The next point {0} is out of range..
+        ///   Looks up a localized string similar to The next point {0} is off the grid..
         /// </summary>
-        internal static string ErrorNextPointOutOfRange {
+        internal static string ErrorNextPointIsOffGrid {
             get {
-                return ResourceManager.GetString("ErrorNextPointOutOfRange", resourceCulture);
+                return ResourceManager.GetString("ErrorNextPointIsOffGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The point {0} is off the grid..
+        /// </summary>
+        internal static string ErrorPointIsOffGrid {
+            get {
+                return ResourceManager.GetString("ErrorPointIsOffGrid", resourceCulture);
             }
         }
         
@@ -102,6 +120,24 @@ namespace Battleships.Domain {
         internal static string ErrorStartingPoint {
             get {
                 return ResourceManager.GetString("ErrorStartingPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To many hits on ship {0}..
+        /// </summary>
+        internal static string ErrorToManyHitsOnShip {
+            get {
+                return ResourceManager.GetString("ErrorToManyHitsOnShip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game ended. {0} won..
+        /// </summary>
+        internal static string GameEnded {
+            get {
+                return ResourceManager.GetString("GameEnded", resourceCulture);
             }
         }
         
