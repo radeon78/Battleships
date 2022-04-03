@@ -5,7 +5,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class FakeOneShipsPlayRule : IPlayRule
+    public class FakeOneShipPlayRule : IPlayRule
     {
         public IReadOnlyCollection<Ship> GetAllowedShips()
             => Array.AsReadOnly(

@@ -401,7 +401,7 @@
             var printErrorMessageNumberCalls = 0;
             void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
 
-            var rule = new FakeOneShipsPlayRule();
+            var rule = new FakeOneShipPlayRule();
             var player = new HumanPlayer(
                 "player1",
                 getPlaceShipStartPoint,
