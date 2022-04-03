@@ -27,33 +27,31 @@
         {
             _allowedShips.ForEach(ship =>
             {
-                if (cancellationToken.IsCancellationRequested) return;
-
-                var startPoint = _getPlaceShipStartPoint(string.Format(Resource.PlaceShipMessage, _playerName, ship));
-
                 Result result;
-                while ((result = _oceanGrid.TryPlaceShip(startPoint, ship)).IsFailure)
+                do
                 {
                     if (cancellationToken.IsCancellationRequested) return;
 
-                    _printErrorMessage(result.ErrorMessage);
-                    startPoint = _getPlaceShipStartPoint(string.Format(Resource.PlaceShipMessage, _playerName, ship));
+                    var startPoint = _getPlaceShipStartPoint(string.Format(Resource.PlaceShipMessage, _playerName, ship));
+                    result = _oceanGrid.TryPlaceShip(startPoint, ship);
+                    if (result.IsFailure) _printErrorMessage(result.ErrorMessage);
                 }
-            });
+                while (result.IsFailure);
+            }, cancellationToken);
         }
 
         public override Point CallOutPointOnTargetingGrid()
         {
-            var point = _callOutPointOnTargetingGrid(
-                string.Format(Resource.CallOutPositionOnTargetingGrid, _playerName));
+            Point point;
+            bool pointOutOfRange;
 
-            while (_oceanGrid.PointIsOutOfRange(point))
+            do
             {
-                _printErrorMessage(string.Format(Resource.ErrorPointIsOffGrid, point));
-
-                point = _callOutPointOnTargetingGrid(
-                    string.Format(Resource.CallOutPositionOnTargetingGrid, _playerName));
+                point = _callOutPointOnTargetingGrid(string.Format(Resource.CallOutPositionOnTargetingGrid, _playerName));
+                pointOutOfRange = _oceanGrid.PointIsOutOfRange(point);
+                if (pointOutOfRange) _printErrorMessage(string.Format(Resource.ErrorPointIsOffGrid, point));
             }
+            while (pointOutOfRange);
 
             return point;
         }

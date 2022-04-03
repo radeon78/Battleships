@@ -45,12 +45,16 @@
 
             var attackerPoint = attacker.CallOutPointOnTargetingGrid();
             var defenderAnswer = defender.AnswerToAttacker(attackerPoint);
-            attacker.SetDefenderAnswer(attackerPoint, defenderAnswer.Data!);
-
+            attacker.SetDefenderAnswer(attackerPoint, defenderAnswer);
             var endGame = defender.AllShipsSunk();
 
-            if (endGame) _printMessage(string.Format(Resource.GameEnded, attacker.PlayerName));
-            else PlayGame(defender, attacker, cancellationToken);
+            if (endGame)
+            {
+                _printMessage(string.Format(Resource.GameEnded, attacker.PlayerName));
+                return;
+            }
+
+            PlayGame(defender, attacker, cancellationToken);
         }
     }
 }

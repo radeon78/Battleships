@@ -1,6 +1,5 @@
 ﻿namespace Battleships.Domain.Players
 {
-    using Battleships.Domain.Common;
     using Battleships.Domain.Grids;
     using Battleships.Domain.PlayRules;
     using System.Threading;
@@ -15,7 +14,7 @@
 
         Point CallOutPointOnTargetingGrid();
 
-        Result<Answer> AnswerToAttacker(Point attackerPoint);
+        Answer AnswerToAttacker(Point attackerPoint);
 
         void SetDefenderAnswer(Point attackerPoint, Answer answer);
 

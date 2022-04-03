@@ -13,13 +13,14 @@
         {
             _allowedShips.ForEach(ship =>
             {
-                var startPoint = GenerateRandomPlaceShipStartPoint();
-                while (_oceanGrid.TryPlaceShip(startPoint, ship).IsFailure)
+                StartPoint startPoint;
+                do
                 {
                     if (cancellationToken.IsCancellationRequested) return;
                     startPoint = GenerateRandomPlaceShipStartPoint();
                 }
-            });
+                while (_oceanGrid.TryPlaceShip(startPoint, ship).IsFailure);
+            }, cancellationToken);
         }
 
         public StartPoint GenerateRandomPlaceShipStartPoint()
@@ -35,6 +36,13 @@
             return new StartPoint(point, direction);
         }
 
-        public override Point CallOutPointOnTargetingGrid() => throw new NotImplementedException();
+        public override Point CallOutPointOnTargetingGrid()
+        {
+            var random = new Random();
+
+            return new Point(
+                random.Next(0, _oceanGrid.Size),
+                random.Next(0, _oceanGrid.Size));
+        }
     }
 }

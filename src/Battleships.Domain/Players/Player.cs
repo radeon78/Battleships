@@ -1,11 +1,11 @@
 ﻿namespace Battleships.Domain.Players
 {
-    using Battleships.Domain.Common;
     using Battleships.Domain.Grids;
     using Battleships.Domain.PlayRules;
     using Battleships.Domain.Ships;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
 
     public abstract class Player : IPlayer
@@ -32,18 +32,13 @@
 
         public abstract Point CallOutPointOnTargetingGrid();
 
-        public virtual Result<Answer> AnswerToAttacker(Point attackerPoint)
-        {
-            var shipHitResult = _oceanGrid.TryHit(attackerPoint);
-
-            return shipHitResult.IsFailure
-                ? Result.Failure<Answer>(shipHitResult.ErrorMessage)
-                : Result.Success(shipHitResult.Data!);
-        }
+        public virtual Answer AnswerToAttacker(Point attackerPoint)
+            => _oceanGrid.TryHit(attackerPoint);
 
         public void SetDefenderAnswer(Point attackerPoint, Answer answer) =>
             _targetingGrid.SetAnswer(attackerPoint, answer);
 
-        public bool AllShipsSunk() => throw new NotImplementedException();
+        public bool AllShipsSunk()
+            => _oceanGrid.AllShipsSunk(_allowedShips.Select(s => s.Length));
     }
 }

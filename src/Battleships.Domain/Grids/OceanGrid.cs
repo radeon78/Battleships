@@ -4,13 +4,16 @@
     using Battleships.Domain.Players;
     using Battleships.Domain.Ships;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class OceanGrid : Grid
     {
         private readonly OceanPoint[,] _oceanPoints;
+        private readonly List<int> _sunkShips;
 
         public OceanGrid()
         {
+            _sunkShips = new List<int>();
             _oceanPoints = new OceanPoint[Size, Size];
 
             for (var i = 0; i < Size; i++)
@@ -45,12 +48,18 @@
             return Result.Success();
         }
 
-        public Result<Answer> TryHit(Point point)
+        public Answer TryHit(Point point)
         {
-            return PointIsOutOfRange(point) == true
-                ? Result.Failure<Answer>(string.Format(Resource.ErrorPointIsOffGrid, point))
-                : Result.Success(_oceanPoints[point.Column, point.Row].TryHit());
+            var answer = _oceanPoints[point.Column, point.Row].TryHit();
+
+            if (answer.Reply == Reply.Sunk)
+                _sunkShips.Add(answer.ShipLength);
+
+            return answer;
         }
+
+        public bool AllShipsSunk(IEnumerable<int> allShips)
+            => !allShips.Except(_sunkShips).Any();
 
         public bool PointIsOutOfRange(Point point)
         {

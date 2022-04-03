@@ -54,54 +54,8 @@
 
             // assert
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeTrue();
-            result.Data!.Reply.Should().Be(Reply.Miss);
-            result.Data!.ShipLength.Should().Be(0);
-        }
-
-        [Fact]
-        public void ShouldReturnFailureWhenColumnIsGreaterThenMaxSize()
-        {
-            // arrange
-            var oceanGrid = new OceanGrid();
-            var point = new Point(10, 3);
-
-            // act
-            var result = oceanGrid.TryHit(point);
-
-            // assert
-            result.Should().NotBeNull();
-            result.IsFailure.Should().BeTrue();
-        }
-
-        [Fact]
-        public void ShouldReturnFailureWhenColumnIsLessThenMinSize()
-        {
-            // arrange
-            var oceanGrid = new OceanGrid();
-            var point = new Point(-1, 3);
-
-            // act
-            var result = oceanGrid.TryHit(point);
-
-            // assert
-            result.Should().NotBeNull();
-            result.IsFailure.Should().BeTrue();
-        }
-
-        [Fact]
-        public void ShouldReturnFailureWhenRowIsLessThenMinSize()
-        {
-            // arrange
-            var oceanGrid = new OceanGrid();
-            var point = new Point(3, -1);
-
-            // act
-            var result = oceanGrid.TryHit(point);
-
-            // assert
-            result.Should().NotBeNull();
-            result.IsFailure.Should().BeTrue();
+            result.Reply.Should().Be(Reply.Miss);
+            result.ShipLength.Should().Be(0);
         }
     }
 }

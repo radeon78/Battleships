@@ -46,8 +46,12 @@
             var player = new ComputerPlayer("computer");
             player.ApplyGameRule(rule);
 
+            var source = new CancellationTokenSource();
+            var token = source.Token;
+
             // act
-            Action action = () => player.PlaceShipsOnOceanGrid(CancellationToken.None);
+            Action action = () => player.PlaceShipsOnOceanGrid(token);
+            source.Cancel();
 
             // assert
             action.Should().NotThrow();
@@ -67,6 +71,22 @@
             startPoint.Point.Column.Should().BeLessThanOrEqualTo(9);
             startPoint.Point.Row.Should().BeGreaterThanOrEqualTo(0);
             startPoint.Point.Row.Should().BeLessThanOrEqualTo(9);
+        }
+
+        [Fact]
+        public void ShouldCallOutPointOnTargetingGrid()
+        {
+            // arrange
+            var player = new ComputerPlayer("computer");
+
+            // act
+            var point = player.CallOutPointOnTargetingGrid();
+
+            // assert
+            point.Column.Should().BeGreaterThanOrEqualTo(0);
+            point.Column.Should().BeLessThanOrEqualTo(9);
+            point.Row.Should().BeGreaterThanOrEqualTo(0);
+            point.Row.Should().BeLessThanOrEqualTo(9);
         }
     }
 }
