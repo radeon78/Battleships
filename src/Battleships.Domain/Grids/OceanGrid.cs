@@ -58,8 +58,8 @@
             return answer;
         }
 
-        public bool AllShipsSunk(IEnumerable<int> allShips)
-            => !allShips.Except(_sunkShips).Any();
+        public bool AllShipsSunk(IEnumerable<int> allShips) 
+            => allShips.Count() <= _sunkShips.Count && !allShips.Except(_sunkShips).Any();
 
         public bool PointIsOutOfRange(Point point)
         {

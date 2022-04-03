@@ -4,6 +4,7 @@
     using Battleships.Domain.Players;
     using Battleships.Domain.Ships;
     using FluentAssertions;
+    using System.Collections.Generic;
     using Xunit;
 
     public class OceanGridTests
@@ -43,7 +44,7 @@
         }
 
         [Fact]
-        public void ShouldReturnSuccess()
+        public void ShouldMissShip()
         {
             // arrange
             var oceanGrid = new OceanGrid();
@@ -56,6 +57,78 @@
             result.Should().NotBeNull();
             result.Reply.Should().Be(Reply.Miss);
             result.ShipLength.Should().Be(0);
+        }
+
+        [Fact]
+        public void ShouldHitAndThenSunkShip()
+        {
+            // arrange
+            var missPoint1 = new Point(2, 5);
+            var hitPoint1 = new Point(2, 6);
+            var hitPoint2 = new Point(3, 6);
+            var hitPoint3 = new Point(4, 6);
+            var hitPoint4 = new Point(5, 6);
+            var hitPoint5 = new Point(6, 6);
+            var missPoint2 = new Point(7, 6);
+
+            var oceanGrid = new OceanGrid();
+            var battleship = Ship.CreateBattleship();
+            var oneShip = new List<int> { battleship.Length };
+            var twoTheSameShips = new List<int> { battleship.Length, battleship.Length };
+            var twoDifferentShips = new List<int> { battleship.Length, 2 };
+            var battleshipStartPoint = new StartPoint(new Point(2, 6), Direction.Horizontal);
+
+            // act
+            var placeShipResult = oceanGrid.TryPlaceShip(battleshipStartPoint, battleship);
+            var tryHitForMissPointResult1 = oceanGrid.TryHit(missPoint1);
+            var tryHitForHitPointResult1 = oceanGrid.TryHit(hitPoint1);
+            var tryHitForHitPointResult2 = oceanGrid.TryHit(hitPoint2);
+            var tryHitForHitPointResult3 = oceanGrid.TryHit(hitPoint3);
+            var tryHitForHitPointResult4 = oceanGrid.TryHit(hitPoint4);
+            var allShipsSunkBeforeLastHit = oceanGrid.AllShipsSunk(oneShip);
+            var tryHitForHitPointResult5 = oceanGrid.TryHit(hitPoint5);
+            var allShipsSunkWhenLastHit = oceanGrid.AllShipsSunk(oneShip);
+            var allShipsSunkForTwoTheSameShips = oceanGrid.AllShipsSunk(twoTheSameShips);
+            var allShipsSunkForTwoDifferentShips = oceanGrid.AllShipsSunk(twoDifferentShips);
+            var tryHitForMissPointResult2 = oceanGrid.TryHit(missPoint2);
+
+            // assert
+            placeShipResult.Should().NotBeNull();
+            placeShipResult.IsSuccess.Should().BeTrue();
+
+            tryHitForMissPointResult1.Should().NotBeNull();
+            tryHitForMissPointResult1.Reply.Should().Be(Reply.Miss);
+            tryHitForMissPointResult1.ShipLength.Should().Be(0);
+
+            tryHitForHitPointResult1.Should().NotBeNull();
+            tryHitForHitPointResult1.Reply.Should().Be(Reply.Hit);
+            tryHitForHitPointResult1.ShipLength.Should().Be(battleship.Length);
+
+            tryHitForHitPointResult2.Should().NotBeNull();
+            tryHitForHitPointResult2.Reply.Should().Be(Reply.Hit);
+            tryHitForHitPointResult2.ShipLength.Should().Be(battleship.Length);
+
+            tryHitForHitPointResult3.Should().NotBeNull();
+            tryHitForHitPointResult3.Reply.Should().Be(Reply.Hit);
+            tryHitForHitPointResult3.ShipLength.Should().Be(battleship.Length);
+
+            tryHitForHitPointResult4.Should().NotBeNull();
+            tryHitForHitPointResult4.Reply.Should().Be(Reply.Hit);
+            tryHitForHitPointResult4.ShipLength.Should().Be(battleship.Length);
+
+            allShipsSunkBeforeLastHit.Should().BeFalse();
+
+            tryHitForHitPointResult5.Should().NotBeNull();
+            tryHitForHitPointResult5.Reply.Should().Be(Reply.Sunk);
+            tryHitForHitPointResult5.ShipLength.Should().Be(battleship.Length);
+
+            allShipsSunkWhenLastHit.Should().BeTrue();
+            allShipsSunkForTwoTheSameShips.Should().BeFalse();
+            allShipsSunkForTwoDifferentShips.Should().BeFalse();
+
+            tryHitForMissPointResult2.Should().NotBeNull();
+            tryHitForMissPointResult2.Reply.Should().Be(Reply.Miss);
+            tryHitForMissPointResult2.ShipLength.Should().Be(0);
         }
     }
 }

@@ -6,6 +6,7 @@
     using FluentAssertions;
     using System;
     using System.Threading;
+    using UnitTests.Fakes;
     using Xunit;
 
     public class HumanPlayerTests
@@ -31,9 +32,11 @@
             var printErrorMessageNumberCalls = 0;
             void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
 
+            var playerName = "player1";
+
             var rule = new ThreeShipsPlayRule();
             var player = new HumanPlayer(
-                "player1",
+                playerName,
                 getPlaceShipStartPoint,
                 callOutPointOnTargetingGrid,
                 printErrorMessage);
@@ -46,6 +49,7 @@
             getPlaceShipStartPointNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
+            player.PlayerName.Should().Be(playerName);
         }
 
         [Fact]
@@ -299,6 +303,132 @@
             getPlaceShipStartPointNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(2);
             printErrorMessageNumberCalls.Should().Be(1);
+        }
+
+        [Theory]
+        [InlineData(3, 9, Reply.Hit, 5)]
+        [InlineData(4, 9, Reply.Hit, 5)]
+        [InlineData(5, 9, Reply.Hit, 5)]
+        [InlineData(6, 9, Reply.Hit, 5)]
+        [InlineData(7, 9, Reply.Hit, 5)]
+        [InlineData(9, 1, Reply.Hit, 4)]
+        [InlineData(9, 2, Reply.Hit, 4)]
+        [InlineData(9, 3, Reply.Hit, 4)]
+        [InlineData(9, 4, Reply.Hit, 4)]
+        [InlineData(9, 5, Reply.Miss, 0)]
+        [InlineData(8, 5, Reply.Miss, 0)]
+        [InlineData(8, 4, Reply.Miss, 0)]
+        [InlineData(8, 3, Reply.Miss, 0)]
+        [InlineData(8, 2, Reply.Miss, 0)]
+        [InlineData(8, 1, Reply.Miss, 0)]
+        [InlineData(8, 0, Reply.Miss, 0)]
+        [InlineData(9, 0, Reply.Miss, 0)]
+        [InlineData(2, 9, Reply.Miss, 0)]
+        [InlineData(2, 8, Reply.Miss, 0)]
+        [InlineData(3, 8, Reply.Miss, 0)]
+        [InlineData(4, 8, Reply.Miss, 0)]
+        [InlineData(5, 8, Reply.Miss, 0)]
+        [InlineData(6, 8, Reply.Miss, 0)]
+        [InlineData(7, 8, Reply.Miss, 0)]
+        [InlineData(8, 8, Reply.Miss, 0)]
+        [InlineData(8, 9, Reply.Miss, 0)]
+
+        public void ShouldAnswerToAttacker(int column, int row, Reply expectedReply, int expectedShipLength)
+        {
+            // arrange
+            var getPlaceShipStartPointNumberCalls = 0;
+            StartPoint getPlaceShipStartPoint(string message)
+            {
+                getPlaceShipStartPointNumberCalls++;
+
+                return getPlaceShipStartPointNumberCalls == 1
+                    ? new StartPoint(new Point(3, 9), Direction.Horizontal)
+                    : new StartPoint(new Point(9, 1), Direction.Vertical);
+            }
+
+            var callOutPointOnTargetingGridNumberCalls = 0;
+            Point callOutPointOnTargetingGrid(string message)
+            {
+                callOutPointOnTargetingGridNumberCalls++;
+                return new Point(2, 2);
+            }
+
+            var printErrorMessageNumberCalls = 0;
+            void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
+
+            var rule = new FakeTwoShipsPlayRule();
+            var player = new HumanPlayer(
+                "player1",
+                getPlaceShipStartPoint,
+                callOutPointOnTargetingGrid,
+                printErrorMessage);
+            player.ApplyGameRule(rule);
+            player.PlaceShipsOnOceanGrid(CancellationToken.None);
+
+            var point = new Point(column, row);
+
+            // act
+            var answer = player.AnswerToAttacker(point);
+
+            // assert
+            getPlaceShipStartPointNumberCalls.Should().Be(2);
+            callOutPointOnTargetingGridNumberCalls.Should().Be(0);
+            printErrorMessageNumberCalls.Should().Be(0);
+
+            answer.Should().NotBeNull();
+            answer.Reply.Should().Be(expectedReply);
+            answer.ShipLength.Should().Be(expectedShipLength);
+        }
+
+        [Fact]
+        public void ShouldAnswerToAttackerHitAndThenSunk()
+        {
+            // arrange
+            var getPlaceShipStartPointNumberCalls = 0;
+            StartPoint getPlaceShipStartPoint(string message)
+            {
+                getPlaceShipStartPointNumberCalls++;
+                return new StartPoint(new Point(4, 4), Direction.Horizontal);
+            }
+
+            var callOutPointOnTargetingGridNumberCalls = 0;
+            Point callOutPointOnTargetingGrid(string message)
+            {
+                callOutPointOnTargetingGridNumberCalls++;
+                return new Point(2, 2);
+            }
+
+            var printErrorMessageNumberCalls = 0;
+            void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
+
+            var rule = new FakeOneShipsPlayRule();
+            var player = new HumanPlayer(
+                "player1",
+                getPlaceShipStartPoint,
+                callOutPointOnTargetingGrid,
+                printErrorMessage);
+            player.ApplyGameRule(rule);
+            player.PlaceShipsOnOceanGrid(CancellationToken.None);
+
+            var point1 = new Point(4, 4);
+            var point2 = new Point(5, 4);
+
+            // act
+            var answer1 = player.AnswerToAttacker(point1);
+            var answer2 = player.AnswerToAttacker(point2);
+
+            // assert
+            getPlaceShipStartPointNumberCalls.Should().Be(1);
+            callOutPointOnTargetingGridNumberCalls.Should().Be(0);
+            printErrorMessageNumberCalls.Should().Be(0);
+
+            answer1.Should().NotBeNull();
+            answer1.Reply.Should().Be(Reply.Hit);
+            answer1.ShipLength.Should().Be(2);
+
+            answer2.Should().NotBeNull();
+            answer2.Reply.Should().Be(Reply.Sunk);
+            answer2.ShipLength.Should().Be(2);
         }
     }
 }

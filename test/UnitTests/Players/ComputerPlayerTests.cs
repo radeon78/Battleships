@@ -13,14 +13,16 @@
         public void ShouldApplyGameRule()
         {
             // arrange
+            var playerName = "computer";
             var rule = new ThreeShipsPlayRule();
-            var player = new ComputerPlayer("computer");
+            var player = new ComputerPlayer(playerName);
 
             // act
             Action action = () => player.ApplyGameRule(rule);
 
             // assert
             action.Should().NotThrow();
+            player.PlayerName.Should().Be(playerName);
         }
 
         [Fact]
