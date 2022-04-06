@@ -42,5 +42,7 @@
             => _oceanGrid.AllShipsSunk(_allowedShips.Select(s => s.Length));
 
         public abstract void PrintOceanGrid();
+
+        public abstract void PrintTargetingGrind();
     }
 }

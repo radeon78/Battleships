@@ -4,21 +4,31 @@
 
     public class TargetingGrid : Grid
     {
-        private readonly TargetingPoint[,] _targetingPoints;
-
         public TargetingGrid()
         {
-            _targetingPoints = new TargetingPoint[Size, Size];
+            TargetingPoints = new TargetingPoint[Size, Size];
 
             for (var i = 0; i < Size; i++)
             {
                 for (var j = 0; j < Size; j++)
-                    _targetingPoints[i, j] = new TargetingPoint();
+                    TargetingPoints[i, j] = new TargetingPoint();
             }
-
         }
 
+        public TargetingGrid(TargetingGrid targetingGrid)
+        {
+            TargetingPoints = new TargetingPoint[Size, Size];
+
+            for (var i = 0; i < Size; i++)
+            {
+                for (var j = 0; j < Size; j++)
+                    TargetingPoints[i, j] = new TargetingPoint(targetingGrid.TargetingPoints[i, j]);
+            }
+        }
+
+        public TargetingPoint[,] TargetingPoints { get; }
+
         public void SetAnswer(Point attackerPoint, Answer answer)
-            => _targetingPoints[attackerPoint.Column, attackerPoint.Row].SetAnswer(answer);
+            => TargetingPoints[attackerPoint.Column, attackerPoint.Row].SetAnswer(answer);
     }
 }

@@ -47,7 +47,12 @@
 
         public override void PrintOceanGrid() 
         {
-            // We don't have to print ships for computer player
+            // We don't have to print anything for computer player
+        }
+
+        public override void PrintTargetingGrind()
+        {
+            // We don't have to print anything for computer player
         }
     }
 }

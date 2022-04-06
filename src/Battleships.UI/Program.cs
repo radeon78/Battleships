@@ -24,6 +24,7 @@
                     (message) => OceanGridUserInterface.GetPlaceShipStartPoint(message),
                     (oceanGrid) => OceanGridUserInterface.PrintOceanGrid(oceanGrid),
                     (message) => TargetingGridUserInterface.CallOutPointOnTargetingGrid(message),
+                    (targetingGrid) => TargetingGridUserInterface.PrintTargetingGrid(targetingGrid),
                     (message) => CommonUserInterface.PrintErrorMessage(message)),
                 new ComputerPlayer("Computer"),
                 token);

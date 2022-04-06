@@ -37,6 +37,8 @@
 
         public static void PrintOceanGrid(OceanGrid oceanGrid)
         {
+            Console.WriteLine($"\nThe Ocean Grid");
+
             var columns = new string[oceanGrid.Size + 1];
 
             columns[0] = string.Empty;
@@ -51,9 +53,13 @@
                 row[0] = i.ToDisplayRow();
                 for (var j = 0; j < oceanGrid.Size; j++)
                 {
-                    oceanGrid.OceanPoints[j, i].IsFillOut()
-                        .IfTrue(() => row[j + 1] = "x")
-                        .IfFalse(() => row[j + 1] = "");
+                    row[j + 1] = string.Empty;
+
+                    oceanGrid.OceanPoints[j, i].FillOut()
+                        .IfTrue(() => row[j + 1] = "X");
+
+                    oceanGrid.OceanPoints[j, i].Hit()
+                        .IfTrue(() => row[j + 1] = "-");
                 }
 
                 table.AddRow(row);

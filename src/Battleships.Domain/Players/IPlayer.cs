@@ -21,5 +21,7 @@
         bool AllShipsSunk();
 
         void PrintOceanGrid();
+
+        void PrintTargetingGrind();
     }
 }

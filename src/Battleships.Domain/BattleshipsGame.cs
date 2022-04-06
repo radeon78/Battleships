@@ -45,10 +45,14 @@
         {
             if (cancellationToken.IsCancellationRequested) return;
 
+            attacker.PrintTargetingGrind();
+
             var attackerPoint = attacker.CallOutPointOnTargetingGrid();
             var defenderAnswer = defender.AnswerToAttacker(attackerPoint);
             attacker.SetDefenderAnswer(attackerPoint, defenderAnswer);
             var endGame = defender.AllShipsSunk();
+
+            defender.PrintOceanGrid();
 
             if (endGame)
             {

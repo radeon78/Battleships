@@ -17,6 +17,18 @@
             _shipLength = 0;
         }
 
+        public TargetingPoint(TargetingPoint targetingPoint)
+        {
+            _isHit = targetingPoint._isHit;
+            _isCalledOut = targetingPoint._isCalledOut;
+            _shipLength = targetingPoint._shipLength;
+            _isSunk = targetingPoint._isSunk;
+        }
+
+        public bool Hit() => _isHit;
+
+        public bool Miss() => _isCalledOut && !_isHit;
+
         public void SetAnswer(Answer answer)
         {
             _isCalledOut = true;
@@ -25,7 +37,9 @@
 
             _isHit = true;
             _shipLength = answer.ShipLength;
-            (answer.Reply == Reply.Sunk).IfTrue(() => _isSunk = true);
+
+            (answer.Reply == Reply.Sunk)
+                .IfTrue(() => _isSunk = true);
         }
     }
 }

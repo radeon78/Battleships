@@ -83,13 +83,13 @@
 
         private bool CanSelectPoint(Point currentPoint)
         {
-            return OceanPoints[currentPoint.Column, currentPoint.Row].IsNotFillOut() &&
-               OceanPoints[currentPoint.Column, FixRowOrColumnValueIfNeed(currentPoint.Row - 1)].IsNotFillOut() &&
-               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column - 1), currentPoint.Row].IsNotFillOut() &&
-               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column - 1), FixRowOrColumnValueIfNeed(currentPoint.Row - 1)].IsNotFillOut() &&
-               OceanPoints[currentPoint.Column, FixRowOrColumnValueIfNeed(currentPoint.Row + 1)].IsNotFillOut() &&
-               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column + 1), currentPoint.Row].IsNotFillOut() &&
-               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column + 1), FixRowOrColumnValueIfNeed(currentPoint.Row + 1)].IsNotFillOut();
+            return OceanPoints[currentPoint.Column, currentPoint.Row].NotFillOut() &&
+               OceanPoints[currentPoint.Column, FixRowOrColumnValueIfNeed(currentPoint.Row - 1)].NotFillOut() &&
+               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column - 1), currentPoint.Row].NotFillOut() &&
+               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column - 1), FixRowOrColumnValueIfNeed(currentPoint.Row - 1)].NotFillOut() &&
+               OceanPoints[currentPoint.Column, FixRowOrColumnValueIfNeed(currentPoint.Row + 1)].NotFillOut() &&
+               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column + 1), currentPoint.Row].NotFillOut() &&
+               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column + 1), FixRowOrColumnValueIfNeed(currentPoint.Row + 1)].NotFillOut();
         }
 
         private int FixRowOrColumnValueIfNeed(int value)

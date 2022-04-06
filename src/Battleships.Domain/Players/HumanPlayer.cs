@@ -9,8 +9,9 @@
     public class HumanPlayer : Player
     {
         private readonly Func<string, StartPoint> _getPlaceShipStartPoint;
-        private readonly Func<string, Point> _callOutPointOnTargetingGrid;
         private readonly Action<OceanGrid> _printOceanGrid;
+        private readonly Func<string, Point> _callOutPointOnTargetingGrid;
+        private readonly Action<TargetingGrid> _printTargetingGrid;
         private readonly Action<string> _printErrorMessage;
 
         public HumanPlayer(
@@ -18,12 +19,14 @@
             Func<string, StartPoint> getPlaceShipStartPoint,
             Action<OceanGrid> printOceanGrid,
             Func<string, Point> callOutPointOnTargetingGrid,
+            Action<TargetingGrid> printTargetingGrid,
             Action<string> printErrorMessage) : base(playerName)
         {
             _getPlaceShipStartPoint = getPlaceShipStartPoint ?? throw new ArgumentNullException(nameof(getPlaceShipStartPoint));
             _printOceanGrid = printOceanGrid ?? throw new ArgumentNullException(nameof(printOceanGrid));
-            _callOutPointOnTargetingGrid = callOutPointOnTargetingGrid ?? throw new ArgumentNullException(nameof(callOutPointOnTargetingGrid)); ;
-            _printErrorMessage = printErrorMessage ?? throw new ArgumentNullException(nameof(printErrorMessage)); ;
+            _callOutPointOnTargetingGrid = callOutPointOnTargetingGrid ?? throw new ArgumentNullException(nameof(callOutPointOnTargetingGrid));
+            _printTargetingGrid = printTargetingGrid ?? throw new ArgumentNullException(nameof(printTargetingGrid));
+            _printErrorMessage = printErrorMessage ?? throw new ArgumentNullException(nameof(printErrorMessage));
         }
 
         public override void PlaceShipsOnOceanGrid(CancellationToken cancellationToken)
@@ -61,5 +64,8 @@
 
         public override void PrintOceanGrid()
             => _printOceanGrid(new OceanGrid(_oceanGrid));
+
+        public override void PrintTargetingGrind()
+            => _printTargetingGrid(new TargetingGrid(_targetingGrid));
     }
 }
