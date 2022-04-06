@@ -8,7 +8,7 @@
         private bool _isFillOut;
         private bool _isHit;
         private Ship _ship;
-
+        
         public OceanPoint()
         {
             _isHit = false;
@@ -16,14 +16,21 @@
             _ship = Ship.CreateEmptyShip();
         }
 
+        public OceanPoint(OceanPoint oceanPoint)
+        {
+            _isFillOut = oceanPoint._isFillOut;
+            _isHit = oceanPoint._isHit;
+            _ship = new Ship(oceanPoint._ship);
+        }
+
         public bool IsNotFillOut() => !_isFillOut;
+
+        public bool IsFillOut() => _isFillOut;
 
         public Answer TryHit()
         {
             if (IsNotFillOut())
-            {
                 return Answer.CreateMissAnswer();
-            }
 
             if (!_isHit)
             {

@@ -22,6 +22,9 @@
                 return new StartPoint(new Point(1, 1), Direction.Horizontal);
             }
 
+            var printOceanGridNumberCalls = 0;
+            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
             {
@@ -38,6 +41,7 @@
             var player = new HumanPlayer(
                 playerName,
                 getPlaceShipStartPoint,
+                printOceanGrid,
                 callOutPointOnTargetingGrid,
                 printErrorMessage);
 
@@ -47,6 +51,7 @@
             // assert
             action.Should().NotThrow();
             getPlaceShipStartPointNumberCalls.Should().Be(0);
+            printOceanGridNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
             player.PlayerName.Should().Be(playerName);
@@ -68,6 +73,9 @@
                     : new StartPoint(new Point(0, 0), Direction.Horizontal);
             }
 
+            var printOceanGridNumberCalls = 0;
+            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
             {
@@ -82,6 +90,7 @@
             var player = new HumanPlayer(
                 "player1",
                 getPlaceShipStartPoint,
+                printOceanGrid,
                 callOutPointOnTargetingGrid,
                 printErrorMessage);
             player.ApplyGameRule(rule);
@@ -92,6 +101,7 @@
             // assert
             action.Should().NotThrow();
             getPlaceShipStartPointNumberCalls.Should().Be(3);
+            printOceanGridNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
         }
@@ -107,6 +117,9 @@
                 return new StartPoint(new Point(getPlaceShipStartPointNumberCalls, getPlaceShipStartPointNumberCalls), Direction.Horizontal);
             }
 
+            var printOceanGridNumberCalls = 0;
+            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
             {
@@ -121,6 +134,7 @@
             var player = new HumanPlayer(
                 "player1",
                 getPlaceShipStartPoint,
+                printOceanGrid,
                 callOutPointOnTargetingGrid,
                 printErrorMessage);
             player.ApplyGameRule(rule);
@@ -131,6 +145,7 @@
             // assert
             action.Should().NotThrow();
             getPlaceShipStartPointNumberCalls.Should().Be(5);
+            printOceanGridNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(2);
         }
@@ -149,6 +164,9 @@
                 return new StartPoint(new Point(getPlaceShipStartPointNumberCalls, getPlaceShipStartPointNumberCalls), Direction.Horizontal);
             }
 
+            var printOceanGridNumberCalls = 0;
+            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
             {
@@ -163,6 +181,7 @@
             var player = new HumanPlayer(
                 "player1",
                 getPlaceShipStartPoint,
+                printOceanGrid,
                 callOutPointOnTargetingGrid,
                 printErrorMessage);
             player.ApplyGameRule(rule);
@@ -174,6 +193,7 @@
             // assert
             action.Should().NotThrow();
             getPlaceShipStartPointNumberCalls.Should().Be(0);
+            printOceanGridNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
         }
@@ -189,9 +209,12 @@
             StartPoint getPlaceShipStartPoint(string message)
             {
                 getPlaceShipStartPointNumberCalls++;
-                source.Cancel();
+                source!.Cancel();
                 return new StartPoint(new Point(getPlaceShipStartPointNumberCalls, getPlaceShipStartPointNumberCalls), Direction.Horizontal);
             }
+
+            var printOceanGridNumberCalls = 0;
+            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
 
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
@@ -207,6 +230,7 @@
             var player = new HumanPlayer(
                 "player1",
                 getPlaceShipStartPoint,
+                printOceanGrid,
                 callOutPointOnTargetingGrid,
                 printErrorMessage);
             player.ApplyGameRule(rule);
@@ -217,6 +241,7 @@
             // assert
             action.Should().NotThrow();
             getPlaceShipStartPointNumberCalls.Should().Be(1);
+            printOceanGridNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
         }
@@ -232,6 +257,9 @@
                 return new StartPoint(new Point(1, 1), Direction.Horizontal);
             }
 
+            var printOceanGridNumberCalls = 0;
+            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
             {
@@ -246,6 +274,7 @@
             var player = new HumanPlayer(
                 "player1",
                 getPlaceShipStartPoint,
+                printOceanGrid,
                 callOutPointOnTargetingGrid,
                 printErrorMessage);
             player.ApplyGameRule(rule);
@@ -258,6 +287,7 @@
             point.Row.Should().Be(2);
             point.Column.Should().Be(4);
             getPlaceShipStartPointNumberCalls.Should().Be(0);
+            printOceanGridNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(1);
             printErrorMessageNumberCalls.Should().Be(0);
         }
@@ -272,6 +302,9 @@
                 getPlaceShipStartPointNumberCalls++;
                 return new StartPoint(new Point(1, 1), Direction.Horizontal);
             }
+
+            var printOceanGridNumberCalls = 0;
+            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
 
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
@@ -289,6 +322,7 @@
             var player = new HumanPlayer(
                 "player1",
                 getPlaceShipStartPoint,
+                printOceanGrid,
                 callOutPointOnTargetingGrid,
                 printErrorMessage);
             player.ApplyGameRule(rule);
@@ -301,6 +335,7 @@
             point.Row.Should().Be(2);
             point.Column.Should().Be(4);
             getPlaceShipStartPointNumberCalls.Should().Be(0);
+            printOceanGridNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(2);
             printErrorMessageNumberCalls.Should().Be(1);
         }
@@ -346,6 +381,9 @@
                     : new StartPoint(new Point(9, 1), Direction.Vertical);
             }
 
+            var printOceanGridNumberCalls = 0;
+            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
             {
@@ -360,6 +398,7 @@
             var player = new HumanPlayer(
                 "player1",
                 getPlaceShipStartPoint,
+                printOceanGrid,
                 callOutPointOnTargetingGrid,
                 printErrorMessage);
             player.ApplyGameRule(rule);
@@ -372,6 +411,7 @@
 
             // assert
             getPlaceShipStartPointNumberCalls.Should().Be(2);
+            printOceanGridNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
 
@@ -391,6 +431,9 @@
                 return new StartPoint(new Point(4, 4), Direction.Horizontal);
             }
 
+            var printOceanGridNumberCalls = 0;
+            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
             {
@@ -405,6 +448,7 @@
             var player = new HumanPlayer(
                 "player1",
                 getPlaceShipStartPoint,
+                printOceanGrid,
                 callOutPointOnTargetingGrid,
                 printErrorMessage);
             player.ApplyGameRule(rule);
@@ -419,6 +463,7 @@
 
             // assert
             getPlaceShipStartPointNumberCalls.Should().Be(1);
+            printOceanGridNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
 
@@ -429,6 +474,94 @@
             answer2.Should().NotBeNull();
             answer2.Reply.Should().Be(Reply.Sunk);
             answer2.ShipLength.Should().Be(2);
+        }
+
+        [Fact]
+        public void ShouldThrowWhenGetPlaceShipStartPointIsNull()
+        {
+            // arrange
+            void printOceanGrid(OceanGrid oceanGrid) { };
+            Point callOutPointOnTargetingGrid(string message) => new Point(1, 1);
+            void printErrorMessage(string message) { };
+
+            var playerName = "player1";
+
+            // act
+            Action action = () => _ = new HumanPlayer(
+                playerName,
+                null,
+                printOceanGrid,
+                callOutPointOnTargetingGrid,
+                printErrorMessage);
+
+            // assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ShouldThrowWhenPrintOceanGridIsNull()
+        {
+            // arrange
+            StartPoint getPlaceShipStartPoint(string message) => new (new Point(1, 1), Direction.Horizontal);
+            Point callOutPointOnTargetingGrid(string message) => new(1, 1);
+            void printErrorMessage(string message) { };
+
+            var playerName = "player1";
+
+            // act
+            Action action = () => _ = new HumanPlayer(
+                playerName,
+                getPlaceShipStartPoint,
+                null,
+                callOutPointOnTargetingGrid,
+                printErrorMessage);
+
+            // assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ShouldThrowWhenCallOutPointOnTargetingGridIsNull()
+        {
+            // arrange
+            StartPoint getPlaceShipStartPoint(string message) => new(new Point(1, 1), Direction.Horizontal);
+            void printOceanGrid(OceanGrid oceanGrid) { };
+            void printErrorMessage(string message) { };
+
+            var playerName = "player1";
+
+            // act
+            Action action = () => _ = new HumanPlayer(
+                playerName,
+                getPlaceShipStartPoint,
+                printOceanGrid,
+                null,
+                printErrorMessage);
+
+            // assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ShouldThrowWhenPrintErrorMessageIsNull()
+        {
+            // arrange
+            StartPoint getPlaceShipStartPoint(string message) => new(new Point(1, 1), Direction.Horizontal);
+            void printOceanGrid(OceanGrid oceanGrid) { };
+            Point callOutPointOnTargetingGrid(string message) => new(1, 1);
+
+            var playerName = "player1";
+
+            // act
+            Action action = () => _ = new HumanPlayer(
+                playerName,
+                getPlaceShipStartPoint,
+                printOceanGrid,
+                callOutPointOnTargetingGrid,
+                null);
+
+            // assert
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
     }
 }

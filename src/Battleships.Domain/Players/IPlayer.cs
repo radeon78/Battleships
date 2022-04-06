@@ -19,5 +19,7 @@
         void SetDefenderAnswer(Point attackerPoint, Answer answer);
 
         bool AllShipsSunk();
+
+        void PrintOceanGrid();
     }
 }

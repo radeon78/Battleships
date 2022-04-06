@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Domain.Grids
 {
     using Battleships.Domain.Common;
+    using Battleships.Domain.Extensions;
     using Battleships.Domain.Players;
     using Battleships.Domain.Ships;
     using System.Collections.Generic;
@@ -8,20 +9,33 @@
 
     public class OceanGrid : Grid
     {
-        private readonly OceanPoint[,] _oceanPoints;
         private readonly List<int> _sunkShips;
 
         public OceanGrid()
         {
             _sunkShips = new List<int>();
-            _oceanPoints = new OceanPoint[Size, Size];
+            OceanPoints = new OceanPoint[Size, Size];
 
             for (var i = 0; i < Size; i++)
             {
                 for (var j = 0; j < Size; j++)
-                    _oceanPoints[i, j] = new OceanPoint();
+                    OceanPoints[i, j] = new OceanPoint();
             }
         }
+
+        public OceanGrid(OceanGrid oceanGrid)
+        {
+            _sunkShips = oceanGrid._sunkShips.Select(x => x).ToList();
+            OceanPoints = new OceanPoint[Size, Size];
+
+            for (var i = 0; i < Size; i++)
+            {
+                for (var j = 0; j < Size; j++)
+                    OceanPoints[i, j] = new OceanPoint(oceanGrid.OceanPoints[i, j]);
+            }
+        }
+
+        public OceanPoint[,] OceanPoints { get; } 
 
         public Result TryPlaceShip(StartPoint startPoint, Ship ship)
         {
@@ -44,16 +58,14 @@
                 }
             }
 
-            pointsToSelect.ForEach(pointToSelect => _oceanPoints[pointToSelect.Column, pointToSelect.Row].Put(ship));
+            pointsToSelect.ForEach(pointToSelect => OceanPoints[pointToSelect.Column, pointToSelect.Row].Put(ship));
             return Result.Success();
         }
 
         public Answer TryHit(Point point)
         {
-            var answer = _oceanPoints[point.Column, point.Row].TryHit();
-
-            if (answer.Reply == Reply.Sunk)
-                _sunkShips.Add(answer.ShipLength);
+            var answer = OceanPoints[point.Column, point.Row].TryHit();
+            (answer.Reply == Reply.Sunk).IfTrue(() => _sunkShips.Add(answer.ShipLength));
 
             return answer;
         }
@@ -71,13 +83,13 @@
 
         private bool CanSelectPoint(Point currentPoint)
         {
-            return _oceanPoints[currentPoint.Column, currentPoint.Row].IsNotFillOut() &&
-               _oceanPoints[currentPoint.Column, FixRowOrColumnValueIfNeed(currentPoint.Row - 1)].IsNotFillOut() &&
-               _oceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column - 1), currentPoint.Row].IsNotFillOut() &&
-               _oceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column - 1), FixRowOrColumnValueIfNeed(currentPoint.Row - 1)].IsNotFillOut() &&
-               _oceanPoints[currentPoint.Column, FixRowOrColumnValueIfNeed(currentPoint.Row + 1)].IsNotFillOut() &&
-               _oceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column + 1), currentPoint.Row].IsNotFillOut() &&
-               _oceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column + 1), FixRowOrColumnValueIfNeed(currentPoint.Row + 1)].IsNotFillOut();
+            return OceanPoints[currentPoint.Column, currentPoint.Row].IsNotFillOut() &&
+               OceanPoints[currentPoint.Column, FixRowOrColumnValueIfNeed(currentPoint.Row - 1)].IsNotFillOut() &&
+               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column - 1), currentPoint.Row].IsNotFillOut() &&
+               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column - 1), FixRowOrColumnValueIfNeed(currentPoint.Row - 1)].IsNotFillOut() &&
+               OceanPoints[currentPoint.Column, FixRowOrColumnValueIfNeed(currentPoint.Row + 1)].IsNotFillOut() &&
+               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column + 1), currentPoint.Row].IsNotFillOut() &&
+               OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column + 1), FixRowOrColumnValueIfNeed(currentPoint.Row + 1)].IsNotFillOut();
         }
 
         private int FixRowOrColumnValueIfNeed(int value)

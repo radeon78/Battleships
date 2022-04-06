@@ -2,7 +2,7 @@
 {
     using System;
 
-    public static class Common
+    public static class CommonUserInterface
     {
         public static void PrintErrorMessage(string message)
         {

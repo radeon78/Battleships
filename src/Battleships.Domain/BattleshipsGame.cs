@@ -29,7 +29,9 @@
             _printMessage(Resource.WelcomeGame);
 
             firstPlayer.PlaceShipsOnOceanGrid(cancellationToken);
+            firstPlayer.PrintOceanGrid();
             secondPlayer.PlaceShipsOnOceanGrid(cancellationToken);
+            secondPlayer.PrintOceanGrid();
 
             _printMessage(Resource.ShipsOnGrid);
 

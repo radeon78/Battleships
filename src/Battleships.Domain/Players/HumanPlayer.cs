@@ -10,17 +10,20 @@
     {
         private readonly Func<string, StartPoint> _getPlaceShipStartPoint;
         private readonly Func<string, Point> _callOutPointOnTargetingGrid;
+        private readonly Action<OceanGrid> _printOceanGrid;
         private readonly Action<string> _printErrorMessage;
 
         public HumanPlayer(
             string playerName,
             Func<string, StartPoint> getPlaceShipStartPoint,
+            Action<OceanGrid> printOceanGrid,
             Func<string, Point> callOutPointOnTargetingGrid,
             Action<string> printErrorMessage) : base(playerName)
         {
-            _getPlaceShipStartPoint = getPlaceShipStartPoint;
-            _callOutPointOnTargetingGrid = callOutPointOnTargetingGrid;
-            _printErrorMessage = printErrorMessage;
+            _getPlaceShipStartPoint = getPlaceShipStartPoint ?? throw new ArgumentNullException(nameof(getPlaceShipStartPoint));
+            _printOceanGrid = printOceanGrid ?? throw new ArgumentNullException(nameof(printOceanGrid));
+            _callOutPointOnTargetingGrid = callOutPointOnTargetingGrid ?? throw new ArgumentNullException(nameof(callOutPointOnTargetingGrid)); ;
+            _printErrorMessage = printErrorMessage ?? throw new ArgumentNullException(nameof(printErrorMessage)); ;
         }
 
         public override void PlaceShipsOnOceanGrid(CancellationToken cancellationToken)
@@ -55,5 +58,8 @@
 
             return point;
         }
+
+        public override void PrintOceanGrid()
+            => _printOceanGrid(new OceanGrid(_oceanGrid));
     }
 }

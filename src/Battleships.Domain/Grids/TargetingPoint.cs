@@ -1,5 +1,6 @@
 ﻿namespace Battleships.Domain.Grids
 {
+    using Battleships.Domain.Extensions;
     using Battleships.Domain.Players;
 
     public class TargetingPoint
@@ -20,14 +21,11 @@
         {
             _isCalledOut = true;
 
-            if (answer.Reply == Reply.Miss)
-            {
-                return;
-            }
+            if (answer.Reply == Reply.Miss) return;
 
             _isHit = true;
             _shipLength = answer.ShipLength;
-            if (answer.Reply == Reply.Sunk) _isSunk = true;
+            (answer.Reply == Reply.Sunk).IfTrue(() => _isSunk = true);
         }
     }
 }

@@ -44,5 +44,10 @@
                 random.Next(0, _oceanGrid.Size),
                 random.Next(0, _oceanGrid.Size));
         }
+
+        public override void PrintOceanGrid() 
+        {
+            // We don't have to print ships for computer player
+        }
     }
 }

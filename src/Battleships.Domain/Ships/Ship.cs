@@ -22,6 +22,12 @@
             Length = length;
         }
 
+        public Ship(Ship ship)
+        {
+            _hits = ship._hits;
+            Length = ship.Length;
+        }
+
         public int Length { get; } = 0;
 
         public void Hit()

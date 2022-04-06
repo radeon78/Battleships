@@ -17,7 +17,7 @@
 
         public Player(string playerName)
         {
-            _playerName = playerName;
+            _playerName = playerName ?? throw new ArgumentNullException(nameof(playerName));
             _oceanGrid = new OceanGrid();
             _targetingGrid = new TargetingGrid();
             _allowedShips = Array.Empty<Ship>();
@@ -32,7 +32,7 @@
 
         public abstract Point CallOutPointOnTargetingGrid();
 
-        public virtual Answer AnswerToAttacker(Point attackerPoint)
+        public Answer AnswerToAttacker(Point attackerPoint)
             => _oceanGrid.TryHit(attackerPoint);
 
         public void SetDefenderAnswer(Point attackerPoint, Answer answer) =>
@@ -40,5 +40,7 @@
 
         public bool AllShipsSunk()
             => _oceanGrid.AllShipsSunk(_allowedShips.Select(s => s.Length));
+
+        public abstract void PrintOceanGrid();
     }
 }
