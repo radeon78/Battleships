@@ -22,9 +22,9 @@
                 new HumanPlayer(
                     "Zbyszko z Bogdanca",
                     (message) => OceanGridUserInterface.GetPlaceShipStartPoint(message),
-                    (oceanGrid) => OceanGridUserInterface.PrintOceanGrid(oceanGrid),
+                    (playerName, oceanGrid) => OceanGridUserInterface.PrintOceanGrid(playerName, oceanGrid),
                     (message) => TargetingGridUserInterface.CallOutPointOnTargetingGrid(message),
-                    (targetingGrid) => TargetingGridUserInterface.PrintTargetingGrid(targetingGrid),
+                    (playerName, targetingGrid) => TargetingGridUserInterface.PrintTargetingGrid(playerName, targetingGrid),
                     (message) => CommonUserInterface.PrintErrorMessage(message)),
                 new ComputerPlayer("Computer"),
                 token);

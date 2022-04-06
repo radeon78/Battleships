@@ -23,7 +23,7 @@
             }
 
             var printOceanGridNumberCalls = 0;
-            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
 
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
@@ -33,7 +33,7 @@
             }
 
             var printTargetingGridNumberCalls = 0;
-            void printTargetingGrid(TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
 
             var printErrorMessageNumberCalls = 0;
             void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
@@ -79,7 +79,7 @@
             }
 
             var printOceanGridNumberCalls = 0;
-            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
 
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
@@ -89,7 +89,7 @@
             }
 
             var printTargetingGridNumberCalls = 0;
-            void printTargetingGrid(TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
 
             var printErrorMessageNumberCalls = 0;
             void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
@@ -128,7 +128,7 @@
             }
 
             var printOceanGridNumberCalls = 0;
-            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
 
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
@@ -138,7 +138,7 @@
             }
 
             var printTargetingGridNumberCalls = 0;
-            void printTargetingGrid(TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
 
             var printErrorMessageNumberCalls = 0;
             void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
@@ -180,7 +180,7 @@
             }
 
             var printOceanGridNumberCalls = 0;
-            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
 
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
@@ -190,7 +190,7 @@
             }
 
             var printTargetingGridNumberCalls = 0;
-            void printTargetingGrid(TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
 
             var printErrorMessageNumberCalls = 0;
             void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
@@ -234,7 +234,7 @@
             }
 
             var printOceanGridNumberCalls = 0;
-            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
 
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
@@ -244,7 +244,7 @@
             }
 
             var printTargetingGridNumberCalls = 0;
-            void printTargetingGrid(TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
 
             var printErrorMessageNumberCalls = 0;
             void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
@@ -283,7 +283,7 @@
             }
 
             var printOceanGridNumberCalls = 0;
-            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
 
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
@@ -293,7 +293,7 @@
             }
 
             var printTargetingGridNumberCalls = 0;
-            void printTargetingGrid(TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
 
             var printErrorMessageNumberCalls = 0;
             void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
@@ -334,7 +334,7 @@
             }
 
             var printOceanGridNumberCalls = 0;
-            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
 
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
@@ -346,7 +346,7 @@
             }
 
             var printTargetingGridNumberCalls = 0;
-            void printTargetingGrid(TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
 
             var printErrorMessageNumberCalls = 0;
             void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
@@ -417,7 +417,7 @@
             }
 
             var printOceanGridNumberCalls = 0;
-            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
 
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
@@ -427,7 +427,7 @@
             }
 
             var printTargetingGridNumberCalls = 0;
-            void printTargetingGrid(TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
 
             var printErrorMessageNumberCalls = 0;
             void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
@@ -472,7 +472,7 @@
             }
 
             var printOceanGridNumberCalls = 0;
-            void printOceanGrid(OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
 
             var callOutPointOnTargetingGridNumberCalls = 0;
             Point callOutPointOnTargetingGrid(string message)
@@ -482,7 +482,7 @@
             }
 
             var printTargetingGridNumberCalls = 0;
-            void printTargetingGrid(TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) => printTargetingGridNumberCalls++;
 
             var printErrorMessageNumberCalls = 0;
             void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
@@ -525,9 +525,9 @@
         public void ShouldThrowWhenGetPlaceShipStartPointIsNull()
         {
             // arrange
-            void printOceanGrid(OceanGrid oceanGrid) { };
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) { };
             Point callOutPointOnTargetingGrid(string message) => new(1, 1);
-            void printTargetingGrid(TargetingGrid oceanGrid) { };
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) { };
             void printErrorMessage(string message) { };
 
             var playerName = "player1";
@@ -551,7 +551,7 @@
             // arrange
             StartPoint getPlaceShipStartPoint(string message) => new (new Point(1, 1), Direction.Horizontal);
             Point callOutPointOnTargetingGrid(string message) => new(1, 1);
-            void printTargetingGrid(TargetingGrid oceanGrid) { };
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) { };
             void printErrorMessage(string message) { };
 
             var playerName = "player1";
@@ -574,8 +574,8 @@
         {
             // arrange
             StartPoint getPlaceShipStartPoint(string message) => new(new Point(1, 1), Direction.Horizontal);
-            void printOceanGrid(OceanGrid oceanGrid) { };
-            void printTargetingGrid(TargetingGrid oceanGrid) { };
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) { };
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) { };
             void printErrorMessage(string message) { };
 
             var playerName = "player1";
@@ -598,9 +598,9 @@
         {
             // arrange
             StartPoint getPlaceShipStartPoint(string message) => new(new Point(1, 1), Direction.Horizontal);
-            void printOceanGrid(OceanGrid oceanGrid) { };
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) { };
             Point callOutPointOnTargetingGrid(string message) => new(1, 1);
-            void printTargetingGrid(TargetingGrid oceanGrid) { };
+            void printTargetingGrid(string playerName, TargetingGrid oceanGrid) { };
 
             var playerName = "player1";
 
@@ -622,7 +622,7 @@
         {
             // arrange
             StartPoint getPlaceShipStartPoint(string message) => new(new Point(1, 1), Direction.Horizontal);
-            void printOceanGrid(OceanGrid oceanGrid) { };
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) { };
             Point callOutPointOnTargetingGrid(string message) => new(1, 1);
             void printErrorMessage(string message) { };
 

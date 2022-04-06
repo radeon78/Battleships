@@ -27,6 +27,8 @@
 
         public bool Hit() => _isHit;
 
+        public string DisplayShipLength() => _shipLength.ToString();
+
         public bool Miss() => _isCalledOut && !_isHit;
 
         public void SetAnswer(Answer answer)

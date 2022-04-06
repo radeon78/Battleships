@@ -9,17 +9,17 @@
     public class HumanPlayer : Player
     {
         private readonly Func<string, StartPoint> _getPlaceShipStartPoint;
-        private readonly Action<OceanGrid> _printOceanGrid;
+        private readonly Action<string, OceanGrid> _printOceanGrid;
         private readonly Func<string, Point> _callOutPointOnTargetingGrid;
-        private readonly Action<TargetingGrid> _printTargetingGrid;
+        private readonly Action<string, TargetingGrid> _printTargetingGrid;
         private readonly Action<string> _printErrorMessage;
 
         public HumanPlayer(
             string playerName,
             Func<string, StartPoint> getPlaceShipStartPoint,
-            Action<OceanGrid> printOceanGrid,
+            Action<string, OceanGrid> printOceanGrid,
             Func<string, Point> callOutPointOnTargetingGrid,
-            Action<TargetingGrid> printTargetingGrid,
+            Action<string, TargetingGrid> printTargetingGrid,
             Action<string> printErrorMessage) : base(playerName)
         {
             _getPlaceShipStartPoint = getPlaceShipStartPoint ?? throw new ArgumentNullException(nameof(getPlaceShipStartPoint));
@@ -63,9 +63,9 @@
         }
 
         public override void PrintOceanGrid()
-            => _printOceanGrid(new OceanGrid(_oceanGrid));
+            => _printOceanGrid(_playerName, new OceanGrid(_oceanGrid));
 
         public override void PrintTargetingGrind()
-            => _printTargetingGrid(new TargetingGrid(_targetingGrid));
+            => _printTargetingGrid(_playerName, new TargetingGrid(_targetingGrid));
     }
 }

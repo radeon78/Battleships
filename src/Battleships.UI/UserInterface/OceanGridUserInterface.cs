@@ -2,7 +2,6 @@
 {
     using Battleships.Domain.Extensions;
     using Battleships.Domain.Grids;
-    using ConsoleTables;
     using System;
 
     public static class OceanGridUserInterface
@@ -35,37 +34,21 @@
             return direction;
         }
 
-        public static void PrintOceanGrid(OceanGrid oceanGrid)
+        public static void PrintOceanGrid(string playerName, OceanGrid oceanGrid)
         {
-            Console.WriteLine($"\nThe Ocean Grid");
-
-            var columns = new string[oceanGrid.Size + 1];
-
-            columns[0] = string.Empty;
-            for (var i = 0; i < oceanGrid.Size; i++)
-                columns[i + 1] = i.ToDisplayColumnAsString();
-
-            var table = new ConsoleTable(columns);
-
-            for (var i = 0; i < oceanGrid.Size; i++)
+            Console.WriteLine($"\n{playerName}'s Ocean Grid");
+            oceanGrid.PrintGrid((column, row) =>
             {
-                var row = new string[oceanGrid.Size + 1];
-                row[0] = i.ToDisplayRow();
-                for (var j = 0; j < oceanGrid.Size; j++)
-                {
-                    row[j + 1] = string.Empty;
+                var pointStatus = string.Empty;
 
-                    oceanGrid.OceanPoints[j, i].FillOut()
-                        .IfTrue(() => row[j + 1] = "X");
+                oceanGrid.OceanPoints[column, row].FillOut()
+                    .IfTrue(() => pointStatus = "X");
 
-                    oceanGrid.OceanPoints[j, i].Hit()
-                        .IfTrue(() => row[j + 1] = "-");
-                }
+                oceanGrid.OceanPoints[column, row].Hit()
+                    .IfTrue(() => pointStatus = "-");
 
-                table.AddRow(row);
-            }
-
-            table.Write();
+                return pointStatus;
+            });
         }
     }
 }
