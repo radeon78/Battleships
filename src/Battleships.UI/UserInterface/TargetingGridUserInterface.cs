@@ -3,14 +3,15 @@
     using Battleships.Domain.Extensions;
     using Battleships.Domain.Grids;
     using System;
+    using System.Threading;
 
     public static class TargetingGridUserInterface
     {
-        public static Point CallOutPointOnTargetingGrid(string message)
+        public static Point CallOutPointOnTargetingGrid(string message, CancellationTokenSource tokenSource)
         {
             Console.WriteLine($"\n{message}");
-            var column = CommonUserInterface.GetColumn();
-            var row = CommonUserInterface.GetRow();
+            var column = CommonUserInterface.GetColumn(tokenSource);
+            var row = CommonUserInterface.GetRow(tokenSource);
 
             return new Point(column, row);
         }

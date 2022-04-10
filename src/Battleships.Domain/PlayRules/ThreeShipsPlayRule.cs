@@ -1,5 +1,6 @@
 ﻿namespace Battleships.Domain.PlayRules
 {
+    using Battleships.Domain.Resources;
     using Battleships.Domain.Ships;
     using System;
     using System.Collections.Generic;
@@ -14,5 +15,7 @@
                     Ship.CreateDestroyer(),
                     Ship.CreateDestroyer()
                 });
+        public string GetPlayRuleDescription() 
+            => string.Format(Resource.PlayRuleDescription, GetAllowedShips().Count);
     }
 }

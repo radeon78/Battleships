@@ -6,5 +6,7 @@
     public interface IPlayRule
     {
         public IReadOnlyCollection<Ship> GetAllowedShips();
+
+        public string GetPlayRuleDescription();
     }
 }

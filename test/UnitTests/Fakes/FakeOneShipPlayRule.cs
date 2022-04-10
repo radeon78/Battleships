@@ -1,6 +1,7 @@
 ﻿namespace UnitTests.Fakes
 {
     using Battleships.Domain.PlayRules;
+    using Battleships.Domain.Resources;
     using Battleships.Domain.Ships;
     using System;
     using System.Collections.Generic;
@@ -13,5 +14,7 @@
                 {
                     new Ship(2)
                 });
+        public string GetPlayRuleDescription() 
+            => string.Format(Resource.PlayRuleDescription, GetAllowedShips().Count);
     }
 }

@@ -86,7 +86,7 @@
             // assert
             action.Should().NotThrow();
             getPlaceShipStartPointNumberCalls.Should().Be(3);
-            printOceanGridNumberCalls.Should().Be(0);
+            printOceanGridNumberCalls.Should().Be(3);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
@@ -102,7 +102,7 @@
                     : new StartPoint(new Point(0, 0), Direction.Horizontal);
             }
 
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
             Point callOutPointOnTargetingGrid(string message)
             {
                 callOutPointOnTargetingGridNumberCalls++;
@@ -139,7 +139,7 @@
             // assert
             action.Should().NotThrow();
             getPlaceShipStartPointNumberCalls.Should().Be(5);
-            printOceanGridNumberCalls.Should().Be(0);
+            printOceanGridNumberCalls.Should().Be(3);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(2);
@@ -150,7 +150,7 @@
                 return new StartPoint(new Point(getPlaceShipStartPointNumberCalls, getPlaceShipStartPointNumberCalls), Direction.Horizontal);
             }
 
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
             Point callOutPointOnTargetingGrid(string message)
             {
                 callOutPointOnTargetingGridNumberCalls++;
@@ -202,7 +202,7 @@
                 return new StartPoint(new Point(getPlaceShipStartPointNumberCalls, getPlaceShipStartPointNumberCalls), Direction.Horizontal);
             }
 
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
             Point callOutPointOnTargetingGrid(string message)
             {
                 callOutPointOnTargetingGridNumberCalls++;
@@ -242,7 +242,7 @@
             // assert
             action.Should().NotThrow();
             getPlaceShipStartPointNumberCalls.Should().Be(1);
-            printOceanGridNumberCalls.Should().Be(0);
+            printOceanGridNumberCalls.Should().Be(1);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
@@ -254,7 +254,7 @@
                 return new StartPoint(new Point(getPlaceShipStartPointNumberCalls, getPlaceShipStartPointNumberCalls), Direction.Horizontal);
             }
 
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
             Point callOutPointOnTargetingGrid(string message)
             {
                 callOutPointOnTargetingGridNumberCalls++;
@@ -304,7 +304,7 @@
                 return new StartPoint(new Point(1, 1), Direction.Horizontal);
             }
 
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
             Point callOutPointOnTargetingGrid(string message)
             {
                 callOutPointOnTargetingGridNumberCalls++;
@@ -354,7 +354,7 @@
                 return new StartPoint(new Point(1, 1), Direction.Horizontal);
             }
 
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
             Point callOutPointOnTargetingGrid(string message)
             {
                 callOutPointOnTargetingGridNumberCalls++;
@@ -422,7 +422,7 @@
 
             // assert
             getPlaceShipStartPointNumberCalls.Should().Be(2);
-            printOceanGridNumberCalls.Should().Be(0);
+            printOceanGridNumberCalls.Should().Be(2);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
@@ -440,7 +440,7 @@
                     : new StartPoint(new Point(9, 1), Direction.Vertical);
             }
 
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
             Point callOutPointOnTargetingGrid(string message)
             {
                 callOutPointOnTargetingGridNumberCalls++;
@@ -481,7 +481,7 @@
 
             // assert
             getPlaceShipStartPointNumberCalls.Should().Be(1);
-            printOceanGridNumberCalls.Should().Be(0);
+            printOceanGridNumberCalls.Should().Be(1);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
@@ -500,7 +500,7 @@
                 return new StartPoint(new Point(4, 4), Direction.Horizontal);
             }
 
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++; ;
+            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
             Point callOutPointOnTargetingGrid(string message)
             {
                 callOutPointOnTargetingGridNumberCalls++;

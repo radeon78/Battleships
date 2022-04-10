@@ -28,6 +28,7 @@
             secondPlayer.ApplyGameRule(_playRule);
 
             _printMessage(Resource.WelcomeGame);
+            _printMessage(_playRule.GetPlayRuleDescription());
 
             firstPlayer.PlaceShipsOnOceanGrid(cancellationToken);
             firstPlayer.PrintOceanGrid();
@@ -40,8 +41,8 @@
         }
 
         private void PlayGame(
-            IPlayer attacker,
-            IPlayer defender,
+            IAttackerPlayer attacker,
+            IDefenderPlayer defender,
             CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested) return;
@@ -60,7 +61,7 @@
                 return;
             }
 
-            PlayGame(defender, attacker, cancellationToken);
+            PlayGame((IAttackerPlayer)defender, (IDefenderPlayer)attacker, cancellationToken);
         }
     }
 }

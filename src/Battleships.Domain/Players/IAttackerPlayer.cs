@@ -4,6 +4,8 @@
 
     public interface IAttackerPlayer
     {
+        string PlayerName { get; }
+
         Point CallOutPointOnTargetingGrid();
 
         void SetDefenderAnswer(Point attackerPoint, Answer answer);

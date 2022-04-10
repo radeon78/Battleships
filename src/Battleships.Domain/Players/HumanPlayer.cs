@@ -41,7 +41,9 @@
 
                     var startPoint = _getPlaceShipStartPoint(string.Format(Resource.PlaceShipMessage, _playerName, ship));
                     result = _oceanGrid.TryPlaceShip(startPoint, ship);
-                    if (result.IsFailure) _printErrorMessage(result.ErrorMessage);
+                    result.IsSuccess
+                        .IfTrue(() => PrintOceanGrid())
+                        .IfFalse(() => _printErrorMessage(result.ErrorMessage));
                 }
                 while (result.IsFailure);
             }, cancellationToken);
