@@ -32,7 +32,7 @@ namespace UnitTests.Ships
         public void ShouldThrow(int length)
         {
             // act
-            Action action = () => { _ = new Ship(length); };
+            Action action = () => _ = new Ship(length);
 
             // assert
             action.Should().ThrowExactly<ArgumentException>();
@@ -60,7 +60,7 @@ namespace UnitTests.Ships
             var ship = new Ship(2);
 
             // act
-            Action action = () => 
+            Action action = () =>
             {
                 ship.Hit();
                 ship.Hit();
@@ -86,6 +86,66 @@ namespace UnitTests.Ships
 
             // assert
             action.Should().ThrowExactly<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void ShouldCloneShip()
+        {
+            // arrange
+            var ship = new Ship(2);
+            ship.Hit();
+            var clonedShip = new Ship(ship);
+
+            // act
+            var result = ship.Equals(clonedShip);
+
+            // assert
+            result.Should().BeTrue();
+            ship.GetHashCode().Should().Be(clonedShip.GetHashCode());
+        }
+
+        [Fact]
+        public void ShouldCompareTheSameShips()
+        {
+            // act
+            var ship1 = new Ship(2);
+            var ship2 = new Ship(2);
+
+            // act
+            var result = ship1.Equals(ship2);
+
+            // assert
+            result.Should().BeTrue();
+            ship1.GetHashCode().Should().Be(ship2.GetHashCode());
+        }
+
+        [Fact]
+        public void ShouldCompareDifferentShips()
+        {
+            // arrange
+            var ship1 = new Ship(2);
+            ship1.Hit();
+            var ship2 = new Ship(2);
+
+            // act
+            var result = ship1.Equals(ship2);
+
+            // assert
+            result.Should().BeFalse();
+            ship1.GetHashCode().Should().NotBe(ship2.GetHashCode());
+        }
+
+        [Fact]
+        public void ShouldCompareShipWithNull()
+        {
+            // arrange
+            var ship1 = new Ship(2);
+            
+            // act
+            var result = ship1.Equals(null);
+
+            // assert
+            result.Should().BeFalse();
         }
     }
 }

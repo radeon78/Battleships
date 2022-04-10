@@ -1,6 +1,6 @@
 ﻿namespace Battleships.Domain.Ships
 {
-    using Battleships.Domain;
+    using Battleships.Domain.Resources;
     using System;
 
     public class Ship
@@ -39,6 +39,17 @@
         public bool IsSunk() => _hits == Length;
 
         public override string ToString() => $"{Length} length ship";
+
+        public override bool Equals(object? obj)
+        {
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
+                return false;
+
+            var otherShip = (Ship)obj;
+            return _hits == otherShip._hits && Length == otherShip.Length;
+        }
+
+        public override int GetHashCode() => HashCode.Combine(_hits, Length);
 
         public static Ship CreateEmptyShip() => new();
 

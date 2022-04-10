@@ -3,7 +3,9 @@
     using Battleships.Domain.Common;
     using Battleships.Domain.Extensions;
     using Battleships.Domain.Players;
+    using Battleships.Domain.Resources;
     using Battleships.Domain.Ships;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -35,7 +37,7 @@
             }
         }
 
-        public OceanPoint[,] OceanPoints { get; } 
+        public OceanPoint[,] OceanPoints { get; }
 
         public Result TryPlaceShip(StartPoint startPoint, Ship ship)
         {
@@ -79,6 +81,44 @@
                 point.Column < 0 ||
                 point.Row > Size - 1 ||
                 point.Row < 0;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
+                return false;
+
+            var otherOceanGrid = (OceanGrid)obj;
+
+            if (!_sunkShips.SequenceEqual(otherOceanGrid._sunkShips))
+                return false;
+
+            for (var i = 0; i < Size; i++)
+            {
+                for (var j = 0; j < Size; j++)
+                {
+                    if (!OceanPoints[i, j].Equals(otherOceanGrid.OceanPoints[i, j]))
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            var hash = new HashCode();
+
+            for (var i = 0; i < _sunkShips.Count; i++)
+                hash.Add(_sunkShips[i].GetHashCode());
+
+            for (var i = 0; i < Size; i++)
+            {
+                for (var j = 0; j < Size; j++)
+                    hash.Add(OceanPoints[i, j].GetHashCode());
+            }
+
+            return hash.ToHashCode();
         }
 
         private bool CanSelectPoint(Point currentPoint)

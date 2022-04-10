@@ -17,7 +17,10 @@
 
         public Player(string playerName)
         {
-            _playerName = playerName ?? throw new ArgumentNullException(nameof(playerName));
+            if (string.IsNullOrEmpty(playerName))
+                throw new ArgumentNullException(nameof(playerName));
+
+            _playerName = playerName;
             _oceanGrid = new OceanGrid();
             _targetingGrid = new TargetingGrid();
             _allowedShips = Array.Empty<Ship>();

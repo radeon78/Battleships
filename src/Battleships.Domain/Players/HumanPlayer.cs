@@ -3,6 +3,7 @@
     using Battleships.Domain.Common;
     using Battleships.Domain.Extensions;
     using Battleships.Domain.Grids;
+    using Battleships.Domain.Resources;
     using System;
     using System.Threading;
 

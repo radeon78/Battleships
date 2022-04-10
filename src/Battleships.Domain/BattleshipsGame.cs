@@ -2,6 +2,7 @@
 {
     using Battleships.Domain.Players;
     using Battleships.Domain.PlayRules;
+    using Battleships.Domain.Resources;
     using System;
     using System.Threading;
 
@@ -14,8 +15,8 @@
             IPlayRule playRule,
             Action<string> printMessage)
         {
-            _playRule = playRule;
-            _printMessage = printMessage;
+            _playRule = playRule ?? throw new ArgumentNullException(nameof(playRule));
+            _printMessage = printMessage ?? throw new ArgumentNullException(nameof(printMessage));
         }
 
         public void StartGame(
@@ -50,11 +51,10 @@
             var attackerPoint = attacker.CallOutPointOnTargetingGrid();
             var defenderAnswer = defender.AnswerToAttacker(attackerPoint);
             attacker.SetDefenderAnswer(attackerPoint, defenderAnswer);
-            var endGame = defender.AllShipsSunk();
-
+            
             defender.PrintOceanGrid();
 
-            if (endGame)
+            if (defender.AllShipsSunk())
             {
                 _printMessage(string.Format(Resource.GameEnded, attacker.PlayerName));
                 return;

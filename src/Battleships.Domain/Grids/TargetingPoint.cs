@@ -2,6 +2,7 @@
 {
     using Battleships.Domain.Extensions;
     using Battleships.Domain.Players;
+    using System;
 
     public class TargetingPoint
     {
@@ -43,5 +44,24 @@
             (answer.Reply == Reply.Sunk)
                 .IfTrue(() => _isSunk = true);
         }
+
+        public override bool Equals(object? obj)
+        {
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
+                return false;
+
+            var otherTargetingPoint = (TargetingPoint)obj;
+            return _isHit == otherTargetingPoint._isHit &&
+                _isSunk == otherTargetingPoint._isSunk &&
+                _isCalledOut == otherTargetingPoint._isCalledOut &&
+                _shipLength == otherTargetingPoint._shipLength;
+        }
+
+        public override int GetHashCode()
+            => HashCode.Combine(
+                _isHit.GetHashCode(),
+                _isSunk.GetHashCode(),
+                _isCalledOut.GetHashCode(),
+                _shipLength.GetHashCode());
     }
 }

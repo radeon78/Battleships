@@ -59,10 +59,9 @@
             {
                 var row = new string[grid.Size + 1];
                 row[0] = i.ToDisplayRow();
+                
                 for (var j = 0; j < grid.Size; j++)
-                {
                     row[j + 1] = getPointStatus(j, i);
-                }
 
                 table.AddRow(row);
             }

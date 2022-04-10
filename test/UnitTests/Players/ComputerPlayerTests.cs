@@ -10,6 +10,27 @@
     public class ComputerPlayerTests
     {
         [Fact]
+        public void ShouldThrowWhenPlayerNameIsNull()
+        {
+            // act
+
+            Action action = () => _ = new ComputerPlayer(null);
+
+            // assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ShouldThrowWhenPlayerNameIsEmpty()
+        {
+            // act
+            Action action = () => _ = new ComputerPlayer(string.Empty);
+
+            // assert
+            action.Should().ThrowExactly<ArgumentNullException>();
+        }
+
+        [Fact]
         public void ShouldApplyGameRule()
         {
             // arrange
@@ -89,6 +110,32 @@
             point.Column.Should().BeLessThanOrEqualTo(9);
             point.Row.Should().BeGreaterThanOrEqualTo(0);
             point.Row.Should().BeLessThanOrEqualTo(9);
+        }
+
+        [Fact]
+        public void ShouldPrintOceanGrid()
+        {
+            // arrange
+            var player = new ComputerPlayer("computer");
+
+            // act
+            Action action = () => player.PrintOceanGrid();
+
+            // assert
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void ShouldPrintTargetingGrid()
+        {
+            // arrange
+            var player = new ComputerPlayer("computer");
+
+            // act
+            Action action = () => player.PrintTargetingGrind();
+
+            // assert
+            action.Should().NotThrow();
         }
     }
 }

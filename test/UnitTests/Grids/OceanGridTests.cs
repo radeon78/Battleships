@@ -78,13 +78,13 @@
             var playRuleWithOneShip = new List<int> { battleship.Length };
             var playRuleWithTwoTheSameShips = new List<int> { battleship.Length, battleship.Length };
             var playRuleWithTwoDifferentShips = new List<int> { battleship.Length, 2 };
-            
+
             // act
             var placeShipResult = oceanGrid.TryPlaceShip(battleshipStartPoint, battleship);
 
             var tryHitForMissPointResult1 = oceanGrid.TryHit(missPoint1);
             var tryHitForMissPointResult2 = oceanGrid.TryHit(missPoint2);
-            
+
             var tryHitForHitPointResult1 = oceanGrid.TryHit(hitPoint1);
             var tryHitForHitPointResult2 = oceanGrid.TryHit(hitPoint2);
             var tryHitForHitPointResult3 = oceanGrid.TryHit(hitPoint3);
@@ -94,7 +94,7 @@
             var isAllShipsSunkWhenLastHit = oceanGrid.AllShipsSunk(playRuleWithOneShip);
             var isAllShipsSunkForTwoTheSameShips = oceanGrid.AllShipsSunk(playRuleWithTwoTheSameShips);
             var isAllShipsSunkForTwoDifferentShips = oceanGrid.AllShipsSunk(playRuleWithTwoDifferentShips);
-            
+
             // assert
             placeShipResult.Should().NotBeNull();
             placeShipResult.IsSuccess.Should().BeTrue();
@@ -132,6 +132,90 @@
             isAllShipsSunkWhenLastHit.Should().BeTrue();
             isAllShipsSunkForTwoTheSameShips.Should().BeFalse();
             isAllShipsSunkForTwoDifferentShips.Should().BeFalse();
+        }
+
+        [Fact]
+        public void ShouldCloneOceanGrid()
+        {
+            // arrange
+            var oceanGrid = new OceanGrid();
+            oceanGrid.TryPlaceShip(new StartPoint(new Point(2, 2), Direction.Horizontal), new Ship(1));
+            oceanGrid.TryHit(new Point(2, 2));
+
+            var clonedOceanGrid = new OceanGrid(oceanGrid);
+
+            // act
+            var result = oceanGrid.Equals(clonedOceanGrid);
+
+            // asert
+            result.Should().BeTrue();
+            oceanGrid.GetHashCode().Should().Be(clonedOceanGrid.GetHashCode());
+        }
+
+        [Fact]
+        public void ShouldCompareTheSameOceanGrids()
+        {
+            // arrange
+            var oceanGrid1 = new OceanGrid();
+            oceanGrid1.TryPlaceShip(new StartPoint(new Point(2, 2), Direction.Horizontal), new Ship(2));
+            var oceanGrid2 = new OceanGrid();
+            oceanGrid2.TryPlaceShip(new StartPoint(new Point(2, 2), Direction.Horizontal), new Ship(2));
+
+            // act
+            var result = oceanGrid1.Equals(oceanGrid2);
+
+            // asert
+            result.Should().BeTrue();
+            oceanGrid1.GetHashCode().Should().Be(oceanGrid2.GetHashCode());
+        }
+
+        [Fact]
+        public void ShouldCompareDifferentOceanGridsWithDifferentPlaceShip()
+        {
+            // arrange
+            var oceanGrid1 = new OceanGrid();
+            oceanGrid1.TryPlaceShip(new StartPoint(new Point(2, 2), Direction.Horizontal), new Ship(2));
+            var oceanGrid2 = new OceanGrid();
+            oceanGrid2.TryPlaceShip(new StartPoint(new Point(3, 2), Direction.Horizontal), new Ship(2));
+
+            // act
+            var result = oceanGrid1.Equals(oceanGrid2);
+
+            // asert
+            result.Should().BeFalse();
+            oceanGrid1.GetHashCode().Should().NotBe(oceanGrid2.GetHashCode());
+        }
+
+        [Fact]
+        public void ShouldCompareDifferentOceanGridsWithDifferentSunkShip()
+        {
+            // arrange
+            var oceanGrid1 = new OceanGrid();
+            oceanGrid1.TryPlaceShip(new StartPoint(new Point(2, 2), Direction.Horizontal), new Ship(1));
+            oceanGrid1.TryHit(new Point(2, 2));
+
+            var oceanGrid2 = new OceanGrid();
+            oceanGrid2.TryPlaceShip(new StartPoint(new Point(2, 2), Direction.Horizontal), new Ship(1));
+
+            // act
+            var result = oceanGrid1.Equals(oceanGrid2);
+
+            // asert
+            result.Should().BeFalse();
+            oceanGrid1.GetHashCode().Should().NotBe(oceanGrid2.GetHashCode());
+        }
+
+        [Fact]
+        public void ShouldCompareOceanGridWithNull()
+        {
+            // arrange
+            var oceanGrid1 = new OceanGrid();
+
+            // act
+            var result = oceanGrid1.Equals(null);
+
+            // asert
+            result.Should().BeFalse();
         }
     }
 }

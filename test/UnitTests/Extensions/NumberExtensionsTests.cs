@@ -17,10 +17,30 @@
         [InlineData(7, 'H')]
         [InlineData(8, 'I')]
         [InlineData(9, 'J')]
-        public void ShoulDisplayColumnAsText(int columnNumber, char expectedText)
+        public void ShouldDisplayColumnAsChar(int columnNumber, char expectedText)
         { 
             // act
             var columnChar = columnNumber.ToDisplayColumn();
+
+            // assert
+            columnChar.Should().Be(expectedText);
+        }
+
+        [Theory]
+        [InlineData(0, "A")]
+        [InlineData(1, "B")]
+        [InlineData(2, "C")]
+        [InlineData(3, "D")]
+        [InlineData(4, "E")]
+        [InlineData(5, "F")]
+        [InlineData(6, "G")]
+        [InlineData(7, "H")]
+        [InlineData(8, "I")]
+        [InlineData(9, "J")]
+        public void ShouldDisplayColumnAsString(int columnNumber, string expectedText)
+        {
+            // act
+            var columnChar = columnNumber.ToDisplayColumnAsString();
 
             // assert
             columnChar.Should().Be(expectedText);
@@ -37,7 +57,7 @@
         [InlineData(7, "8")]
         [InlineData(8, "9")]
         [InlineData(9, "10")]
-        public void ShoulDisplayRowAsText(int rowNumber, string expectedText)
+        public void ShouldDisplayRowAsText(int rowNumber, string expectedText)
         {
             // act
             var columnChar = rowNumber.ToDisplayRow();

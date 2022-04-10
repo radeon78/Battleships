@@ -2,6 +2,7 @@
 {
     using Battleships.Domain.Players;
     using Battleships.Domain.Ships;
+    using System;
 
     public class OceanPoint
     {
@@ -50,5 +51,19 @@
             _ship = ship;
             _isFillOut = true;
         }
+
+        public override bool Equals(object? obj)
+        {
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
+                return false;
+
+            var otherOceanPoint = (OceanPoint)obj;
+            return _isFillOut == otherOceanPoint._isFillOut &&
+                _isHit == otherOceanPoint._isHit &&
+                _ship.Equals(otherOceanPoint._ship);
+        }
+
+        public override int GetHashCode() 
+            => HashCode.Combine(_isFillOut.GetHashCode(), _isHit.GetHashCode(), _ship.GetHashCode());
     }
 }
