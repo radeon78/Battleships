@@ -6,42 +6,42 @@
 
     public class OceanPoint
     {
-        private bool _isFillOut;
-        private bool _isHit;
+        private bool _fillOut;
+        private bool _hit;
         private Ship _ship;
 
         public OceanPoint()
         {
-            _isHit = false;
-            _isFillOut = false;
+            _hit = false;
+            _fillOut = false;
             _ship = Ship.CreateEmptyShip();
         }
 
         public OceanPoint(OceanPoint oceanPoint)
         {
-            _isFillOut = oceanPoint._isFillOut;
-            _isHit = oceanPoint._isHit;
+            _fillOut = oceanPoint._fillOut;
+            _hit = oceanPoint._hit;
             _ship = new Ship(oceanPoint._ship);
         }
 
-        public bool NotFillOut() => !_isFillOut;
+        public bool NotFillOut() => !_fillOut;
 
-        public bool FillOut() => _isFillOut;
+        public bool FillOut() => _fillOut;
 
-        public bool Hit() => _isHit;
+        public bool Hit() => _hit;
 
         public Answer TryHit()
         {
             if (NotFillOut())
                 return Answer.CreateMissAnswer();
 
-            if (!_isHit)
+            if (!_hit)
             {
                 _ship.Hit();
-                _isHit = true;
+                _hit = true;
             }
 
-            return _ship.IsSunk()
+            return _ship.Sunk()
                 ? new Answer(_ship.Length, Reply.Sunk)
                 : new Answer(_ship.Length, Reply.Hit);
         }
@@ -49,7 +49,7 @@
         public void Put(Ship ship)
         {
             _ship = ship;
-            _isFillOut = true;
+            _fillOut = true;
         }
 
         public override bool Equals(object? obj)
@@ -58,12 +58,12 @@
                 return false;
 
             var otherOceanPoint = (OceanPoint)obj;
-            return _isFillOut == otherOceanPoint._isFillOut &&
-                _isHit == otherOceanPoint._isHit &&
+            return _fillOut == otherOceanPoint._fillOut &&
+                _hit == otherOceanPoint._hit &&
                 _ship.Equals(otherOceanPoint._ship);
         }
 
         public override int GetHashCode() 
-            => HashCode.Combine(_isFillOut.GetHashCode(), _isHit.GetHashCode(), _ship.GetHashCode());
+            => HashCode.Combine(_fillOut.GetHashCode(), _hit.GetHashCode(), _ship.GetHashCode());
     }
 }

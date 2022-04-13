@@ -6,43 +6,43 @@
 
     public class TargetingPoint
     {
-        private bool _isHit;
-        private bool _isSunk;
-        private bool _isCalledOut;
+        private bool _hit;
+        private bool _sunk;
+        private bool _calledOut;
         private int _shipLength;
 
         public TargetingPoint()
         {
-            _isHit = false;
-            _isCalledOut = false;
+            _hit = false;
+            _calledOut = false;
             _shipLength = 0;
         }
 
         public TargetingPoint(TargetingPoint targetingPoint)
         {
-            _isHit = targetingPoint._isHit;
-            _isCalledOut = targetingPoint._isCalledOut;
+            _hit = targetingPoint._hit;
+            _calledOut = targetingPoint._calledOut;
             _shipLength = targetingPoint._shipLength;
-            _isSunk = targetingPoint._isSunk;
+            _sunk = targetingPoint._sunk;
         }
 
-        public bool Hit() => _isHit;
+        public bool Hit() => _hit;
 
         public string DisplayShipLength() => _shipLength.ToString();
 
-        public bool Miss() => _isCalledOut && !_isHit;
+        public bool Miss() => _calledOut && !_hit;
 
         public void SetAnswer(Answer answer)
         {
-            _isCalledOut = true;
+            _calledOut = true;
 
             if (answer.Reply == Reply.Miss) return;
 
-            _isHit = true;
+            _hit = true;
             _shipLength = answer.ShipLength;
 
             (answer.Reply == Reply.Sunk)
-                .IfTrue(() => _isSunk = true);
+                .IfTrue(() => _sunk = true);
         }
 
         public override bool Equals(object? obj)
@@ -51,17 +51,17 @@
                 return false;
 
             var otherTargetingPoint = (TargetingPoint)obj;
-            return _isHit == otherTargetingPoint._isHit &&
-                _isSunk == otherTargetingPoint._isSunk &&
-                _isCalledOut == otherTargetingPoint._isCalledOut &&
+            return _hit == otherTargetingPoint._hit &&
+                _sunk == otherTargetingPoint._sunk &&
+                _calledOut == otherTargetingPoint._calledOut &&
                 _shipLength == otherTargetingPoint._shipLength;
         }
 
         public override int GetHashCode()
             => HashCode.Combine(
-                _isHit.GetHashCode(),
-                _isSunk.GetHashCode(),
-                _isCalledOut.GetHashCode(),
+                _hit.GetHashCode(),
+                _sunk.GetHashCode(),
+                _calledOut.GetHashCode(),
                 _shipLength.GetHashCode());
     }
 }

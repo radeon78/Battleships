@@ -36,7 +36,7 @@
             else throw new ArgumentOutOfRangeException(string.Format(Resource.ErrorToManyHitsOnShip, this));
         }
 
-        public bool IsSunk() => _hits == Length;
+        public bool Sunk() => _hits == Length;
 
         public override string ToString() => $"{Length} length ship";
 
