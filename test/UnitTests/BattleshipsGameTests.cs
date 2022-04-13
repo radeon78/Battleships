@@ -3,7 +3,6 @@
     using Battleships.Domain;
     using Battleships.Domain.Grids;
     using Battleships.Domain.Players;
-    using Battleships.Domain.PlayRules;
     using FluentAssertions;
     using Moq;
     using System;
@@ -27,7 +26,7 @@
         public void ShouldThrowWhenPrintMessageIsNull()
         {
             // act
-            Action action = () => _ = new BattleshipsGame(new FakeOneShipPlayRule(), null);
+            Action action = () => _ = new BattleshipsGame(new FakeOneShipGameRule(), null);
 
             // assert
             action.Should().ThrowExactly<ArgumentNullException>();
@@ -37,7 +36,7 @@
         public void ShouldNotThrow()
         {
             // act
-            Action action = () => _ = new BattleshipsGame(new FakeOneShipPlayRule(), (message) => { });
+            Action action = () => _ = new BattleshipsGame(new FakeOneShipGameRule(), (message) => { });
 
             // assert
             action.Should().NotThrow();
@@ -50,7 +49,7 @@
             var token = CancellationToken.None;
 
             var firstPlayerMock = new Mock<IPlayer>();
-            firstPlayerMock.Setup(x => x.ApplyGameRule(It.IsAny<IPlayRule>()));
+            firstPlayerMock.Setup(x => x.ApplyGameRule(It.IsAny<IGameRule>()));
             firstPlayerMock.Setup(x => x.PlaceShipsOnOceanGrid(token));
             firstPlayerMock.Setup(x => x.PrintOceanGrid());
             firstPlayerMock.Setup(x => x.PrintTargetingGrind());
@@ -61,7 +60,7 @@
             firstPlayerMock.Setup(x => x.PlayerName).Returns("player1");
 
             var secondPlayerMock = new Mock<IPlayer>();
-            secondPlayerMock.Setup(x => x.ApplyGameRule(It.IsAny<IPlayRule>()));
+            secondPlayerMock.Setup(x => x.ApplyGameRule(It.IsAny<IGameRule>()));
             secondPlayerMock.Setup(x => x.PlaceShipsOnOceanGrid(token));
             secondPlayerMock.Setup(x => x.PrintOceanGrid());
             secondPlayerMock.Setup(x => x.PrintTargetingGrind());
@@ -72,19 +71,19 @@
             secondPlayerMock.Setup(x => x.PlayerName).Returns("player2");
 
             var printMessageNumberCalls = 0;
-            var game = new BattleshipsGame(new FakeOneShipPlayRule(), printMessage);
+            var game = new BattleshipsGame(new FakeOneShipGameRule(), printMessage);
 
             // act
-            game.StartGame(firstPlayerMock.Object, secondPlayerMock.Object, token);
+            game.Start(firstPlayerMock.Object, secondPlayerMock.Object, token);
 
             // assert
-            printMessageNumberCalls.Should().Be(4);
+            printMessageNumberCalls.Should().Be(5);
 
             void printMessage(string message)
             {
                 printMessageNumberCalls++;
 
-                if (printMessageNumberCalls == 4)
+                if (printMessageNumberCalls == 5)
                     message.Should().Be("Game ended. player1 won.");
             }
 

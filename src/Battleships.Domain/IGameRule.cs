@@ -1,12 +1,12 @@
-﻿namespace Battleships.Domain.PlayRules
+﻿namespace Battleships.Domain
 {
     using Battleships.Domain.Ships;
     using System.Collections.Generic;
 
-    public interface IPlayRule
+    public interface IGameRule
     {
         public IReadOnlyCollection<Ship> GetAllowedShips();
 
-        public string GetPlayRuleDescription();
+        public string GetGameRuleDescription();
     }
 }

@@ -5,6 +5,7 @@
     using Battleships.Domain.Ships;
     using FluentAssertions;
     using System.Collections.Generic;
+    using UnitTests.Fakes;
     using Xunit;
 
     public class OceanGridTests
@@ -29,9 +30,9 @@
             // arrange
             var oceanGrid = new OceanGrid();
 
-            var battleship = Ship.CreateBattleship();
+            var battleship = FakeShipFactory.CreateBattleship();
             var battleshipStartPoint = new StartPoint(new Point(battleshipColumn, battleshipRow), battleshipDirection);
-            var destroyer = Ship.CreateDestroyer();
+            var destroyer = FakeShipFactory.CreateDestroyer();
             var destroyerStartPoint = new StartPoint(new Point(destroyerColumn, destroyerRow), destroyerDirection);
 
             // act
@@ -72,7 +73,7 @@
             var missPoint2 = new Point(7, 6);
 
             var oceanGrid = new OceanGrid();
-            var battleship = Ship.CreateBattleship();
+            var battleship = FakeShipFactory.CreateBattleship();
             var battleshipStartPoint = new StartPoint(new Point(2, 6), Direction.Horizontal);
 
             var playRuleWithOneShip = new List<int> { battleship.Length };

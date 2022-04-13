@@ -22,7 +22,7 @@ namespace Battleships.Domain.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resource {
+    internal class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Battleships.Domain.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Battleships.Domain.Resources.Resource", typeof(Resource).Assembly);
@@ -51,7 +51,7 @@ namespace Battleships.Domain.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Battleships.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to {0}, call out a position on your targeting grid..
         /// </summary>
-        public static string CallOutPositionOnTargetingGrid {
+        internal static string CallOutPositionOnTargetingGrid {
             get {
                 return ResourceManager.GetString("CallOutPositionOnTargetingGrid", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Battleships.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Field must be beetwen {0} and {1}..
         /// </summary>
-        public static string ErrorFieldMustBeBetween {
+        internal static string ErrorFieldMustBeBetween {
             get {
                 return ResourceManager.GetString("ErrorFieldMustBeBetween", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Battleships.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to You will have to try choose different starting point or direction for {0}. {1}.
         /// </summary>
-        public static string ErrorGetNextPoint {
+        internal static string ErrorGetNextPoint {
             get {
                 return ResourceManager.GetString("ErrorGetNextPoint", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Battleships.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The next point {0} is off the grid..
         /// </summary>
-        public static string ErrorNextPointIsOffGrid {
+        internal static string ErrorNextPointIsOffGrid {
             get {
                 return ResourceManager.GetString("ErrorNextPointIsOffGrid", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Battleships.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The point {0} is off the grid..
         /// </summary>
-        public static string ErrorPointIsOffGrid {
+        internal static string ErrorPointIsOffGrid {
             get {
                 return ResourceManager.GetString("ErrorPointIsOffGrid", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Battleships.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to You will have to try choose different starting point or direction for {0}. The point {1} is already selected or next to a different ship..
         /// </summary>
-        public static string ErrorSelectPoint {
+        internal static string ErrorSelectPoint {
             get {
                 return ResourceManager.GetString("ErrorSelectPoint", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Battleships.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to You will have to try choose different starting point or direction for {0}. The point {1} is not allowed..
         /// </summary>
-        public static string ErrorStartingPoint {
+        internal static string ErrorStartingPoint {
             get {
                 return ResourceManager.GetString("ErrorStartingPoint", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Battleships.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to To many hits on ship {0}..
         /// </summary>
-        public static string ErrorToManyHitsOnShip {
+        internal static string ErrorToManyHitsOnShip {
             get {
                 return ResourceManager.GetString("ErrorToManyHitsOnShip", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Battleships.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Game ended. {0} won..
         /// </summary>
-        public static string GameEnded {
+        internal static string GameEnded {
             get {
                 return ResourceManager.GetString("GameEnded", resourceCulture);
             }
@@ -144,25 +144,25 @@ namespace Battleships.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to {0}, place the {1} on the ocean grid. Choose starting point and direction horizontal or vertical..
         /// </summary>
-        public static string PlaceShipMessage {
+        internal static string PlaceShipMessage {
             get {
                 return ResourceManager.GetString("PlaceShipMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There will be {0} ships in the game that you will have to sink. If you want to quit the game just press &apos;q&apos;..
+        ///   Looks up a localized string similar to If you want to quit the game just press &apos;q&apos;..
         /// </summary>
-        public static string PlayRuleDescription {
+        internal static string QuitTheGame {
             get {
-                return ResourceManager.GetString("PlayRuleDescription", resourceCulture);
+                return ResourceManager.GetString("QuitTheGame", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Well done. All ships are on the grid. Let&apos;s start the game..
         /// </summary>
-        public static string ShipsOnGrid {
+        internal static string ShipsOnGrid {
             get {
                 return ResourceManager.GetString("ShipsOnGrid", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Battleships.Domain.Resources {
         /// <summary>
         ///   Looks up a localized string similar to You are welcome in the Battleships Game..
         /// </summary>
-        public static string WelcomeGame {
+        internal static string WelcomeGame {
             get {
                 return ResourceManager.GetString("WelcomeGame", resourceCulture);
             }

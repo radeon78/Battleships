@@ -52,9 +52,5 @@
         public override int GetHashCode() => HashCode.Combine(_hits, Length);
 
         public static Ship CreateEmptyShip() => new();
-
-        public static Ship CreateBattleship() => new(5);
-
-        public static Ship CreateDestroyer() => new(4);
     }
 }

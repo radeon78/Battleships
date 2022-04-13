@@ -1,25 +1,24 @@
 ﻿namespace Battleships.UI
 {
     using Battleships.Domain;
-    using Battleships.Domain.PlayRules;
     using System;
     using System.Threading;
 
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var tokenSource = new CancellationTokenSource();
             var token = tokenSource.Token;
 
             var game = new BattleshipsGame(
-                new ThreeShipsPlayRule(),
-                (message) => Console.WriteLine($"\n{message}"));
+                gameRule: new ThreeShipsGameRule(),
+                printMessage: (message) => Console.WriteLine($"\n{message}"));
 
-            game.StartGame(
-                PlayerFactory.CreateHumanPlayer(tokenSource),
-                PlayerFactory.CreateComputerPlayer(),
-                token);
+            game.Start(
+                firstPlayer: PlayerFactory.CreateHumanPlayer(tokenSource),
+                secondPlayer: PlayerFactory.CreateComputerPlayer(),
+                cancellationToken: token);
         }
     }
 }

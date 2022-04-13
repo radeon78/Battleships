@@ -6,15 +6,16 @@
 
     public static class PlayerFactory
     {
-        public static IPlayer CreateComputerPlayer() => new ComputerPlayer("Computer");
+        public static IPlayer CreateComputerPlayer() 
+            => new ComputerPlayer(playerName: "Computer");
 
         public static IPlayer CreateHumanPlayer(CancellationTokenSource tokenSource)
             => new HumanPlayer(
-                CommonUserInterface.GetHumanPlayerName(tokenSource),
-                (message) => OceanGridUserInterface.GetPlaceShipStartPoint(message, tokenSource),
-                (playerName, oceanGrid) => OceanGridUserInterface.PrintOceanGrid(playerName, oceanGrid),
-                (message) => TargetingGridUserInterface.CallOutPointOnTargetingGrid(message, tokenSource),
-                (playerName, targetingGrid) => TargetingGridUserInterface.PrintTargetingGrid(playerName, targetingGrid),
-                (message) => CommonUserInterface.PrintErrorMessage(message));
+                playerName: CommonUserInterface.GetHumanPlayerName(tokenSource),
+                getPlaceShipStartPoint: (message) => OceanGridUserInterface.GetPlaceShipStartPoint(message, tokenSource),
+                printOceanGrid: (playerName, oceanGrid) => OceanGridUserInterface.PrintOceanGrid(playerName, oceanGrid),
+                callOutPointOnTargetingGrid: (message) => TargetingGridUserInterface.CallOutPointOnTargetingGrid(message, tokenSource),
+                printTargetingGrid: (playerName, targetingGrid) => TargetingGridUserInterface.PrintTargetingGrid(playerName, targetingGrid),
+                printErrorMessage: (message) => CommonUserInterface.PrintErrorMessage(message));
     }
 }

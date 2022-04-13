@@ -1,7 +1,7 @@
 ﻿namespace Battleships.Domain.Players
 {
+    using Battleships.Domain;
     using Battleships.Domain.Grids;
-    using Battleships.Domain.PlayRules;
     using Battleships.Domain.Ships;
     using System;
     using System.Collections.Generic;
@@ -28,8 +28,8 @@
 
         public string PlayerName => _playerName;
 
-        public void ApplyGameRule(IPlayRule playRule)
-            => _allowedShips = playRule.GetAllowedShips();
+        public void ApplyGameRule(IGameRule gameRule)
+            => _allowedShips = gameRule.GetAllowedShips();
 
         public abstract void PlaceShipsOnOceanGrid(CancellationToken cancellationToken);
 

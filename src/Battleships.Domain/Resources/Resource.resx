@@ -147,8 +147,8 @@
   <data name="PlaceShipMessage" xml:space="preserve">
     <value>{0}, place the {1} on the ocean grid. Choose starting point and direction horizontal or vertical.</value>
   </data>
-  <data name="PlayRuleDescription" xml:space="preserve">
-    <value>There will be {0} ships in the game that you will have to sink. If you want to quit the game just press 'q'.</value>
+  <data name="QuitTheGame" xml:space="preserve">
+    <value>If you want to quit the game just press 'q'.</value>
   </data>
   <data name="ShipsOnGrid" xml:space="preserve">
     <value>Well done. All ships are on the grid. Let's start the game.</value>

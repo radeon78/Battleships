@@ -1,10 +1,10 @@
 ﻿namespace UnitTests.Players
 {
     using Battleships.Domain.Players;
-    using Battleships.Domain.PlayRules;
     using FluentAssertions;
     using System;
     using System.Threading;
+    using UnitTests.Fakes;
     using Xunit;
 
     public class ComputerPlayerTests
@@ -35,7 +35,7 @@
         {
             // arrange
             var playerName = "computer";
-            var rule = new ThreeShipsPlayRule();
+            var rule = new FakeThreeShipsGameRule();
             var player = new ComputerPlayer(playerName);
 
             // act
@@ -50,7 +50,7 @@
         public void ShouldPlaceShipsOnGrid()
         {
             // arrange
-            var rule = new ThreeShipsPlayRule();
+            var rule = new FakeThreeShipsGameRule();
             var player = new ComputerPlayer("computer");
             player.ApplyGameRule(rule);
 
@@ -65,7 +65,7 @@
         public void ShouldCancelPlaceShipsOnGrid()
         {
             // arrange
-            var rule = new ThreeShipsPlayRule();
+            var rule = new FakeThreeShipsGameRule();
             var player = new ComputerPlayer("computer");
             player.ApplyGameRule(rule);
 

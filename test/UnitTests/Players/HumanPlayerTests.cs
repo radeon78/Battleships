@@ -2,7 +2,6 @@
 {
     using Battleships.Domain.Grids;
     using Battleships.Domain.Players;
-    using Battleships.Domain.PlayRules;
     using FluentAssertions;
     using System;
     using System.Threading;
@@ -22,7 +21,7 @@
             var printErrorMessageNumberCalls = 0;
             var playerName = "humanPlayer";
 
-            var rule = new ThreeShipsPlayRule();
+            var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 playerName,
                 getPlaceShipStartPoint,
@@ -70,7 +69,7 @@
             var printTargetingGridNumberCalls = 0;
             var printErrorMessageNumberCalls = 0;
 
-            var rule = new ThreeShipsPlayRule();
+            var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
                 getPlaceShipStartPoint,
@@ -123,7 +122,7 @@
             var printTargetingGridNumberCalls = 0;
             var printErrorMessageNumberCalls = 0;
 
-            var rule = new ThreeShipsPlayRule();
+            var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
                 getPlaceShipStartPoint,
@@ -174,7 +173,7 @@
             var printTargetingGridNumberCalls = 0;
             var printErrorMessageNumberCalls = 0;
 
-            var rule = new ThreeShipsPlayRule();
+            var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
                 getPlaceShipStartPoint,
@@ -226,7 +225,7 @@
             var printTargetingGridNumberCalls = 0;
             var printErrorMessageNumberCalls = 0;
 
-            var rule = new ThreeShipsPlayRule();
+            var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
                 getPlaceShipStartPoint,
@@ -275,7 +274,7 @@
             var printTargetingGridNumberCalls = 0;
             var printErrorMessageNumberCalls = 0;
 
-            var rule = new ThreeShipsPlayRule();
+            var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
                 getPlaceShipStartPoint,
@@ -325,7 +324,7 @@
             var printTargetingGridNumberCalls = 0;
             var printErrorMessageNumberCalls = 0;
 
-            var rule = new ThreeShipsPlayRule();
+            var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
                 getPlaceShipStartPoint,
@@ -404,7 +403,7 @@
             var printTargetingGridNumberCalls = 0;
             var printErrorMessageNumberCalls = 0;
 
-            var rule = new FakeTwoShipsPlayRule();
+            var rule = new FakeTwoShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
                 getPlaceShipStartPoint,
@@ -461,7 +460,7 @@
             var printTargetingGridNumberCalls = 0;
             var printErrorMessageNumberCalls = 0;
 
-            var rule = new FakeOneShipPlayRule();
+            var rule = new FakeOneShipGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
                 getPlaceShipStartPoint,
@@ -638,7 +637,7 @@
         public void ShouldSetDefenderAnswer(int defenderAnswershipLength, Reply defenderAnswersReply, bool expectedHit, bool expectedMiss)
         {
             // arrange
-            var rule = new FakeOneShipPlayRule();
+            var rule = new FakeOneShipGameRule();
             var attackerPoint = callOutPointOnTargetingGrid("message");
             var startPoint = getPlaceShipStartPoint("message");
 
@@ -683,7 +682,7 @@
         public void ShouldSunkAllShips()
         {
             // arrange
-            var rule = new FakeOneShipPlayRule();
+            var rule = new FakeOneShipGameRule();
             var defender = new HumanPlayer(
                 "humanPlayer",
                 getPlaceShipStartPoint,
