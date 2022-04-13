@@ -6,10 +6,10 @@
 
     public static class PlayerFactory
     {
-        public static IPlayer CreateComputerPlayer() 
-            => new ComputerPlayer(playerName: "Computer");
+        public static Player CreateComputerPlayer(string computerName) 
+            => new ComputerPlayer(playerName: computerName);
 
-        public static IPlayer CreateHumanPlayer(CancellationTokenSource tokenSource)
+        public static Player CreateHumanPlayer(CancellationTokenSource tokenSource)
             => new HumanPlayer(
                 playerName: CommonUserInterface.GetHumanPlayerName(tokenSource),
                 getPlaceShipStartPoint: (message) => OceanGridUserInterface.GetPlaceShipStartPoint(message, tokenSource),

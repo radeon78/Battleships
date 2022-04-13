@@ -2,10 +2,8 @@
 {
     using Battleships.Domain.Grids;
 
-    public interface IAttackerPlayer
+    public interface IAttackerPlayer : IBasePlayer
     {
-        string PlayerName { get; }
-
         Point CallOutPointOnTargetingGrid();
 
         void SetDefenderAnswer(Point attackerPoint, Answer answer);

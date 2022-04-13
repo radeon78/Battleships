@@ -48,7 +48,7 @@
             // arrange
             var token = CancellationToken.None;
 
-            var firstPlayerMock = new Mock<IPlayer>();
+            var firstPlayerMock = new Mock<Player>("player1");
             firstPlayerMock.Setup(x => x.ApplyGameRule(It.IsAny<IGameRule>()));
             firstPlayerMock.Setup(x => x.PlaceShipsOnOceanGrid(token));
             firstPlayerMock.Setup(x => x.PrintOceanGrid());
@@ -59,7 +59,7 @@
             firstPlayerMock.SetupSequence(x => x.AllShipsSunk()).Returns(false).Returns(true);
             firstPlayerMock.Setup(x => x.PlayerName).Returns("player1");
 
-            var secondPlayerMock = new Mock<IPlayer>();
+            var secondPlayerMock = new Mock<Player>("player2");
             secondPlayerMock.Setup(x => x.ApplyGameRule(It.IsAny<IGameRule>()));
             secondPlayerMock.Setup(x => x.PlaceShipsOnOceanGrid(token));
             secondPlayerMock.Setup(x => x.PrintOceanGrid());
@@ -77,13 +77,13 @@
             game.Start(firstPlayerMock.Object, secondPlayerMock.Object, token);
 
             // assert
-            printMessageNumberCalls.Should().Be(5);
+            printMessageNumberCalls.Should().Be(11);
 
             void printMessage(string message)
             {
                 printMessageNumberCalls++;
 
-                if (printMessageNumberCalls == 5)
+                if (printMessageNumberCalls == 11)
                     message.Should().Be("Game ended. player1 won.");
             }
 

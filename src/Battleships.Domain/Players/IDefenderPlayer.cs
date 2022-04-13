@@ -2,7 +2,7 @@
 {
     using Battleships.Domain.Grids;
 
-    public interface IDefenderPlayer
+    public interface IDefenderPlayer : IBasePlayer
     {
         Answer AnswerToAttacker(Point attackerPoint);
 

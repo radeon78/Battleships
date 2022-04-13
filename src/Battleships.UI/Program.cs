@@ -17,7 +17,7 @@
 
             game.Start(
                 firstPlayer: PlayerFactory.CreateHumanPlayer(tokenSource),
-                secondPlayer: PlayerFactory.CreateComputerPlayer(),
+                secondPlayer: PlayerFactory.CreateComputerPlayer("Computer"),
                 cancellationToken: token);
         }
     }

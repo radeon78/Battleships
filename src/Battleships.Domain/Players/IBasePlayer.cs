@@ -3,8 +3,10 @@
     using Battleships.Domain;
     using System.Threading;
 
-    public interface IPlayer : IAttackerPlayer, IDefenderPlayer
+    public interface IBasePlayer
     {
+        string PlayerName { get; }
+
         void ApplyGameRule(IGameRule gameRule);
 
         void PlaceShipsOnOceanGrid(CancellationToken cancellationToken);

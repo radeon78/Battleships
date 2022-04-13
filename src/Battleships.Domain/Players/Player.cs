@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Domain.Players
 {
     using Battleships.Domain;
+    using Battleships.Domain.Extensions;
     using Battleships.Domain.Grids;
     using Battleships.Domain.Ships;
     using System;
@@ -8,7 +9,7 @@
     using System.Linq;
     using System.Threading;
 
-    public abstract class Player : IPlayer
+    public abstract class Player : IAttackerPlayer, IDefenderPlayer
     {
         protected readonly string _playerName;
         protected OceanGrid _oceanGrid;
@@ -26,26 +27,51 @@
             _allowedShips = Array.Empty<Ship>();
         }
 
-        public string PlayerName => _playerName;
+        public virtual string PlayerName => _playerName;
 
-        public void ApplyGameRule(IGameRule gameRule)
+        public virtual void ApplyGameRule(IGameRule gameRule)
             => _allowedShips = gameRule.GetAllowedShips();
 
-        public abstract void PlaceShipsOnOceanGrid(CancellationToken cancellationToken);
+        public virtual void PlaceShipsOnOceanGrid(CancellationToken cancellationToken)
+        {
+            _allowedShips.ForEach(ship =>
+            {
+                StartPoint startPoint;
+                do
+                {
+                    if (cancellationToken.IsCancellationRequested) return;
+                    startPoint = GenerateRandomPlaceShipStartPoint();
+                }
+                while (_oceanGrid.TryPlaceShip(startPoint, ship).IsFailure);
+            }, cancellationToken);
+        }
 
         public abstract Point CallOutPointOnTargetingGrid();
 
-        public Answer AnswerToAttacker(Point attackerPoint)
+        public virtual Answer AnswerToAttacker(Point attackerPoint)
             => _oceanGrid.TryHit(attackerPoint);
 
-        public void SetDefenderAnswer(Point attackerPoint, Answer answer) =>
+        public virtual void SetDefenderAnswer(Point attackerPoint, Answer answer) =>
             _targetingGrid.SetAnswer(attackerPoint, answer);
 
-        public bool AllShipsSunk()
+        public virtual bool AllShipsSunk()
             => _oceanGrid.AllShipsSunk(_allowedShips.Select(s => s.Length));
 
         public abstract void PrintOceanGrid();
 
         public abstract void PrintTargetingGrind();
+
+        public StartPoint GenerateRandomPlaceShipStartPoint()
+        {
+            var random = new Random();
+
+            var point = new Point(
+                random.Next(0, _oceanGrid.Size),
+                random.Next(0, _oceanGrid.Size));
+
+            var direction = (Direction)random.Next(0, 1);
+
+            return new StartPoint(point, direction);
+        }
     }
 }

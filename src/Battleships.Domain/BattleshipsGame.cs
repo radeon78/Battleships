@@ -1,5 +1,6 @@
 ﻿namespace Battleships.Domain
 {
+    using Battleships.Domain.Extensions;
     using Battleships.Domain.Players;
     using Battleships.Domain.Resources;
     using System;
@@ -19,8 +20,8 @@
         }
 
         public void Start(
-            IPlayer firstPlayer,
-            IPlayer secondPlayer,
+            Player firstPlayer,
+            Player secondPlayer,
             CancellationToken cancellationToken)
         {
             firstPlayer.ApplyGameRule(_gameRule);
@@ -52,8 +53,12 @@
             var attackerPoint = attacker.CallOutPointOnTargetingGrid();
             var defenderAnswer = defender.AnswerToAttacker(attackerPoint);
             attacker.SetDefenderAnswer(attackerPoint, defenderAnswer);
-            
-            defender.PrintOceanGrid();
+
+            (defenderAnswer.Reply == Reply.Hit || defenderAnswer.Reply == Reply.Sunk)
+                .IfTrue(() => defender.PrintOceanGrid());
+
+            _printMessage($"{attacker.PlayerName} (attacker) called out {attackerPoint}");
+            _printMessage($"{defender.PlayerName} (defender) answered {defenderAnswer}");
 
             if (defender.AllShipsSunk())
             {
