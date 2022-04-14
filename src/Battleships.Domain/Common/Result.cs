@@ -1,40 +1,40 @@
 ﻿namespace Battleships.Domain.Common
 {
-    public class Result
+    internal class Result
     {
-        public Result()
+        internal Result()
         {
             IsSuccess = true;
             ErrorMessage = string.Empty;
         }
 
-        public Result(string errorMessage)
+        internal Result(string errorMessage)
         {
             IsSuccess = false;
             ErrorMessage = errorMessage;
         }
 
-        public bool IsSuccess { get; }
+        internal bool IsSuccess { get; }
 
-        public bool IsFailure => !IsSuccess;
+        internal bool IsFailure => !IsSuccess;
 
-        public string ErrorMessage { get; }
+        internal string ErrorMessage { get; }
 
-        public static Result Success() => new();
+        internal static Result Success() => new();
 
-        public static Result<T> Success<T>(T data) => new(data);
+        internal static Result<T> Success<T>(T data) => new(data);
 
-        public static Result Failure(string errorMessage) => new(errorMessage);
+        internal static Result Failure(string errorMessage) => new(errorMessage);
 
-        public static Result<T> Failure<T>(string errorMessage) => new(errorMessage);
+        internal static Result<T> Failure<T>(string errorMessage) => new(errorMessage);
     }
 
-    public class Result<T> : Result
+    internal class Result<T> : Result
     {
-        public Result(T data) => Data = data;
+        internal Result(T data) => Data = data;
 
-        public Result(string errorMessage) : base(errorMessage) => Data = default;
+        internal Result(string errorMessage) : base(errorMessage) => Data = default;
 
-        public T? Data { get; }
+        internal T? Data { get; }
     }
 }

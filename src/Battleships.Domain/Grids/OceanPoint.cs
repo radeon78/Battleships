@@ -10,14 +10,14 @@
         private bool _hit;
         private Ship _ship;
 
-        public OceanPoint()
+        internal OceanPoint()
         {
             _hit = false;
             _fillOut = false;
             _ship = Ship.CreateEmptyShip();
         }
 
-        public OceanPoint(OceanPoint oceanPoint)
+        internal OceanPoint(OceanPoint oceanPoint)
         {
             _fillOut = oceanPoint._fillOut;
             _hit = oceanPoint._hit;
@@ -30,7 +30,7 @@
 
         public bool Hit() => _hit;
 
-        public Answer TryHit()
+        internal Answer TryHit()
         {
             if (NotFillOut())
                 return Answer.CreateMissAnswer();
@@ -46,7 +46,7 @@
                 : new Answer(_ship.Length, Reply.Hit);
         }
 
-        public void Put(Ship ship)
+        internal void Put(Ship ship)
         {
             _ship = ship;
             _fillOut = true;

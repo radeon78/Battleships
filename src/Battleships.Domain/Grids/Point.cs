@@ -10,9 +10,9 @@
             Row = row;
         }
 
-        public int Column { get; }
+        internal int Column { get; }
 
-        public int Row { get; }
+        internal int Row { get; }
 
         public override string ToString()
             => $"{Column.ToDisplayColumn()}{Row.ToDisplayRow()}";

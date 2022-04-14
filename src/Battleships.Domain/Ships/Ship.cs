@@ -22,21 +22,21 @@
             Length = length;
         }
 
-        public Ship(Ship ship)
+        internal Ship(Ship ship)
         {
             _hits = ship._hits;
             Length = ship.Length;
         }
 
-        public int Length { get; } = 0;
+        internal int Length { get; } = 0;
 
-        public void Hit()
+        internal void Hit()
         {
             if (_hits < Length) _hits++;
             else throw new ArgumentOutOfRangeException(string.Format(Resource.ErrorToManyHitsOnShip, this));
         }
 
-        public bool Sunk() => _hits == Length;
+        internal bool Sunk() => _hits == Length;
 
         public override string ToString() => $"{Length} length ship";
 
@@ -51,6 +51,6 @@
 
         public override int GetHashCode() => HashCode.Combine(_hits, Length);
 
-        public static Ship CreateEmptyShip() => new();
+        internal static Ship CreateEmptyShip() => new();
     }
 }

@@ -8,8 +8,8 @@
             Direction = direction;
         }
 
-        public Point Point { get; }
+        internal Point Point { get; }
 
-        public Direction Direction { get; }
+        internal Direction Direction { get; }
     }
 }

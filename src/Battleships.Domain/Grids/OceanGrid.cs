@@ -13,7 +13,7 @@
     {
         private readonly List<int> _sunkShips;
 
-        public OceanGrid()
+        internal OceanGrid()
         {
             _sunkShips = new List<int>();
             OceanPoints = new OceanPoint[Size, Size];
@@ -25,7 +25,7 @@
             }
         }
 
-        public OceanGrid(OceanGrid oceanGrid)
+        internal OceanGrid(OceanGrid oceanGrid)
         {
             _sunkShips = oceanGrid._sunkShips.Select(x => x).ToList();
             OceanPoints = new OceanPoint[Size, Size];
@@ -39,7 +39,7 @@
 
         public OceanPoint[,] OceanPoints { get; }
 
-        public Result TryPlaceShip(StartPoint startPoint, Ship ship)
+        internal Result TryPlaceShip(StartPoint startPoint, Ship ship)
         {
             if (PointIsOutOfRange(startPoint.Point))
                 return Result.Failure(string.Format(Resource.ErrorStartingPoint, ship, startPoint.Point));
@@ -64,7 +64,7 @@
             return Result.Success();
         }
 
-        public Answer TryHit(Point point)
+        internal Answer TryHit(Point point)
         {
             var answer = OceanPoints[point.Column, point.Row].TryHit();
             (answer.Reply == Reply.Sunk).IfTrue(() => _sunkShips.Add(answer.ShipLength));
@@ -72,10 +72,10 @@
             return answer;
         }
 
-        public bool AllShipsSunk(IEnumerable<int> allowedShipsInPlayRule)
+        internal bool AllShipsSunk(IEnumerable<int> allowedShipsInPlayRule)
             => allowedShipsInPlayRule.Count() <= _sunkShips.Count && !allowedShipsInPlayRule.Except(_sunkShips).Any();
 
-        public bool PointIsOutOfRange(Point point)
+        internal bool PointIsOutOfRange(Point point)
         {
             return point.Column > Size - 1 ||
                 point.Column < 0 ||

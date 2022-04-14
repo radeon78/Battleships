@@ -11,14 +11,14 @@
         private bool _calledOut;
         private int _shipLength;
 
-        public TargetingPoint()
+        internal TargetingPoint()
         {
             _hit = false;
             _calledOut = false;
             _shipLength = 0;
         }
 
-        public TargetingPoint(TargetingPoint targetingPoint)
+        internal TargetingPoint(TargetingPoint targetingPoint)
         {
             _hit = targetingPoint._hit;
             _calledOut = targetingPoint._calledOut;
@@ -32,7 +32,7 @@
 
         public bool Miss() => _calledOut && !_hit;
 
-        public void SetAnswer(Answer answer)
+        internal void SetAnswer(Answer answer)
         {
             _calledOut = true;
 

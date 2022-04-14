@@ -2,17 +2,17 @@
 {
     public class Answer
     {
-        public Answer(int shipLength, Reply reply)
+        internal Answer(int shipLength, Reply reply)
         {
             ShipLength = shipLength;
             Reply = reply;
         }
 
-        public Reply Reply { get; }
+        internal Reply Reply { get; }
 
-        public int ShipLength { get; }
+        internal int ShipLength { get; }
 
-        public static Answer CreateMissAnswer()
+        internal static Answer CreateMissAnswer()
             => new(0, Reply.Miss);
 
         public override string ToString()

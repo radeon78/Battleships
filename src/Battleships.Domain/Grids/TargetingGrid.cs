@@ -5,7 +5,7 @@
 
     public class TargetingGrid : Grid
     {
-        public TargetingGrid()
+        internal TargetingGrid()
         {
             TargetingPoints = new TargetingPoint[Size, Size];
 
@@ -16,7 +16,7 @@
             }
         }
 
-        public TargetingGrid(TargetingGrid targetingGrid)
+        internal TargetingGrid(TargetingGrid targetingGrid)
         {
             TargetingPoints = new TargetingPoint[Size, Size];
 
@@ -29,7 +29,7 @@
 
         public TargetingPoint[,] TargetingPoints { get; }
 
-        public void SetAnswer(Point attackerPoint, Answer answer)
+        internal void SetAnswer(Point attackerPoint, Answer answer)
             => TargetingPoints[attackerPoint.Column, attackerPoint.Row].SetAnswer(answer);
 
         public override bool Equals(object? obj)
