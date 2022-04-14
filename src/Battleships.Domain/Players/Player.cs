@@ -57,9 +57,9 @@
         public virtual bool AllShipsSunk()
             => _oceanGrid.AllShipsSunk(_allowedShips.Select(s => s.Length));
 
-        public abstract void PrintOceanGrid();
+        public virtual void PrintOceanGrid() { }
 
-        public abstract void PrintTargetingGrind();
+        public virtual void PrintTargetingGrind() { }
 
         public StartPoint GenerateRandomPlaceShipStartPoint()
         {
