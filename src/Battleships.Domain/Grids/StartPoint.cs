@@ -11,5 +11,8 @@
         internal Point Point { get; }
 
         internal Direction Direction { get; }
+
+        public static StartPoint CreateEmptyStartPoint()
+            => new(Point.CreateEmptyPoint(), Direction.Horizontal);
     }
 }

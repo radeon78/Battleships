@@ -32,9 +32,9 @@
             _printMessage(Resource.QuitTheGame);
 
             firstPlayer.PlaceShipsOnOceanGrid(cancellationToken);
-            firstPlayer.PrintOceanGrid();
             secondPlayer.PlaceShipsOnOceanGrid(cancellationToken);
-            secondPlayer.PrintOceanGrid();
+
+            if (cancellationToken.IsCancellationRequested) return;
 
             _printMessage(Resource.ShipsOnGrid);
 
@@ -51,6 +51,8 @@
             attacker.PrintTargetingGrind();
 
             var attackerPoint = attacker.CallOutPointOnTargetingGrid();
+            if (cancellationToken.IsCancellationRequested) return;
+
             var defenderAnswer = defender.AnswerToAttacker(attackerPoint);
             attacker.SetDefenderAnswer(attackerPoint, defenderAnswer);
 

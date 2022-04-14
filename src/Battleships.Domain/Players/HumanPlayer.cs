@@ -37,10 +37,11 @@
                 Result result;
                 do
                 {
-                    if (cancellationToken.IsCancellationRequested) return;
-
                     var startPoint = _getPlaceShipStartPoint(string.Format(Resource.PlaceShipMessage, _playerName, ship));
                     result = _oceanGrid.TryPlaceShip(startPoint, ship);
+
+                    if (cancellationToken.IsCancellationRequested) return;
+
                     result.IsSuccess
                         .IfTrue(() => PrintOceanGrid())
                         .IfFalse(() => _printErrorMessage(result.ErrorMessage));

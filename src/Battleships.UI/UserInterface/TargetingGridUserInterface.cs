@@ -11,9 +11,15 @@
         {
             Console.WriteLine($"\n{message}");
             var column = CommonUserInterface.GetColumn(tokenSource);
+
+            if (tokenSource.IsCancellationRequested)
+                return Point.CreateEmptyPoint();
+
             var row = CommonUserInterface.GetRow(tokenSource);
 
-            return new Point(column, row);
+            return tokenSource.IsCancellationRequested
+                ? Point.CreateEmptyPoint()
+                : new Point(column, row);
         }
 
         public static void PrintTargetingGrid(string playerName, TargetingGrid targetingGrid)

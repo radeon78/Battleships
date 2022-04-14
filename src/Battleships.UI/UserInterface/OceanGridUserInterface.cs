@@ -11,10 +11,20 @@
         {
             Console.WriteLine($"\n{message}");
             var column = CommonUserInterface.GetColumn(tokenSource);
+            
+            if (tokenSource.IsCancellationRequested)
+                return StartPoint.CreateEmptyStartPoint();
+
             var row = CommonUserInterface.GetRow(tokenSource);
+            
+            if (tokenSource.IsCancellationRequested)
+                return StartPoint.CreateEmptyStartPoint();
+
             var direction = GetDirection(tokenSource);
 
-            return new StartPoint(new Point(column, row), direction);
+            return tokenSource.IsCancellationRequested 
+                ? StartPoint.CreateEmptyStartPoint() 
+                : new StartPoint(new Point(column, row), direction);
         }
 
         private static Direction GetDirection(CancellationTokenSource tokenSource)

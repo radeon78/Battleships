@@ -16,5 +16,8 @@
 
         public override string ToString()
             => $"{Column.ToDisplayColumn()}{Row.ToDisplayRow()}";
+
+        public static Point CreateEmptyPoint()
+            => new(0, 0);
     }
 }

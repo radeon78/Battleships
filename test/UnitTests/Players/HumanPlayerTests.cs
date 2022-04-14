@@ -241,7 +241,7 @@
             // assert
             action.Should().NotThrow();
             getPlaceShipStartPointNumberCalls.Should().Be(1);
-            printOceanGridNumberCalls.Should().Be(1);
+            printOceanGridNumberCalls.Should().Be(0);
             callOutPointOnTargetingGridNumberCalls.Should().Be(0);
             printTargetingGridNumberCalls.Should().Be(0);
             printErrorMessageNumberCalls.Should().Be(0);
