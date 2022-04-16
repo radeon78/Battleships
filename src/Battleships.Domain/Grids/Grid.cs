@@ -2,6 +2,6 @@
 {
     public abstract class Grid
     {
-        public int Size { get; } = 10;
+        public int Size => 10;
     }
 }

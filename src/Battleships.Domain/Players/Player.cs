@@ -61,7 +61,7 @@
 
         public virtual void PrintTargetingGrind() { }
 
-        public StartPoint GenerateRandomPlaceShipStartPoint()
+        internal StartPoint GenerateRandomPlaceShipStartPoint()
         {
             var random = new Random();
 

@@ -9,19 +9,30 @@
     public static class CommonUserInterface
     {
         public static string GetHumanPlayerName(CancellationTokenSource tokenSource)
+            => GetInputDataFromUser(
+                displayMessageToUser: "\nType your name: ",
+                inputValid: input => !string.IsNullOrEmpty(input),
+                tokenSource: tokenSource);
+
+        public static string GetInputDataFromUser(
+            string displayMessageToUser,
+            Func<string, bool> inputValid,
+            CancellationTokenSource tokenSource)
         {
-            Console.WriteLine($"\nType your name: ");
-            string? input;
+            Console.WriteLine(displayMessageToUser);
 
             do
             {
-                input = Console.ReadLine();
+                var input = Console.ReadLine() ?? string.Empty;
 
-                if (!string.IsNullOrEmpty(input))
+                if (input.Equals("q", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (input.Equals("q", StringComparison.OrdinalIgnoreCase)) 
-                        tokenSource.Cancel();
+                    tokenSource.Cancel();
+                    return string.Empty;
+                }
 
+                if (inputValid(input))
+                {
                     return input;
                 }
             }
@@ -33,48 +44,6 @@
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"\n{message}");
             Console.ResetColor();
-        }
-
-        public static int GetColumn(CancellationTokenSource tokenSource)
-        {
-            Console.WriteLine($"\nType column (A-J): ");
-            ConsoleKeyInfo columnKey;
-            do
-            {
-                columnKey = Console.ReadKey();
-                if (columnKey.Key.ToString().Equals("q", StringComparison.OrdinalIgnoreCase))
-                {
-                    tokenSource.Cancel();
-                    return 0;
-                } 
-            }
-            while ((int)columnKey.Key is < 65 or > 74);
-            var column = (int)columnKey.Key - 65;
-
-            return column;
-        }
-
-        public static int GetRow(CancellationTokenSource tokenSource)
-        {
-            Console.WriteLine($"\nType row (1-10): ");
-            string? input;
-
-            do
-            {
-                input = Console.ReadLine();
-                if (!string.IsNullOrEmpty(input) && input.Length <= 2)
-                {
-                    if (input.Equals("q", StringComparison.OrdinalIgnoreCase))
-                    {
-                        tokenSource.Cancel();
-                        return 0;
-                    }
-
-                    if (int.TryParse(input, out var result) && result >= 1 && result <= 10)
-                        return result - 1;
-                }
-            }
-            while (true);
         }
 
         public static void PrintGrid(this Grid grid, Func<int, int, string> getPointStatus)

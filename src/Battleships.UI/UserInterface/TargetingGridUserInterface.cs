@@ -1,5 +1,7 @@
 ﻿namespace Battleships.UI.UserInterface
 {
+    using Battleships.Domain.Common;
+    using System.Text.RegularExpressions;
     using Battleships.Domain.Extensions;
     using Battleships.Domain.Grids;
     using System;
@@ -10,16 +12,14 @@
         public static Point CallOutPointOnTargetingGrid(string message, CancellationTokenSource tokenSource)
         {
             Console.WriteLine($"\n{message}");
-            var column = CommonUserInterface.GetColumn(tokenSource);
-
-            if (tokenSource.IsCancellationRequested)
-                return Point.CreateEmptyPoint();
-
-            var row = CommonUserInterface.GetRow(tokenSource);
+            var pointAsText = CommonUserInterface.GetInputDataFromUser(
+                displayMessageToUser: "\nType start point (e.g. A1 where A is a column and 1 is a row) : ",
+                inputValid: input => Regex.Match(input, RegexPatterns.PointPattern).Success,
+                tokenSource: tokenSource);
 
             return tokenSource.IsCancellationRequested
                 ? Point.CreateEmptyPoint()
-                : new Point(column, row);
+                : new Point(pointAsText);
         }
 
         public static void PrintTargetingGrid(string playerName, TargetingGrid targetingGrid)
