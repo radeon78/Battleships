@@ -21,13 +21,13 @@
         }
 
         [Fact]
-        public void ShouldThrowWhenPlayerNameIsEmpty()
+        public void ShouldNotThrowWhenPlayerNameIsEmpty()
         {
             // act
             Action action = () => _ = new ComputerPlayer(string.Empty);
 
             // assert
-            action.Should().ThrowExactly<ArgumentNullException>();
+            action.Should().NotThrow();
         }
 
         [Fact]
@@ -83,11 +83,8 @@
         [Fact]
         public void ShouldGenerateRandomPlaceShipStartPoint()
         {
-            // arrange
-            var player = new ComputerPlayer("computer");
-
             // act
-            var startPoint = player.GenerateRandomPlaceShipStartPoint();
+            var startPoint = Player.GenerateRandomPlaceShipStartPoint();
 
             // assert
             startPoint.Point.Column.Should().BeGreaterThanOrEqualTo(0);

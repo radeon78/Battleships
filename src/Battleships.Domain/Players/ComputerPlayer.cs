@@ -12,8 +12,8 @@
             var random = new Random();
 
             return new Point(
-                random.Next(0, _oceanGrid.Size),
-                random.Next(0, _oceanGrid.Size));
+                random.Next(0, Grid.Size),
+                random.Next(0, Grid.Size));
         }
     }
 }

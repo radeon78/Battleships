@@ -44,17 +44,18 @@
         }
 
         [Theory]
-        [InlineData("h")]
-        [InlineData("H")]
-        [InlineData("v")]
-        [InlineData("V")]
-        public void ShouldNotThrow(string directionAsText)
+        [InlineData("h", Direction.Horizontal)]
+        [InlineData("H", Direction.Horizontal)]
+        [InlineData("v", Direction.Vertical)]
+        [InlineData("V", Direction.Vertical)]
+        public void ShouldCreateStartPoint(string directionAsText, Direction expectedDirection)
         {
             // act
-            Action action = () => _ = new StartPoint(new Point(0, 0), directionAsText);
+            var startPoint = new StartPoint(new Point(0, 0), directionAsText);
 
             // assert
-            action.Should().NotThrow();
+            startPoint.Should().NotBeNull();
+            startPoint.Direction.Should().Be(expectedDirection);
         }
 
         [Fact]

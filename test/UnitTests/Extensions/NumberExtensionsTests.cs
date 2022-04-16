@@ -37,6 +37,16 @@
         [InlineData('H', 7)]
         [InlineData('I', 8)]
         [InlineData('J', 9)]
+        [InlineData('a', 0)]
+        [InlineData('b', 1)]
+        [InlineData('c', 2)]
+        [InlineData('d', 3)]
+        [InlineData('e', 4)]
+        [InlineData('f', 5)]
+        [InlineData('g', 6)]
+        [InlineData('h', 7)]
+        [InlineData('i', 8)]
+        [InlineData('j', 9)]
         public void ShouldConvertColumnCharToNumber(char columnChar, int expectedNumber)
         {
             // act

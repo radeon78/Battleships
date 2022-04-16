@@ -6,7 +6,10 @@
             => (char)(65 + columnNumber);
 
         public static int ToNumberColumn(this char columnChar)
-            => columnChar - 65;
+        {
+            var subtractBy = columnChar >= 97 ? 97 : 65;
+            return columnChar - subtractBy;
+        }
 
         public static string ToDisplayColumnAsString(this int columnNumber)
             => ToDisplayColumn(columnNumber).ToString();

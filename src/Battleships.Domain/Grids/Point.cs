@@ -16,7 +16,7 @@
                 throw new ArgumentException(pointAsText, nameof(pointAsText));
 
             Column = pointAsText[0].ToNumberColumn();
-            Row = int.Parse(pointAsText.Remove(0, 1));
+            Row = int.Parse(pointAsText.Remove(0, 1)) - 1;
         }
 
         public Point(int column, int row)

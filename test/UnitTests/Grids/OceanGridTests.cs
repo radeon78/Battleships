@@ -76,9 +76,9 @@
             var battleship = FakeShipFactory.CreateBattleship();
             var battleshipStartPoint = new StartPoint(new Point(2, 6), Direction.Horizontal);
 
-            var playRuleWithOneShip = new List<int> { battleship.Length };
-            var playRuleWithTwoTheSameShips = new List<int> { battleship.Length, battleship.Length };
-            var playRuleWithTwoDifferentShips = new List<int> { battleship.Length, 2 };
+            var playRuleWithOneShip = new[] { battleship.Length };
+            var playRuleWithTwoTheSameShips = new[] { battleship.Length, battleship.Length };
+            var playRuleWithTwoDifferentShips = new[] { battleship.Length, 2 };
 
             // act
             var placeShipResult = oceanGrid.TryPlaceShip(battleshipStartPoint, battleship);

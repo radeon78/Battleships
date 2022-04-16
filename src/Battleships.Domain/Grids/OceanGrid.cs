@@ -41,7 +41,7 @@
 
         internal Result TryPlaceShip(StartPoint startPoint, Ship ship)
         {
-            if (PointIsOutOfRange(startPoint.Point))
+            if (PointIsOutOfGrid(startPoint.Point))
                 return Result.Failure(string.Format(Resource.ErrorStartingPoint, ship, startPoint.Point));
 
             var pointsToSelect = new List<Point>();
@@ -52,12 +52,11 @@
                 if (CanSelectPoint(currentPoint)) pointsToSelect.Add(currentPoint);
                 else return Result.Failure(string.Format(Resource.ErrorSelectPoint, ship, currentPoint));
 
-                if (i < ship.Length)
-                {
-                    var nextPointResult = GetNextPoint(currentPoint, startPoint.Direction);
-                    if (nextPointResult.IsSuccess) currentPoint = nextPointResult.Data!;
-                    else return Result.Failure(string.Format(Resource.ErrorGetNextPoint, ship, nextPointResult.ErrorMessage));
-                }
+                if (i == ship.Length) continue;
+
+                var nextPointResult = GetNextPoint(currentPoint, startPoint.Direction);
+                if (nextPointResult.IsSuccess) currentPoint = nextPointResult.Data!;
+                else return Result.Failure(string.Format(Resource.ErrorGetNextPoint, ship, nextPointResult.ErrorMessage));
             }
 
             pointsToSelect.ForEach(pointToSelect => OceanPoints[pointToSelect.Column, pointToSelect.Row].Put(ship));
@@ -72,16 +71,8 @@
             return answer;
         }
 
-        internal bool AllShipsSunk(IEnumerable<int> allowedShipsInPlayRule)
-            => allowedShipsInPlayRule.Count() <= _sunkShips.Count && !allowedShipsInPlayRule.Except(_sunkShips).Any();
-
-        internal bool PointIsOutOfRange(Point point)
-        {
-            return point.Column > Size - 1 ||
-                point.Column < 0 ||
-                point.Row > Size - 1 ||
-                point.Row < 0;
-        }
+        internal bool AllShipsSunk(int[] allowedShipsInPlayRule)
+            => allowedShipsInPlayRule.Length <= _sunkShips.Count && !allowedShipsInPlayRule.Except(_sunkShips).Any();
 
         public override bool Equals(object? obj)
         {
@@ -109,8 +100,7 @@
         {
             var hash = new HashCode();
 
-            for (var i = 0; i < _sunkShips.Count; i++)
-                hash.Add(_sunkShips[i].GetHashCode());
+            _sunkShips.ForEach(sunkShip => hash.Add(sunkShip.GetHashCode()));
 
             for (var i = 0; i < Size; i++)
             {
@@ -132,7 +122,7 @@
                OceanPoints[FixRowOrColumnValueIfNeed(currentPoint.Column + 1), FixRowOrColumnValueIfNeed(currentPoint.Row + 1)].NotFillOut();
         }
 
-        private int FixRowOrColumnValueIfNeed(int value)
+        private static int FixRowOrColumnValueIfNeed(int value)
         {
             return value < 0
                 ? 0
@@ -141,7 +131,7 @@
                     : value;
         }
 
-        private Result<Point> GetNextPoint(Point currentPoint, Direction direction)
+        private static Result<Point> GetNextPoint(Point currentPoint, Direction direction)
         {
             var nextPoint = direction == Direction.Horizontal
                 ? new Point(currentPoint.Column + 1, currentPoint.Row)

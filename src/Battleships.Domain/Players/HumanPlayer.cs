@@ -58,7 +58,7 @@
             do
             {
                 point = _callOutPointOnTargetingGrid(string.Format(Resource.CallOutPositionOnTargetingGrid, _playerName));
-                pointOutOfRange = _oceanGrid.PointIsOutOfRange(point);
+                pointOutOfRange = Grid.PointIsOutOfGrid(point);
                 if (pointOutOfRange) _printErrorMessage(string.Format(Resource.ErrorPointIsOffGrid, point));
             }
             while (pointOutOfRange);

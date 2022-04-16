@@ -24,6 +24,8 @@
             Player secondPlayer,
             CancellationToken cancellationToken)
         {
+            if (cancellationToken.IsCancellationRequested) return;
+
             firstPlayer.ApplyGameRule(_gameRule);
             secondPlayer.ApplyGameRule(_gameRule);
 

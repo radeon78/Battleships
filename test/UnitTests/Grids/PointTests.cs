@@ -35,17 +35,19 @@
         }
 
         [Theory]
-        [InlineData("a1")]
-        [InlineData("B2")]
-        [InlineData("c3")]
-        [InlineData("j10")]
-        public void ShouldNotThrow(string pointAsText)
+        [InlineData("a1", 0, 0)]
+        [InlineData("B2", 1, 1)]
+        [InlineData("c3", 2, 2)]
+        [InlineData("j10", 9, 9)]
+        public void ShouldCreatePoint(string pointAsText, int expectedColumn, int expectedRow)
         {
             // act
-            Action action = () => _ = new Point(pointAsText);
+            var point = new Point(pointAsText);
 
             // assert
-            action.Should().NotThrow();
+            point.Should().NotBeNull();
+            point.Column.Should().Be(expectedColumn);
+            point.Row.Should().Be(expectedRow);
         }
 
         [Fact]

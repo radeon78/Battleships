@@ -48,20 +48,20 @@
 
         public static void PrintGrid(this Grid grid, Func<int, int, string> getPointStatus)
         {
-            var columns = new string[grid.Size + 1];
+            var columns = new string[Grid.Size + 1];
 
             columns[0] = string.Empty;
-            for (var i = 0; i < grid.Size; i++)
+            for (var i = 0; i < Grid.Size; i++)
                 columns[i + 1] = i.ToDisplayColumnAsString();
 
             var table = new ConsoleTable(columns);
 
-            for (var i = 0; i < grid.Size; i++)
+            for (var i = 0; i < Grid.Size; i++)
             {
-                var row = new string[grid.Size + 1];
+                var row = new string[Grid.Size + 1];
                 row[0] = i.ToDisplayRow();
 
-                for (var j = 0; j < grid.Size; j++)
+                for (var j = 0; j < Grid.Size; j++)
                     row[j + 1] = getPointStatus(j, i);
 
                 table.AddRow(row);

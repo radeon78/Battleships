@@ -15,7 +15,7 @@
                 throw new ArgumentException(directionAsText, nameof(directionAsText));
 
             Point = point ?? throw new ArgumentNullException(nameof(point));
-            Direction = directionAsText == "H"
+            Direction = directionAsText.ToUpper() == "H"
                 ? Direction.Horizontal
                 : Direction.Vertical;
         }

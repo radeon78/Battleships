@@ -16,12 +16,9 @@
         protected TargetingGrid _targetingGrid;
         protected IReadOnlyCollection<Ship> _allowedShips;
 
-        public Player(string playerName)
+        protected Player(string playerName)
         {
-            if (string.IsNullOrEmpty(playerName))
-                throw new ArgumentNullException(nameof(playerName));
-
-            _playerName = playerName;
+            _playerName = playerName ?? throw new ArgumentNullException(nameof(playerName));
             _oceanGrid = new OceanGrid();
             _targetingGrid = new TargetingGrid();
             _allowedShips = Array.Empty<Ship>();
@@ -55,19 +52,19 @@
             _targetingGrid.SetAnswer(attackerPoint, answer);
 
         public virtual bool AllShipsSunk()
-            => _oceanGrid.AllShipsSunk(_allowedShips.Select(s => s.Length));
+            => _oceanGrid.AllShipsSunk(_allowedShips.Select(s => s.Length).ToArray());
 
         public virtual void PrintOceanGrid() { }
 
         public virtual void PrintTargetingGrind() { }
 
-        internal StartPoint GenerateRandomPlaceShipStartPoint()
+        internal static StartPoint GenerateRandomPlaceShipStartPoint()
         {
             var random = new Random();
 
             var point = new Point(
-                random.Next(0, _oceanGrid.Size),
-                random.Next(0, _oceanGrid.Size));
+                random.Next(0, Grid.Size),
+                random.Next(0, Grid.Size));
 
             var direction = (Direction)random.Next(0, 1);
 
