@@ -4,7 +4,6 @@
     using Battleships.Domain.Players;
     using Battleships.Domain.Ships;
     using FluentAssertions;
-    using System.Collections.Generic;
     using UnitTests.Fakes;
     using Xunit;
 
@@ -13,7 +12,7 @@
         [Theory]
         [InlineData(2, 2, Direction.Horizontal, true, 2, 2, Direction.Horizontal, false)]
         [InlineData(2, 2, Direction.Horizontal, true, 2, 4, Direction.Horizontal, true)]
-        [InlineData(0, 0, Direction.Horizontal, true, 1, 1, Direction.Vertical, false)]
+        [InlineData(0, 0, Direction.Horizontal, true, 1, 1, Direction.Vertical, true)]
         [InlineData(-1, 0, Direction.Horizontal, false, 1, 1, Direction.Vertical, true)]
         [InlineData(0, -1, Direction.Horizontal, false, 1, 1, Direction.Vertical, true)]
         [InlineData(9, 9, Direction.Horizontal, false, 1, 1, Direction.Vertical, true)]
@@ -148,7 +147,7 @@
             // act
             var result = oceanGrid.Equals(clonedOceanGrid);
 
-            // asert
+            // assert
             result.Should().BeTrue();
             oceanGrid.GetHashCode().Should().Be(clonedOceanGrid.GetHashCode());
         }
@@ -165,7 +164,7 @@
             // act
             var result = oceanGrid1.Equals(oceanGrid2);
 
-            // asert
+            // assert
             result.Should().BeTrue();
             oceanGrid1.GetHashCode().Should().Be(oceanGrid2.GetHashCode());
         }
@@ -182,7 +181,7 @@
             // act
             var result = oceanGrid1.Equals(oceanGrid2);
 
-            // asert
+            // assert
             result.Should().BeFalse();
             oceanGrid1.GetHashCode().Should().NotBe(oceanGrid2.GetHashCode());
         }
@@ -201,7 +200,7 @@
             // act
             var result = oceanGrid1.Equals(oceanGrid2);
 
-            // asert
+            // assert
             result.Should().BeFalse();
             oceanGrid1.GetHashCode().Should().NotBe(oceanGrid2.GetHashCode());
         }
@@ -215,7 +214,7 @@
             // act
             var result = oceanGrid1.Equals(null);
 
-            // asert
+            // assert
             result.Should().BeFalse();
         }
     }

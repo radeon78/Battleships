@@ -106,7 +106,7 @@ namespace Battleships.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You will have to try choose different starting point or direction for {0}. The point {1} is already selected or next to a different ship..
+        ///   Looks up a localized string similar to You will have to try choose different starting point or direction for {0}. The point {1} is already selected..
         /// </summary>
         internal static string ErrorSelectPoint {
             get {

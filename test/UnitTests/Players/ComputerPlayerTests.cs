@@ -44,6 +44,7 @@
             // assert
             action.Should().NotThrow();
             player.PlayerName.Should().Be(playerName);
+            rule.GetGameRuleDescription().Should().Be("Three ships game rule");
         }
 
         [Fact]

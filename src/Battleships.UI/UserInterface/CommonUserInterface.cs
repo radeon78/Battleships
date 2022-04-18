@@ -46,7 +46,7 @@
             Console.ResetColor();
         }
 
-        public static void PrintGrid(this Grid grid, Func<int, int, string> getPointStatus)
+        public static void PrintGrid(Func<int, int, string> getPointStatus)
         {
             var columns = new string[Grid.Size + 1];
 

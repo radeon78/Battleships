@@ -25,7 +25,7 @@
         public static void PrintTargetingGrid(string playerName, TargetingGrid targetingGrid)
         {
             Console.WriteLine($"\n{playerName}'s Targeting Grid");
-            targetingGrid.PrintGrid((column, row) =>
+            CommonUserInterface.PrintGrid((column, row) =>
             {
                 var pointStatus = string.Empty;
 

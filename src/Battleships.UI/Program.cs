@@ -4,9 +4,9 @@
     using System;
     using System.Threading;
 
-    static class Program
+    internal static class Program
     {
-        static void Main()
+        internal static void Main()
         {
             var tokenSource = new CancellationTokenSource();
             var token = tokenSource.Token;

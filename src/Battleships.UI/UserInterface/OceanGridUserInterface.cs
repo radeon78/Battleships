@@ -34,7 +34,7 @@
         public static void PrintOceanGrid(string playerName, OceanGrid oceanGrid)
         {
             Console.WriteLine($"\n{playerName}'s Ocean Grid");
-            oceanGrid.PrintGrid((column, row) =>
+            CommonUserInterface.PrintGrid((column, row) =>
             {
                 var pointStatus = string.Empty;
 

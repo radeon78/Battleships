@@ -1,5 +1,6 @@
 ﻿namespace UnitTests.Players
 {
+    using Moq;
     using Battleships.Domain.Grids;
     using Battleships.Domain.Players;
     using FluentAssertions;
@@ -10,73 +11,76 @@
 
     public class HumanPlayerTests
     {
+        private readonly Mock<Func<string, StartPoint>> _getPlaceShipStartPointMock;
+        private readonly Mock<Action<string, OceanGrid>> _printOceanGridMock;
+        private readonly Mock<Func<string, Point>> _callOutPointOnTargetingGridMock;
+        private readonly Mock<Action<string, TargetingGrid>> _printTargetingGridMock;
+        private readonly Mock<Action<string>> _printErrorMessageMock;
+
+        public HumanPlayerTests()
+        {
+            _getPlaceShipStartPointMock = new Mock<Func<string, StartPoint>>();
+            _printOceanGridMock = new Mock<Action<string, OceanGrid>>();
+            _callOutPointOnTargetingGridMock = new Mock<Func<string, Point>>();
+            _printTargetingGridMock = new Mock<Action<string, TargetingGrid>>();
+            _printErrorMessageMock = new Mock<Action<string>>();
+        }
+
         [Fact]
         public void ShouldApplyGameRule()
         {
             // arrange
-            var getPlaceShipStartPointNumberCalls = 0;
-            var printOceanGridNumberCalls = 0;
-            var callOutPointOnTargetingGridNumberCalls = 0;
-            var printTargetingGridNumberCalls = 0;
-            var printErrorMessageNumberCalls = 0;
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(new StartPoint(new Point(1, 1), Direction.Horizontal));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(1, 1));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
             var playerName = "humanPlayer";
 
             var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 playerName,
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
 
             // act
             Action action = () => player.ApplyGameRule(rule);
 
             // assert
             action.Should().NotThrow();
-            getPlaceShipStartPointNumberCalls.Should().Be(0);
-            printOceanGridNumberCalls.Should().Be(0);
-            callOutPointOnTargetingGridNumberCalls.Should().Be(0);
-            printTargetingGridNumberCalls.Should().Be(0);
-            printErrorMessageNumberCalls.Should().Be(0);
+            _getPlaceShipStartPointMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            _printOceanGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()), Times.Never);
+            _callOutPointOnTargetingGridMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            _printTargetingGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()), Times.Never);
+            _printErrorMessageMock.Verify(x => x(It.IsAny<string>()), Times.Never);
             player.PlayerName.Should().Be(playerName);
-
-            StartPoint getPlaceShipStartPoint(string message)
-            {
-                getPlaceShipStartPointNumberCalls++;
-                return new StartPoint(new Point(1, 1), Direction.Horizontal);
-            }
-
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
-            Point callOutPointOnTargetingGrid(string message)
-            {
-                callOutPointOnTargetingGridNumberCalls++;
-                return new Point(1, 1);
-            }
-
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) => printTargetingGridNumberCalls++;
-            void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
         }
 
         [Fact]
         public void ShouldPlaceShipsOnGridWithNoError()
         {
             // arrange
-            var getPlaceShipStartPointNumberCalls = 0;
-            var printOceanGridNumberCalls = 0;
-            var callOutPointOnTargetingGridNumberCalls = 0;
-            var printTargetingGridNumberCalls = 0;
-            var printErrorMessageNumberCalls = 0;
+            _getPlaceShipStartPointMock
+                .SetupSequence(x => x(It.IsAny<string>()))
+                .Returns(new StartPoint(new Point(0, 0), Direction.Horizontal))
+                .Returns(new StartPoint(new Point(2, 2), Direction.Horizontal))
+                .Returns(new StartPoint(new Point(5, 5), Direction.Vertical));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
 
             var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
             player.ApplyGameRule(rule);
 
             // act
@@ -84,52 +88,37 @@
 
             // assert
             action.Should().NotThrow();
-            getPlaceShipStartPointNumberCalls.Should().Be(3);
-            printOceanGridNumberCalls.Should().Be(3);
-            callOutPointOnTargetingGridNumberCalls.Should().Be(0);
-            printTargetingGridNumberCalls.Should().Be(0);
-            printErrorMessageNumberCalls.Should().Be(0);
-
-            StartPoint getPlaceShipStartPoint(string message)
-            {
-                getPlaceShipStartPointNumberCalls++;
-
-                return getPlaceShipStartPointNumberCalls == 2
-                    ? new StartPoint(new Point(2, 2), Direction.Horizontal)
-                    : getPlaceShipStartPointNumberCalls == 3
-                    ? new StartPoint(new Point(5, 5), Direction.Vertical)
-                    : new StartPoint(new Point(0, 0), Direction.Horizontal);
-            }
-
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
-            Point callOutPointOnTargetingGrid(string message)
-            {
-                callOutPointOnTargetingGridNumberCalls++;
-                return new Point(2, 2);
-            }
-
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) => printTargetingGridNumberCalls++;
-            void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
+            _getPlaceShipStartPointMock.Verify(x => x(It.IsAny<string>()), Times.Exactly(3));
+            _printOceanGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()), Times.Exactly(3));
+            _callOutPointOnTargetingGridMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            _printTargetingGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()), Times.Never);
+            _printErrorMessageMock.Verify(x => x(It.IsAny<string>()), Times.Never());
         }
 
         [Fact]
         public void ShouldPlaceShipsOnGridWithTwoErrors()
         {
             // arrange
-            var getPlaceShipStartPointNumberCalls = 0;
-            var printOceanGridNumberCalls = 0;
-            var callOutPointOnTargetingGridNumberCalls = 0;
-            var printTargetingGridNumberCalls = 0;
-            var printErrorMessageNumberCalls = 0;
+            _getPlaceShipStartPointMock
+                .SetupSequence(x => x(It.IsAny<string>()))
+                .Returns(new StartPoint(new Point(1, 1), Direction.Horizontal))
+                .Returns(new StartPoint(new Point(2, 1), Direction.Vertical))
+                .Returns(new StartPoint(new Point(5, 1), Direction.Vertical))
+                .Returns(new StartPoint(new Point(5, 5), Direction.Vertical))
+                .Returns(new StartPoint(new Point(6, 5), Direction.Horizontal));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
 
             var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
             player.ApplyGameRule(rule);
 
             // act
@@ -137,27 +126,11 @@
 
             // assert
             action.Should().NotThrow();
-            getPlaceShipStartPointNumberCalls.Should().Be(5);
-            printOceanGridNumberCalls.Should().Be(3);
-            callOutPointOnTargetingGridNumberCalls.Should().Be(0);
-            printTargetingGridNumberCalls.Should().Be(0);
-            printErrorMessageNumberCalls.Should().Be(2);
-
-            StartPoint getPlaceShipStartPoint(string message)
-            {
-                getPlaceShipStartPointNumberCalls++;
-                return new StartPoint(new Point(getPlaceShipStartPointNumberCalls, getPlaceShipStartPointNumberCalls), Direction.Horizontal);
-            }
-
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
-            Point callOutPointOnTargetingGrid(string message)
-            {
-                callOutPointOnTargetingGridNumberCalls++;
-                return new Point(2, 2);
-            }
-
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) => printTargetingGridNumberCalls++;
-            void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
+            _getPlaceShipStartPointMock.Verify(x => x(It.IsAny<string>()), Times.Exactly(5));
+            _printOceanGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()), Times.Exactly(3));
+            _callOutPointOnTargetingGridMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            _printTargetingGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()), Times.Never);
+            _printErrorMessageMock.Verify(x => x(It.IsAny<string>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -167,20 +140,20 @@
             var source = new CancellationTokenSource();
             var token = source.Token;
 
-            var getPlaceShipStartPointNumberCalls = 0;
-            var printOceanGridNumberCalls = 0;
-            var callOutPointOnTargetingGridNumberCalls = 0;
-            var printTargetingGridNumberCalls = 0;
-            var printErrorMessageNumberCalls = 0;
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(new StartPoint(new Point(1, 1), Direction.Horizontal));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
 
             var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
             player.ApplyGameRule(rule);
 
             // act
@@ -189,27 +162,11 @@
 
             // assert
             action.Should().NotThrow();
-            getPlaceShipStartPointNumberCalls.Should().Be(0);
-            printOceanGridNumberCalls.Should().Be(0);
-            callOutPointOnTargetingGridNumberCalls.Should().Be(0);
-            printTargetingGridNumberCalls.Should().Be(0);
-            printErrorMessageNumberCalls.Should().Be(0);
-
-            StartPoint getPlaceShipStartPoint(string message)
-            {
-                getPlaceShipStartPointNumberCalls++;
-                return new StartPoint(new Point(getPlaceShipStartPointNumberCalls, getPlaceShipStartPointNumberCalls), Direction.Horizontal);
-            }
-
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
-            Point callOutPointOnTargetingGrid(string message)
-            {
-                callOutPointOnTargetingGridNumberCalls++;
-                return new Point(2, 2);
-            }
-
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) => printTargetingGridNumberCalls++;
-            void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
+            _getPlaceShipStartPointMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            _printOceanGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()), Times.Never);
+            _callOutPointOnTargetingGridMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            _printTargetingGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()), Times.Never);
+            _printErrorMessageMock.Verify(x => x(It.IsAny<string>()), Times.Never);
         }
 
         [Fact]
@@ -219,20 +176,26 @@
             var source = new CancellationTokenSource();
             var token = source.Token;
 
-            var getPlaceShipStartPointNumberCalls = 0;
-            var printOceanGridNumberCalls = 0;
-            var callOutPointOnTargetingGridNumberCalls = 0;
-            var printTargetingGridNumberCalls = 0;
-            var printErrorMessageNumberCalls = 0;
+            _getPlaceShipStartPointMock
+                .Setup(x => x(It.IsAny<string>()))
+                .Returns(() =>
+                {
+                    source!.Cancel();
+                    return new StartPoint(new Point(1, 1), Direction.Horizontal);
+                });
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
 
             var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
             player.ApplyGameRule(rule);
 
             // act
@@ -240,48 +203,31 @@
 
             // assert
             action.Should().NotThrow();
-            getPlaceShipStartPointNumberCalls.Should().Be(1);
-            printOceanGridNumberCalls.Should().Be(0);
-            callOutPointOnTargetingGridNumberCalls.Should().Be(0);
-            printTargetingGridNumberCalls.Should().Be(0);
-            printErrorMessageNumberCalls.Should().Be(0);
-
-            StartPoint getPlaceShipStartPoint(string message)
-            {
-                getPlaceShipStartPointNumberCalls++;
-                source!.Cancel();
-                return new StartPoint(new Point(getPlaceShipStartPointNumberCalls, getPlaceShipStartPointNumberCalls), Direction.Horizontal);
-            }
-
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
-            Point callOutPointOnTargetingGrid(string message)
-            {
-                callOutPointOnTargetingGridNumberCalls++;
-                return new Point(2, 2);
-            }
-
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) => printTargetingGridNumberCalls++;
-            void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
+            _getPlaceShipStartPointMock.Verify(x => x(It.IsAny<string>()), Times.Once);
+            _printOceanGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()), Times.Never);
+            _callOutPointOnTargetingGridMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            _printTargetingGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()), Times.Never);
+            _printErrorMessageMock.Verify(x => x(It.IsAny<string>()), Times.Never);
         }
 
         [Fact]
         public void ShouldCallOutPointOnTargetingGridWithNoError()
         {
             // arrange
-            var getPlaceShipStartPointNumberCalls = 0;
-            var printOceanGridNumberCalls = 0;
-            var callOutPointOnTargetingGridNumberCalls = 0;
-            var printTargetingGridNumberCalls = 0;
-            var printErrorMessageNumberCalls = 0;
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(1, 1), Direction.Horizontal));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(4, 2));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
 
             var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
             player.ApplyGameRule(rule);
 
             // act
@@ -291,47 +237,34 @@
             point.Should().NotBeNull();
             point.Row.Should().Be(2);
             point.Column.Should().Be(4);
-            getPlaceShipStartPointNumberCalls.Should().Be(0);
-            printOceanGridNumberCalls.Should().Be(0);
-            callOutPointOnTargetingGridNumberCalls.Should().Be(1);
-            printTargetingGridNumberCalls.Should().Be(0);
-            printErrorMessageNumberCalls.Should().Be(0);
-
-            StartPoint getPlaceShipStartPoint(string message)
-            {
-                getPlaceShipStartPointNumberCalls++;
-                return new StartPoint(new Point(1, 1), Direction.Horizontal);
-            }
-
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
-            Point callOutPointOnTargetingGrid(string message)
-            {
-                callOutPointOnTargetingGridNumberCalls++;
-                return new Point(4, 2);
-            }
-
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) => printTargetingGridNumberCalls++;
-            void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
+            _getPlaceShipStartPointMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            _printOceanGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()), Times.Never);
+            _callOutPointOnTargetingGridMock.Verify(x => x(It.IsAny<string>()), Times.Once);
+            _printTargetingGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()), Times.Never);
+            _printErrorMessageMock.Verify(x => x(It.IsAny<string>()), Times.Never);
         }
 
         [Fact]
         public void ShouldCallOutPointOnTargetingGridWithOneError()
         {
             // arrange
-            var getPlaceShipStartPointNumberCalls = 0;
-            var printOceanGridNumberCalls = 0;
-            var callOutPointOnTargetingGridNumberCalls = 0;
-            var printTargetingGridNumberCalls = 0;
-            var printErrorMessageNumberCalls = 0;
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(1, 1), Direction.Horizontal));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock
+                .SetupSequence(x => x(It.IsAny<string>()))
+                .Returns(new Point(10, 0))
+                .Returns(new Point(4, 2));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
 
             var rule = new FakeThreeShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
             player.ApplyGameRule(rule);
 
             // act
@@ -341,29 +274,11 @@
             point.Should().NotBeNull();
             point.Row.Should().Be(2);
             point.Column.Should().Be(4);
-            getPlaceShipStartPointNumberCalls.Should().Be(0);
-            printOceanGridNumberCalls.Should().Be(0);
-            callOutPointOnTargetingGridNumberCalls.Should().Be(2);
-            printTargetingGridNumberCalls.Should().Be(0);
-            printErrorMessageNumberCalls.Should().Be(1);
-
-            StartPoint getPlaceShipStartPoint(string message)
-            {
-                getPlaceShipStartPointNumberCalls++;
-                return new StartPoint(new Point(1, 1), Direction.Horizontal);
-            }
-
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
-            Point callOutPointOnTargetingGrid(string message)
-            {
-                callOutPointOnTargetingGridNumberCalls++;
-                return callOutPointOnTargetingGridNumberCalls == 1
-                    ? new Point(10, 0)
-                    : new Point(4, 2);
-            }
-
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) => printTargetingGridNumberCalls++;
-            void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
+            _getPlaceShipStartPointMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            _printOceanGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()), Times.Never);
+            _callOutPointOnTargetingGridMock.Verify(x => x(It.IsAny<string>()), Times.Exactly(2));
+            _printTargetingGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()), Times.Never);
+            _printErrorMessageMock.Verify(x => x(It.IsAny<string>()), Times.Once);
         }
 
         [Theory]
@@ -397,20 +312,23 @@
         public void ShouldAnswerToAttacker(int column, int row, Reply expectedReply, int expectedShipLength)
         {
             // arrange
-            var getPlaceShipStartPointNumberCalls = 0;
-            var printOceanGridNumberCalls = 0;
-            var callOutPointOnTargetingGridNumberCalls = 0;
-            var printTargetingGridNumberCalls = 0;
-            var printErrorMessageNumberCalls = 0;
+            _getPlaceShipStartPointMock
+                .SetupSequence(x => x(It.IsAny<string>()))
+                .Returns(() => new StartPoint(new Point(3, 9), Direction.Horizontal))
+                .Returns(() => new StartPoint(new Point(9, 1), Direction.Vertical));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
 
             var rule = new FakeTwoShipsGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
             player.ApplyGameRule(rule);
             player.PlaceShipsOnOceanGrid(CancellationToken.None);
 
@@ -420,54 +338,35 @@
             var answer = player.AnswerToAttacker(point);
 
             // assert
-            getPlaceShipStartPointNumberCalls.Should().Be(2);
-            printOceanGridNumberCalls.Should().Be(2);
-            callOutPointOnTargetingGridNumberCalls.Should().Be(0);
-            printTargetingGridNumberCalls.Should().Be(0);
-            printErrorMessageNumberCalls.Should().Be(0);
-
             answer.Should().NotBeNull();
             answer.Reply.Should().Be(expectedReply);
             answer.ShipLength.Should().Be(expectedShipLength);
-
-            StartPoint getPlaceShipStartPoint(string message)
-            {
-                getPlaceShipStartPointNumberCalls++;
-
-                return getPlaceShipStartPointNumberCalls == 1
-                    ? new StartPoint(new Point(3, 9), Direction.Horizontal)
-                    : new StartPoint(new Point(9, 1), Direction.Vertical);
-            }
-
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
-            Point callOutPointOnTargetingGrid(string message)
-            {
-                callOutPointOnTargetingGridNumberCalls++;
-                return new Point(2, 2);
-            }
-
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) => printTargetingGridNumberCalls++;
-            void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
+            _getPlaceShipStartPointMock.Verify(x => x(It.IsAny<string>()), Times.Exactly(2));
+            _printOceanGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()), Times.Exactly(2));
+            _callOutPointOnTargetingGridMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            _printTargetingGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()), Times.Never);
+            _printErrorMessageMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            rule.GetGameRuleDescription().Should().Be("Two ships game rule");
         }
 
         [Fact]
         public void ShouldAnswerToAttackerHitAndThenSunk()
         {
             // arrange
-            var getPlaceShipStartPointNumberCalls = 0;
-            var printOceanGridNumberCalls = 0;
-            var callOutPointOnTargetingGridNumberCalls = 0;
-            var printTargetingGridNumberCalls = 0;
-            var printErrorMessageNumberCalls = 0;
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), Direction.Horizontal));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
 
             var rule = new FakeOneShipGameRule();
             var player = new HumanPlayer(
                 "humanPlayer",
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
             player.ApplyGameRule(rule);
             player.PlaceShipsOnOceanGrid(CancellationToken.None);
 
@@ -479,12 +378,6 @@
             var answer2 = player.AnswerToAttacker(point2);
 
             // assert
-            getPlaceShipStartPointNumberCalls.Should().Be(1);
-            printOceanGridNumberCalls.Should().Be(1);
-            callOutPointOnTargetingGridNumberCalls.Should().Be(0);
-            printTargetingGridNumberCalls.Should().Be(0);
-            printErrorMessageNumberCalls.Should().Be(0);
-
             answer1.Should().NotBeNull();
             answer1.Reply.Should().Be(Reply.Hit);
             answer1.ShipLength.Should().Be(2);
@@ -493,164 +386,153 @@
             answer2.Reply.Should().Be(Reply.Sunk);
             answer2.ShipLength.Should().Be(2);
 
-            StartPoint getPlaceShipStartPoint(string message)
-            {
-                getPlaceShipStartPointNumberCalls++;
-                return new StartPoint(new Point(4, 4), Direction.Horizontal);
-            }
-
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) => printOceanGridNumberCalls++;
-            Point callOutPointOnTargetingGrid(string message)
-            {
-                callOutPointOnTargetingGridNumberCalls++;
-                return new Point(2, 2);
-            }
-
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) => printTargetingGridNumberCalls++;
-            void printErrorMessage(string message) => ++printErrorMessageNumberCalls;
+            _getPlaceShipStartPointMock.Verify(x => x(It.IsAny<string>()), Times.Once);
+            _printOceanGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()), Times.Once);
+            _callOutPointOnTargetingGridMock.Verify(x => x(It.IsAny<string>()), Times.Never);
+            _printTargetingGridMock.Verify(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()), Times.Never);
+            _printErrorMessageMock.Verify(x => x(It.IsAny<string>()), Times.Never);
         }
 
         [Fact]
         public void ShouldThrowWhenGetPlaceShipStartPointIsNull()
         {
             // arrange
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
             var playerName = "humanPlayer";
 
             // act
             Action action = () => _ = new HumanPlayer(
                 playerName,
                 null,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
 
             // assert
             action.Should().ThrowExactly<ArgumentNullException>();
-
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) { };
-            Point callOutPointOnTargetingGrid(string message) => new(1, 1);
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) { };
-            void printErrorMessage(string message) { };
         }
 
         [Fact]
         public void ShouldThrowWhenPrintOceanGridIsNull()
         {
             // arrange
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), Direction.Horizontal));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
             var playerName = "humanPlayer";
 
             // act
             Action action = () => _ = new HumanPlayer(
                 playerName,
-                getPlaceShipStartPoint,
+                _getPlaceShipStartPointMock.Object,
                 null,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
 
             // assert
             action.Should().ThrowExactly<ArgumentNullException>();
-
-            StartPoint getPlaceShipStartPoint(string message) => new(new Point(1, 1), Direction.Horizontal);
-            Point callOutPointOnTargetingGrid(string message) => new(1, 1);
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) { };
-            void printErrorMessage(string message) { };
         }
 
         [Fact]
         public void ShouldThrowWhenCallOutPointOnTargetingGridIsNull()
         {
             // arrange
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), Direction.Horizontal));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
             var playerName = "humanPlayer";
 
             // act
             Action action = () => _ = new HumanPlayer(
                 playerName,
-                getPlaceShipStartPoint,
-                printOceanGrid,
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
                 null,
-                printTargetingGrid,
-                printErrorMessage);
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
 
             // assert
             action.Should().ThrowExactly<ArgumentNullException>();
-
-            StartPoint getPlaceShipStartPoint(string message) => new(new Point(1, 1), Direction.Horizontal);
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) { };
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) { };
-            void printErrorMessage(string message) { };
         }
 
         [Fact]
         public void ShouldThrowWhenPrintTargetingGridIsNull()
         {
             // arrange
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), Direction.Horizontal));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
             var playerName = "humanPlayer";
 
             // act
             Action action = () => _ = new HumanPlayer(
                 playerName,
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
                 null,
-                printErrorMessage);
+                _printErrorMessageMock.Object);
 
             // assert
             action.Should().ThrowExactly<ArgumentNullException>();
-
-            StartPoint getPlaceShipStartPoint(string message) => new(new Point(1, 1), Direction.Horizontal);
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) { };
-            Point callOutPointOnTargetingGrid(string message) => new(1, 1);
-            void printErrorMessage(string message) { };
         }
 
         [Fact]
         public void ShouldThrowWhenPrintErrorMessageIsNull()
         {
             // arrange
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), Direction.Horizontal));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
             var playerName = "humanPlayer";
 
             // act
             Action action = () => _ = new HumanPlayer(
                 playerName,
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
                 null);
 
             // assert
             action.Should().ThrowExactly<ArgumentNullException>();
-
-            StartPoint getPlaceShipStartPoint(string message) => new(new Point(1, 1), Direction.Horizontal);
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) { };
-            Point callOutPointOnTargetingGrid(string message) => new(1, 1);
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) { };
         }
 
         [Theory]
         [InlineData(2, Reply.Hit, true, false)]
         [InlineData(0, Reply.Miss, false, true)]
         [InlineData(2, Reply.Sunk, true, false)]
-        public void ShouldSetDefenderAnswer(int defenderAnswershipLength, Reply defenderAnswersReply, bool expectedHit, bool expectedMiss)
+        public void ShouldSetDefenderAnswer(int defenderAnswerShipLength, Reply defenderAnswersReply, bool expectedHit, bool expectedMiss)
         {
             // arrange
+            var startPoint = new StartPoint(new Point(2, 2), Direction.Horizontal);
+            var attackerPoint = new Point(4, 4);
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(startPoint);
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(attackerPoint);
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
+
             var rule = new FakeOneShipGameRule();
-            var attackerPoint = callOutPointOnTargetingGrid("message");
-            var startPoint = getPlaceShipStartPoint("message");
 
             var attacker = new HumanPlayer(
                 "humanPlayer",
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _getPlaceShipStartPointMock.Object,
+                PrintOceanGrid,
+                _callOutPointOnTargetingGridMock.Object,
+                PrintTargetingGrid,
+                _printErrorMessageMock.Object);
             attacker.ApplyGameRule(rule);
             attacker.PlaceShipsOnOceanGrid(CancellationToken.None);
-            var defenderAnswer = new Answer(defenderAnswershipLength, defenderAnswersReply);
+            var defenderAnswer = new Answer(defenderAnswerShipLength, defenderAnswersReply);
 
             // act
             attacker.SetDefenderAnswer(attackerPoint, defenderAnswer);
@@ -658,38 +540,40 @@
             attacker.PrintTargetingGrind();
 
             // assert
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid)
+            void PrintTargetingGrid(string playerName, TargetingGrid targetingGrid)
             {
                 targetingGrid.TargetingPoints[attackerPoint.Column, attackerPoint.Row].Hit().Should().Be(expectedHit);
                 targetingGrid.TargetingPoints[attackerPoint.Column, attackerPoint.Row].Miss().Should().Be(expectedMiss);
-                targetingGrid.TargetingPoints[attackerPoint.Column, attackerPoint.Row].DisplayShipLength().Should().Be(defenderAnswershipLength.ToString());
+                targetingGrid.TargetingPoints[attackerPoint.Column, attackerPoint.Row].DisplayShipLength().Should().Be(defenderAnswerShipLength.ToString());
             };
 
-            void printOceanGrid(string playerName, OceanGrid oceanGrid)
+            void PrintOceanGrid(string playerName, OceanGrid oceanGrid)
             {
                 oceanGrid.OceanPoints[startPoint.Point.Column - 1, startPoint.Point.Row].FillOut().Should().BeFalse();
                 oceanGrid.OceanPoints[startPoint.Point.Column, startPoint.Point.Row].FillOut().Should().BeTrue();
                 oceanGrid.OceanPoints[startPoint.Point.Column + 1, startPoint.Point.Row].FillOut().Should().BeTrue();
                 oceanGrid.OceanPoints[startPoint.Point.Column + 3, startPoint.Point.Row].FillOut().Should().BeFalse();
             };
-
-            StartPoint getPlaceShipStartPoint(string message) => new(new Point(2, 2), Direction.Horizontal);
-            Point callOutPointOnTargetingGrid(string message) => new(4, 4);
-            void printErrorMessage(string message) { };
         }
 
         [Fact]
         public void ShouldSunkAllShips()
         {
             // arrange
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(2, 2), Direction.Horizontal));
+            _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
+            _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(4, 4));
+            _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
+            _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
+
             var rule = new FakeOneShipGameRule();
             var defender = new HumanPlayer(
                 "humanPlayer",
-                getPlaceShipStartPoint,
-                printOceanGrid,
-                callOutPointOnTargetingGrid,
-                printTargetingGrid,
-                printErrorMessage);
+                _getPlaceShipStartPointMock.Object,
+                _printOceanGridMock.Object,
+                _callOutPointOnTargetingGridMock.Object,
+                _printTargetingGridMock.Object,
+                _printErrorMessageMock.Object);
             defender.ApplyGameRule(rule);
             defender.PlaceShipsOnOceanGrid(CancellationToken.None);
 
@@ -710,12 +594,6 @@
             allShipsSunk3.Should().BeFalse();
             defenderAnswer3.Reply.Should().Be(Reply.Sunk);
             allShipsSunk4.Should().BeTrue();
-
-            void printTargetingGrid(string playerName, TargetingGrid targetingGrid) { };
-            StartPoint getPlaceShipStartPoint(string message) => new(new Point(2, 2), Direction.Horizontal);
-            void printOceanGrid(string playerName, OceanGrid oceanGrid) { };
-            Point callOutPointOnTargetingGrid(string message) => new(4, 4);
-            void printErrorMessage(string message) { };
         }
     }
 }

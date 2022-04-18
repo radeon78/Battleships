@@ -133,7 +133,7 @@
     <value>The point {0} is off the grid.</value>
   </data>
   <data name="ErrorSelectPoint" xml:space="preserve">
-    <value>You will have to try choose different starting point or direction for {0}. The point {1} is already selected or next to a different ship.</value>
+    <value>You will have to try choose different starting point or direction for {0}. The point {1} is already selected.</value>
   </data>
   <data name="ErrorStartingPoint" xml:space="preserve">
     <value>You will have to try choose different starting point or direction for {0}. The point {1} is not allowed.</value>
