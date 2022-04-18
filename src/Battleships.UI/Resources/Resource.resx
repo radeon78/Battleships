@@ -117,43 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CallOutPositionOnTargetingGrid" xml:space="preserve">
-    <value>{0}, call out a position on your targeting grid.</value>
+  <data name="PlayerOceanGrid" xml:space="preserve">
+    <value>{0}{1}'s Ocean Grid</value>
   </data>
-  <data name="ErrorFieldMustBeBetween" xml:space="preserve">
-    <value>Field must be beetwen {0} and {1}.</value>
+  <data name="PlayerTargetingGrid" xml:space="preserve">
+    <value>{0}{1}'s Targeting Grid</value>
   </data>
-  <data name="ErrorGetNextPoint" xml:space="preserve">
-    <value>You will have to try choose different starting point or position for {0}. {1}</value>
+  <data name="TypeDirection" xml:space="preserve">
+    <value>Type a position a ship will be placed. Choose a H or V (H - horizontal, V - vertical):</value>
   </data>
-  <data name="ErrorNextPointIsOffGrid" xml:space="preserve">
-    <value>The next point {0} is off the grid.</value>
+  <data name="TypeName" xml:space="preserve">
+    <value>Type your name:</value>
   </data>
-  <data name="ErrorPointIsOffGrid" xml:space="preserve">
-    <value>The point {0} is off the grid.</value>
+  <data name="TypePoint" xml:space="preserve">
+    <value>Type a point (e.g. A1 where A is a column and 1 is a row):</value>
   </data>
-  <data name="ErrorSelectPoint" xml:space="preserve">
-    <value>You will have to try choose different starting point or position for {0}. The point {1} is already selected.</value>
-  </data>
-  <data name="ErrorStartingPoint" xml:space="preserve">
-    <value>You will have to try choose different starting point or position for {0}. The point {1} is not allowed.</value>
-  </data>
-  <data name="ErrorToManyHitsOnShip" xml:space="preserve">
-    <value>To many hits on ship {0}.</value>
-  </data>
-  <data name="GameEnded" xml:space="preserve">
-    <value>Game ended. {0} won.</value>
-  </data>
-  <data name="PlaceShipMessage" xml:space="preserve">
-    <value>{0}, place the {1} on the ocean grid. Choose starting point and position horizontal or vertical.</value>
-  </data>
-  <data name="QuitTheGame" xml:space="preserve">
-    <value>If you want to quit the game just press 'q'.</value>
-  </data>
-  <data name="ShipsOnGrid" xml:space="preserve">
-    <value>Well done. All ships are on the grid. Let's start the game.</value>
-  </data>
-  <data name="WelcomeGame" xml:space="preserve">
-    <value>You are welcome in the Battleships Game.</value>
+  <data name="TypeStartPoint" xml:space="preserve">
+    <value>Type a start point (e.g. A1 where A is a column and 1 is a row):</value>
   </data>
 </root>

@@ -13,7 +13,7 @@
 
             var game = new BattleshipsGame(
                 gameRule: new ThreeShipsGameRule(),
-                printMessage: (message) => Console.WriteLine($"\n{message}"));
+                printMessage: (message) => Console.WriteLine(Environment.NewLine + message));
 
             game.Start(
                 firstPlayer: PlayerFactory.CreateHumanPlayer(tokenSource),

@@ -15,22 +15,22 @@
                 throw new ArgumentException(directionAsText, nameof(directionAsText));
 
             Point = point ?? throw new ArgumentNullException(nameof(point));
-            Direction = directionAsText.ToUpper() == "H"
-                ? Direction.Horizontal
-                : Direction.Vertical;
+            Position = directionAsText.ToUpper() == "H"
+                ? Position.Horizontal
+                : Position.Vertical;
         }
 
-        public StartPoint(Point point, Direction direction)
+        public StartPoint(Point point, Position position)
         {
             Point = point;
-            Direction = direction;
+            Position = position;
         }
 
         internal Point Point { get; }
 
-        internal Direction Direction { get; }
+        internal Position Position { get; }
 
         public static StartPoint CreateEmptyStartPoint()
-            => new(Point.CreateEmptyPoint(), Direction.Horizontal);
+            => new(Point.CreateEmptyPoint(), Position.Horizontal);
     }
 }

@@ -44,18 +44,18 @@
         }
 
         [Theory]
-        [InlineData("h", Direction.Horizontal)]
-        [InlineData("H", Direction.Horizontal)]
-        [InlineData("v", Direction.Vertical)]
-        [InlineData("V", Direction.Vertical)]
-        public void ShouldCreateStartPoint(string directionAsText, Direction expectedDirection)
+        [InlineData("h", Position.Horizontal)]
+        [InlineData("H", Position.Horizontal)]
+        [InlineData("v", Position.Vertical)]
+        [InlineData("V", Position.Vertical)]
+        public void ShouldCreateStartPoint(string directionAsText, Position expectedPosition)
         {
             // act
             var startPoint = new StartPoint(new Point(0, 0), directionAsText);
 
             // assert
             startPoint.Should().NotBeNull();
-            startPoint.Direction.Should().Be(expectedDirection);
+            startPoint.Position.Should().Be(expectedPosition);
         }
 
         [Fact]
@@ -66,7 +66,7 @@
 
             // assert
             startPoint.Should().NotBeNull();
-            startPoint.Direction.Should().Be(Direction.Horizontal);
+            startPoint.Position.Should().Be(Position.Horizontal);
             startPoint.Point.Should().NotBeNull();
             startPoint.Point.Column.Should().Be(0);
             startPoint.Point.Row.Should().Be(0);

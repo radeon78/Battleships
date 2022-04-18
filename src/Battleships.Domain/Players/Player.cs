@@ -66,7 +66,7 @@
                 random.Next(0, Grid.Size),
                 random.Next(0, Grid.Size));
 
-            var direction = (Direction)random.Next(0, 1);
+            var direction = (Position)random.Next(0, 1);
 
             return new StartPoint(point, direction);
         }

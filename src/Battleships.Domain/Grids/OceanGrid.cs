@@ -41,7 +41,7 @@
 
         internal Result TryPlaceShip(StartPoint startPoint, Ship ship)
         {
-            if (Grid.PointIsOutOfGrid(startPoint.Point))
+            if (startPoint.Point.PointIsOutOfGrid())
                 return Result.Failure(string.Format(Resource.ErrorStartingPoint, ship, startPoint.Point));
 
             var pointsToSelect = new List<Point>();
@@ -54,7 +54,7 @@
 
                 if (i == ship.Length) continue;
 
-                var nextPointResult = GetNextPoint(currentPoint, startPoint.Direction);
+                var nextPointResult = GetNextPoint(currentPoint, startPoint.Position);
                 if (nextPointResult.IsSuccess) currentPoint = nextPointResult.Data!;
                 else return Result.Failure(string.Format(Resource.ErrorGetNextPoint, ship, nextPointResult.ErrorMessage));
             }
@@ -114,9 +114,9 @@
         private bool CanSelectPoint(Point currentPoint)
             => OceanPoints[currentPoint.Column, currentPoint.Row].NotFillOut();
 
-        private static Result<Point> GetNextPoint(Point currentPoint, Direction direction)
+        private static Result<Point> GetNextPoint(Point currentPoint, Position position)
         {
-            var nextPoint = direction == Direction.Horizontal
+            var nextPoint = position == Position.Horizontal
                 ? new Point(currentPoint.Column + 1, currentPoint.Row)
                 : new Point(currentPoint.Column, currentPoint.Row + 1);
 

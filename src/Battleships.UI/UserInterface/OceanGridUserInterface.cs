@@ -1,5 +1,6 @@
 ﻿namespace Battleships.UI.UserInterface
 {
+    using Battleships.UI.Resources;
     using Battleships.Domain.Common;
     using System.Text.RegularExpressions;
     using Battleships.Domain.Extensions;
@@ -11,10 +12,10 @@
     {
         public static StartPoint GetPlaceShipStartPoint(string message, CancellationTokenSource tokenSource)
         {
-            Console.WriteLine($"\n{message}");
+            Console.WriteLine(Environment.NewLine + message);
 
             var pointAsText = CommonUserInterface.GetInputDataFromUser(
-                displayMessageToUser: "\nType start point (e.g. A1 where A is a column and 1 is a row) : ",
+                displayMessageToUser: Resource.TypeStartPoint,
                 inputValid: input => Regex.Match(input, RegexPatterns.PointPattern).Success,
                 tokenSource: tokenSource);
 
@@ -22,7 +23,7 @@
                 return StartPoint.CreateEmptyStartPoint();
 
             var directionAsText = CommonUserInterface.GetInputDataFromUser(
-                displayMessageToUser: $"\nType a direction from a start point a ship will be placed. Choose a H or V (H - {Direction.Horizontal}, V - {Direction.Vertical}): ",
+                displayMessageToUser: Resource.TypeDirection,
                 inputValid: input => Regex.Match(input, RegexPatterns.DirectionPattern).Success,
                 tokenSource: tokenSource);
 
@@ -33,16 +34,19 @@
 
         public static void PrintOceanGrid(string playerName, OceanGrid oceanGrid)
         {
-            Console.WriteLine($"\n{playerName}'s Ocean Grid");
+            const string shipChar = "O";
+            const string shipHitChar = "X";
+
+            Console.WriteLine(Resource.PlayerOceanGrid, Environment.NewLine, playerName);
             CommonUserInterface.PrintGrid((column, row) =>
             {
                 var pointStatus = string.Empty;
 
                 oceanGrid.OceanPoints[column, row].FillOut()
-                    .IfTrue(() => pointStatus = "X");
+                    .IfTrue(() => pointStatus = shipChar);
 
                 oceanGrid.OceanPoints[column, row].Hit()
-                    .IfTrue(() => pointStatus = "-");
+                    .IfTrue(() => pointStatus = shipHitChar);
 
                 return pointStatus;
             });

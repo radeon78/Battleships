@@ -53,15 +53,15 @@
         public override Point CallOutPointOnTargetingGrid()
         {
             Point point;
-            bool pointOutOfRange;
+            bool pointOutOfGrid;
 
             do
             {
                 point = _callOutPointOnTargetingGrid(string.Format(Resource.CallOutPositionOnTargetingGrid, _playerName));
-                pointOutOfRange = Grid.PointIsOutOfGrid(point);
-                if (pointOutOfRange) _printErrorMessage(string.Format(Resource.ErrorPointIsOffGrid, point));
+                pointOutOfGrid = point.PointIsOutOfGrid();
+                if (pointOutOfGrid) _printErrorMessage(string.Format(Resource.ErrorPointIsOffGrid, point));
             }
-            while (pointOutOfRange);
+            while (pointOutOfGrid);
 
             return point;
         }

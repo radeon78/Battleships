@@ -4,7 +4,7 @@
     {
         public static int Size => 10;
 
-        internal static bool PointIsOutOfGrid(Point point)
+        internal static bool PointIsOutOfGrid(this Point point)
         {
             return point.Column > Size - 1 ||
                    point.Column < 0 ||

@@ -1,5 +1,6 @@
 ﻿namespace Battleships.UI.UserInterface
 {
+    using Battleships.UI.Resources;
     using Battleships.Domain.Extensions;
     using Battleships.Domain.Grids;
     using ConsoleTables;
@@ -10,7 +11,7 @@
     {
         public static string GetHumanPlayerName(CancellationTokenSource tokenSource)
             => GetInputDataFromUser(
-                displayMessageToUser: "\nType your name: ",
+                displayMessageToUser: Resource.TypeName,
                 inputValid: input => !string.IsNullOrEmpty(input),
                 tokenSource: tokenSource);
 
@@ -19,13 +20,14 @@
             Func<string, bool> inputValid,
             CancellationTokenSource tokenSource)
         {
-            Console.WriteLine(displayMessageToUser);
+            Console.WriteLine(Environment.NewLine + displayMessageToUser);
+            const string quitKey = "q";
 
             do
             {
                 var input = Console.ReadLine() ?? string.Empty;
 
-                if (input.Equals("q", StringComparison.OrdinalIgnoreCase))
+                if (input.Equals(quitKey, StringComparison.OrdinalIgnoreCase))
                 {
                     tokenSource.Cancel();
                     return string.Empty;
@@ -42,7 +44,7 @@
         public static void PrintErrorMessage(string message)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"\n{message}");
+            Console.WriteLine(Environment.NewLine + message);
             Console.ResetColor();
         }
 
