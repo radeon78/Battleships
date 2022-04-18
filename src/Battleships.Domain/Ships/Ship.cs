@@ -42,7 +42,7 @@
 
         public override bool Equals(object? obj)
         {
-            if ((obj == null) || !GetType().Equals(obj.GetType()))
+            if (obj == null || GetType() != obj.GetType())
                 return false;
 
             var otherShip = (Ship)obj;
