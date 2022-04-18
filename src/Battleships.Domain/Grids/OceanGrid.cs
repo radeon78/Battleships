@@ -9,18 +9,18 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class OceanGrid : Grid
+    public class OceanGrid
     {
         private readonly List<int> _sunkShips;
 
         internal OceanGrid()
         {
             _sunkShips = new List<int>();
-            OceanPoints = new OceanPoint[Size, Size];
+            OceanPoints = new OceanPoint[Grid.Size, Grid.Size];
 
-            for (var i = 0; i < Size; i++)
+            for (var i = 0; i < Grid.Size; i++)
             {
-                for (var j = 0; j < Size; j++)
+                for (var j = 0; j < Grid.Size; j++)
                     OceanPoints[i, j] = new OceanPoint();
             }
         }
@@ -28,11 +28,11 @@
         internal OceanGrid(OceanGrid oceanGrid)
         {
             _sunkShips = oceanGrid._sunkShips.Select(x => x).ToList();
-            OceanPoints = new OceanPoint[Size, Size];
+            OceanPoints = new OceanPoint[Grid.Size, Grid.Size];
 
-            for (var i = 0; i < Size; i++)
+            for (var i = 0; i < Grid.Size; i++)
             {
-                for (var j = 0; j < Size; j++)
+                for (var j = 0; j < Grid.Size; j++)
                     OceanPoints[i, j] = new OceanPoint(oceanGrid.OceanPoints[i, j]);
             }
         }
@@ -41,7 +41,7 @@
 
         internal Result TryPlaceShip(StartPoint startPoint, Ship ship)
         {
-            if (PointIsOutOfGrid(startPoint.Point))
+            if (Grid.PointIsOutOfGrid(startPoint.Point))
                 return Result.Failure(string.Format(Resource.ErrorStartingPoint, ship, startPoint.Point));
 
             var pointsToSelect = new List<Point>();
@@ -84,9 +84,9 @@
             if (!_sunkShips.SequenceEqual(otherOceanGrid._sunkShips))
                 return false;
 
-            for (var i = 0; i < Size; i++)
+            for (var i = 0; i < Grid.Size; i++)
             {
-                for (var j = 0; j < Size; j++)
+                for (var j = 0; j < Grid.Size; j++)
                 {
                     if (!OceanPoints[i, j].Equals(otherOceanGrid.OceanPoints[i, j]))
                         return false;
@@ -102,9 +102,9 @@
 
             _sunkShips.ForEach(sunkShip => hash.Add(sunkShip.GetHashCode()));
 
-            for (var i = 0; i < Size; i++)
+            for (var i = 0; i < Grid.Size; i++)
             {
-                for (var j = 0; j < Size; j++)
+                for (var j = 0; j < Grid.Size; j++)
                     hash.Add(OceanPoints[i, j].GetHashCode());
             }
 
@@ -120,7 +120,7 @@
                 ? new Point(currentPoint.Column + 1, currentPoint.Row)
                 : new Point(currentPoint.Column, currentPoint.Row + 1);
 
-            return nextPoint.Column > Size - 1 || nextPoint.Row > Size - 1
+            return nextPoint.Column > Grid.Size - 1 || nextPoint.Row > Grid.Size - 1
                 ? Result.Failure<Point>(string.Format(Resource.ErrorNextPointIsOffGrid, nextPoint))
                 : Result.Success(nextPoint);
         }

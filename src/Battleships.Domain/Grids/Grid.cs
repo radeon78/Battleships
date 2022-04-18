@@ -1,6 +1,6 @@
 ﻿namespace Battleships.Domain.Grids
 {
-    public abstract class Grid
+    public static class Grid
     {
         public static int Size => 10;
 

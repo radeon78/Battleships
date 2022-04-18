@@ -3,26 +3,26 @@
     using Battleships.Domain.Players;
     using System;
 
-    public class TargetingGrid : Grid
+    public class TargetingGrid
     {
         internal TargetingGrid()
         {
-            TargetingPoints = new TargetingPoint[Size, Size];
+            TargetingPoints = new TargetingPoint[Grid.Size, Grid.Size];
 
-            for (var i = 0; i < Size; i++)
+            for (var i = 0; i < Grid.Size; i++)
             {
-                for (var j = 0; j < Size; j++)
+                for (var j = 0; j < Grid.Size; j++)
                     TargetingPoints[i, j] = new TargetingPoint();
             }
         }
 
         internal TargetingGrid(TargetingGrid targetingGrid)
         {
-            TargetingPoints = new TargetingPoint[Size, Size];
+            TargetingPoints = new TargetingPoint[Grid.Size, Grid.Size];
 
-            for (var i = 0; i < Size; i++)
+            for (var i = 0; i < Grid.Size; i++)
             {
-                for (var j = 0; j < Size; j++)
+                for (var j = 0; j < Grid.Size; j++)
                     TargetingPoints[i, j] = new TargetingPoint(targetingGrid.TargetingPoints[i, j]);
             }
         }
@@ -39,9 +39,9 @@
 
             var otherTargetingGrid = (TargetingGrid)obj;
 
-            for (var i = 0; i < Size; i++)
+            for (var i = 0; i < Grid.Size; i++)
             {
-                for (var j = 0; j < Size; j++)
+                for (var j = 0; j < Grid.Size; j++)
                 {
                     if (!TargetingPoints[i, j].Equals(otherTargetingGrid.TargetingPoints[i, j]))
                         return false;
@@ -55,9 +55,9 @@
         {
             var hash = new HashCode();
 
-            for (var i = 0; i < Size; i++)
+            for (var i = 0; i < Grid.Size; i++)
             {
-                for (var j = 0; j < Size; j++)
+                for (var j = 0; j < Grid.Size; j++)
                     hash.Add(TargetingPoints[i, j].GetHashCode());
             }
 
