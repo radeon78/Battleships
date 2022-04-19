@@ -10,29 +10,29 @@
     public class OceanGridTests
     {
         [Theory]
-        [InlineData(2, 2, Position.Horizontal, true, 2, 2, Position.Horizontal, false)]
-        [InlineData(2, 2, Position.Horizontal, true, 2, 4, Position.Horizontal, true)]
-        [InlineData(0, 0, Position.Horizontal, true, 1, 1, Position.Vertical, true)]
-        [InlineData(-1, 0, Position.Horizontal, false, 1, 1, Position.Vertical, true)]
-        [InlineData(0, -1, Position.Horizontal, false, 1, 1, Position.Vertical, true)]
-        [InlineData(9, 9, Position.Horizontal, false, 1, 1, Position.Vertical, true)]
-        [InlineData(9, 9, Position.Vertical, false, 1, 1, Position.Horizontal, true)]
-        [InlineData(10, 1, Position.Horizontal, false, 1, 1, Position.Vertical, true)]
-        [InlineData(1, 10, Position.Horizontal, false, 1, 1, Position.Vertical, true)]
-        [InlineData(4, 3, Position.Vertical, true, 2, 5, Position.Horizontal, false)]
-        [InlineData(4, 3, Position.Vertical, true, 9, 1, Position.Vertical, true)]
-        [InlineData(4, 3, Position.Vertical, true, 10, 1, Position.Vertical, false)]
+        [InlineData(2, 2, ShipPosition.Horizontal, true, 2, 2, ShipPosition.Horizontal, false)]
+        [InlineData(2, 2, ShipPosition.Horizontal, true, 2, 4, ShipPosition.Horizontal, true)]
+        [InlineData(0, 0, ShipPosition.Horizontal, true, 1, 1, ShipPosition.Vertical, true)]
+        [InlineData(-1, 0, ShipPosition.Horizontal, false, 1, 1, ShipPosition.Vertical, true)]
+        [InlineData(0, -1, ShipPosition.Horizontal, false, 1, 1, ShipPosition.Vertical, true)]
+        [InlineData(9, 9, ShipPosition.Horizontal, false, 1, 1, ShipPosition.Vertical, true)]
+        [InlineData(9, 9, ShipPosition.Vertical, false, 1, 1, ShipPosition.Horizontal, true)]
+        [InlineData(10, 1, ShipPosition.Horizontal, false, 1, 1, ShipPosition.Vertical, true)]
+        [InlineData(1, 10, ShipPosition.Horizontal, false, 1, 1, ShipPosition.Vertical, true)]
+        [InlineData(4, 3, ShipPosition.Vertical, true, 2, 5, ShipPosition.Horizontal, false)]
+        [InlineData(4, 3, ShipPosition.Vertical, true, 9, 1, ShipPosition.Vertical, true)]
+        [InlineData(4, 3, ShipPosition.Vertical, true, 10, 1, ShipPosition.Vertical, false)]
         public void TryPlaceShip(
-            int battleshipColumn, int battleshipRow, Position battleshipPosition, bool battleshipExpectedSuccessResult,
-            int destroyerColumn, int destroyerRow, Position destroyerPosition, bool destroyerExpectedSuccessResult)
+            int battleshipColumn, int battleshipRow, ShipPosition battleshipShipPosition, bool battleshipExpectedSuccessResult,
+            int destroyerColumn, int destroyerRow, ShipPosition destroyerShipPosition, bool destroyerExpectedSuccessResult)
         {
             // arrange
             var oceanGrid = new OceanGrid();
 
             var battleship = FakeShipFactory.CreateBattleship();
-            var battleshipStartPoint = new StartPoint(new Point(battleshipColumn, battleshipRow), battleshipPosition);
+            var battleshipStartPoint = new StartPoint(new Point(battleshipColumn, battleshipRow), battleshipShipPosition);
             var destroyer = FakeShipFactory.CreateDestroyer();
-            var destroyerStartPoint = new StartPoint(new Point(destroyerColumn, destroyerRow), destroyerPosition);
+            var destroyerStartPoint = new StartPoint(new Point(destroyerColumn, destroyerRow), destroyerShipPosition);
 
             // act
             var battleshipResult = oceanGrid.TryPlaceShip(battleshipStartPoint, battleship);
@@ -73,7 +73,7 @@
 
             var oceanGrid = new OceanGrid();
             var battleship = FakeShipFactory.CreateBattleship();
-            var battleshipStartPoint = new StartPoint(new Point(2, 6), Position.Horizontal);
+            var battleshipStartPoint = new StartPoint(new Point(2, 6), ShipPosition.Horizontal);
 
             var playRuleWithOneShip = new[] { battleship.Length };
             var playRuleWithTwoTheSameShips = new[] { battleship.Length, battleship.Length };
@@ -139,7 +139,7 @@
         {
             // arrange
             var oceanGrid = new OceanGrid();
-            oceanGrid.TryPlaceShip(new StartPoint(new Point(2, 2), Position.Horizontal), new Ship(1));
+            oceanGrid.TryPlaceShip(new StartPoint(new Point(2, 2), ShipPosition.Horizontal), new Ship(1));
             oceanGrid.TryHit(new Point(2, 2));
 
             var clonedOceanGrid = new OceanGrid(oceanGrid);
@@ -157,9 +157,9 @@
         {
             // arrange
             var oceanGrid1 = new OceanGrid();
-            oceanGrid1.TryPlaceShip(new StartPoint(new Point(2, 2), Position.Horizontal), new Ship(2));
+            oceanGrid1.TryPlaceShip(new StartPoint(new Point(2, 2), ShipPosition.Horizontal), new Ship(2));
             var oceanGrid2 = new OceanGrid();
-            oceanGrid2.TryPlaceShip(new StartPoint(new Point(2, 2), Position.Horizontal), new Ship(2));
+            oceanGrid2.TryPlaceShip(new StartPoint(new Point(2, 2), ShipPosition.Horizontal), new Ship(2));
 
             // act
             var result = oceanGrid1.Equals(oceanGrid2);
@@ -174,9 +174,9 @@
         {
             // arrange
             var oceanGrid1 = new OceanGrid();
-            oceanGrid1.TryPlaceShip(new StartPoint(new Point(2, 2), Position.Horizontal), new Ship(2));
+            oceanGrid1.TryPlaceShip(new StartPoint(new Point(2, 2), ShipPosition.Horizontal), new Ship(2));
             var oceanGrid2 = new OceanGrid();
-            oceanGrid2.TryPlaceShip(new StartPoint(new Point(3, 2), Position.Horizontal), new Ship(2));
+            oceanGrid2.TryPlaceShip(new StartPoint(new Point(3, 2), ShipPosition.Horizontal), new Ship(2));
 
             // act
             var result = oceanGrid1.Equals(oceanGrid2);
@@ -191,11 +191,11 @@
         {
             // arrange
             var oceanGrid1 = new OceanGrid();
-            oceanGrid1.TryPlaceShip(new StartPoint(new Point(2, 2), Position.Horizontal), new Ship(1));
+            oceanGrid1.TryPlaceShip(new StartPoint(new Point(2, 2), ShipPosition.Horizontal), new Ship(1));
             oceanGrid1.TryHit(new Point(2, 2));
 
             var oceanGrid2 = new OceanGrid();
-            oceanGrid2.TryPlaceShip(new StartPoint(new Point(2, 2), Position.Horizontal), new Ship(1));
+            oceanGrid2.TryPlaceShip(new StartPoint(new Point(2, 2), ShipPosition.Horizontal), new Ship(1));
 
             // act
             var result = oceanGrid1.Equals(oceanGrid2);

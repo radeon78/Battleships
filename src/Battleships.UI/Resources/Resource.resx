@@ -124,7 +124,7 @@
     <value>{0}{1}'s Targeting Grid</value>
   </data>
   <data name="TypeDirection" xml:space="preserve">
-    <value>Type a position a ship will be placed. Choose a H or V (H - horizontal, V - vertical):</value>
+    <value>Type a ship position. Choose a H or V (H - horizontal, V - vertical):</value>
   </data>
   <data name="TypeName" xml:space="preserve">
     <value>Type your name:</value>

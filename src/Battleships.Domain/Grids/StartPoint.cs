@@ -1,5 +1,6 @@
 ﻿namespace Battleships.Domain.Grids
 {
+    using Battleships.Domain.Ships;
     using Battleships.Domain.Common;
     using System;
     using System.Text.RegularExpressions;
@@ -15,22 +16,22 @@
                 throw new ArgumentException(directionAsText, nameof(directionAsText));
 
             Point = point ?? throw new ArgumentNullException(nameof(point));
-            Position = directionAsText.ToUpper() == "H"
-                ? Position.Horizontal
-                : Position.Vertical;
+            ShipPosition = directionAsText.ToUpper() == "H"
+                ? ShipPosition.Horizontal
+                : ShipPosition.Vertical;
         }
 
-        public StartPoint(Point point, Position position)
+        public StartPoint(Point point, ShipPosition shipPosition)
         {
             Point = point;
-            Position = position;
+            ShipPosition = shipPosition;
         }
 
         internal Point Point { get; }
 
-        internal Position Position { get; }
+        internal ShipPosition ShipPosition { get; }
 
         public static StartPoint CreateEmptyStartPoint()
-            => new(Point.CreateEmptyPoint(), Position.Horizontal);
+            => new(Point.CreateEmptyPoint(), ShipPosition.Horizontal);
     }
 }

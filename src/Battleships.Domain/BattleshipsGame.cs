@@ -58,7 +58,7 @@
             var defenderAnswer = defender.AnswerToAttacker(attackerPoint);
             attacker.SetDefenderAnswer(attackerPoint, defenderAnswer);
 
-            (defenderAnswer.Reply == Reply.Hit || defenderAnswer.Reply == Reply.Sunk)
+            (defenderAnswer.Reply is Reply.Hit or Reply.Sunk)
                 .IfTrue(() => defender.PrintOceanGrid());
 
             _printMessage($"{attacker.PlayerName} (attacker) called out {attackerPoint}");

@@ -1,5 +1,6 @@
 ﻿namespace UnitTests.Grids
 {
+    using Battleships.Domain.Ships;
     using Battleships.Domain.Grids;
     using FluentAssertions;
     using Xunit;
@@ -44,18 +45,18 @@
         }
 
         [Theory]
-        [InlineData("h", Position.Horizontal)]
-        [InlineData("H", Position.Horizontal)]
-        [InlineData("v", Position.Vertical)]
-        [InlineData("V", Position.Vertical)]
-        public void ShouldCreateStartPoint(string directionAsText, Position expectedPosition)
+        [InlineData("h", ShipPosition.Horizontal)]
+        [InlineData("H", ShipPosition.Horizontal)]
+        [InlineData("v", ShipPosition.Vertical)]
+        [InlineData("V", ShipPosition.Vertical)]
+        public void ShouldCreateStartPoint(string directionAsText, ShipPosition expectedShipPosition)
         {
             // act
             var startPoint = new StartPoint(new Point(0, 0), directionAsText);
 
             // assert
             startPoint.Should().NotBeNull();
-            startPoint.Position.Should().Be(expectedPosition);
+            startPoint.ShipPosition.Should().Be(expectedShipPosition);
         }
 
         [Fact]
@@ -66,7 +67,7 @@
 
             // assert
             startPoint.Should().NotBeNull();
-            startPoint.Position.Should().Be(Position.Horizontal);
+            startPoint.ShipPosition.Should().Be(ShipPosition.Horizontal);
             startPoint.Point.Should().NotBeNull();
             startPoint.Point.Column.Should().Be(0);
             startPoint.Point.Row.Should().Be(0);

@@ -11,3 +11,4 @@
 /test/UnitTests/bin/Debug/net5.0
 /.vs/Battleships/DesignTimeBuild
 /Battleships.sln.DotSettings.user
+/src/Battleships.Domain/Battleships.Domain.csproj.user

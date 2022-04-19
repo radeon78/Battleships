@@ -1,5 +1,6 @@
 ﻿namespace UnitTests.Players
 {
+    using Battleships.Domain.Ships;
     using Moq;
     using Battleships.Domain.Grids;
     using Battleships.Domain.Players;
@@ -30,7 +31,7 @@
         public void ShouldApplyGameRule()
         {
             // arrange
-            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(new StartPoint(new Point(1, 1), Position.Horizontal));
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(new StartPoint(new Point(1, 1), ShipPosition.Horizontal));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(1, 1));
             _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
@@ -65,9 +66,9 @@
             // arrange
             _getPlaceShipStartPointMock
                 .SetupSequence(x => x(It.IsAny<string>()))
-                .Returns(new StartPoint(new Point(0, 0), Position.Horizontal))
-                .Returns(new StartPoint(new Point(2, 2), Position.Horizontal))
-                .Returns(new StartPoint(new Point(5, 5), Position.Vertical));
+                .Returns(new StartPoint(new Point(0, 0), ShipPosition.Horizontal))
+                .Returns(new StartPoint(new Point(2, 2), ShipPosition.Horizontal))
+                .Returns(new StartPoint(new Point(5, 5), ShipPosition.Vertical));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
             _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
@@ -101,11 +102,11 @@
             // arrange
             _getPlaceShipStartPointMock
                 .SetupSequence(x => x(It.IsAny<string>()))
-                .Returns(new StartPoint(new Point(1, 1), Position.Horizontal))
-                .Returns(new StartPoint(new Point(2, 1), Position.Vertical))
-                .Returns(new StartPoint(new Point(5, 1), Position.Vertical))
-                .Returns(new StartPoint(new Point(5, 5), Position.Vertical))
-                .Returns(new StartPoint(new Point(6, 5), Position.Horizontal));
+                .Returns(new StartPoint(new Point(1, 1), ShipPosition.Horizontal))
+                .Returns(new StartPoint(new Point(2, 1), ShipPosition.Vertical))
+                .Returns(new StartPoint(new Point(5, 1), ShipPosition.Vertical))
+                .Returns(new StartPoint(new Point(5, 5), ShipPosition.Vertical))
+                .Returns(new StartPoint(new Point(6, 5), ShipPosition.Horizontal));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
             _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
@@ -140,7 +141,7 @@
             var source = new CancellationTokenSource();
             var token = source.Token;
 
-            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(new StartPoint(new Point(1, 1), Position.Horizontal));
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(new StartPoint(new Point(1, 1), ShipPosition.Horizontal));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
             _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
@@ -181,7 +182,7 @@
                 .Returns(() =>
                 {
                     source!.Cancel();
-                    return new StartPoint(new Point(1, 1), Position.Horizontal);
+                    return new StartPoint(new Point(1, 1), ShipPosition.Horizontal);
                 });
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
@@ -214,7 +215,7 @@
         public void ShouldCallOutPointOnTargetingGridWithNoError()
         {
             // arrange
-            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(1, 1), Position.Horizontal));
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(1, 1), ShipPosition.Horizontal));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(4, 2));
             _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
@@ -248,7 +249,7 @@
         public void ShouldCallOutPointOnTargetingGridWithOneError()
         {
             // arrange
-            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(1, 1), Position.Horizontal));
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(1, 1), ShipPosition.Horizontal));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock
                 .SetupSequence(x => x(It.IsAny<string>()))
@@ -314,8 +315,8 @@
             // arrange
             _getPlaceShipStartPointMock
                 .SetupSequence(x => x(It.IsAny<string>()))
-                .Returns(() => new StartPoint(new Point(3, 9), Position.Horizontal))
-                .Returns(() => new StartPoint(new Point(9, 1), Position.Vertical));
+                .Returns(() => new StartPoint(new Point(3, 9), ShipPosition.Horizontal))
+                .Returns(() => new StartPoint(new Point(9, 1), ShipPosition.Vertical));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
             _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
@@ -353,7 +354,7 @@
         public void ShouldAnswerToAttackerHitAndThenSunk()
         {
             // arrange
-            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), Position.Horizontal));
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), ShipPosition.Horizontal));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
             _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
@@ -420,7 +421,7 @@
         public void ShouldThrowWhenPrintOceanGridIsNull()
         {
             // arrange
-            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), Position.Horizontal));
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), ShipPosition.Horizontal));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
             _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
             _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
@@ -443,7 +444,7 @@
         public void ShouldThrowWhenCallOutPointOnTargetingGridIsNull()
         {
             // arrange
-            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), Position.Horizontal));
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), ShipPosition.Horizontal));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
             _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
@@ -466,7 +467,7 @@
         public void ShouldThrowWhenPrintTargetingGridIsNull()
         {
             // arrange
-            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), Position.Horizontal));
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), ShipPosition.Horizontal));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
             _printErrorMessageMock.Setup(x => x(It.IsAny<string>()));
@@ -489,7 +490,7 @@
         public void ShouldThrowWhenPrintErrorMessageIsNull()
         {
             // arrange
-            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), Position.Horizontal));
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(4, 4), ShipPosition.Horizontal));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(2, 2));
             _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));
@@ -515,7 +516,7 @@
         public void ShouldSetDefenderAnswer(int defenderAnswerShipLength, Reply defenderAnswersReply, bool expectedHit, bool expectedMiss)
         {
             // arrange
-            var startPoint = new StartPoint(new Point(2, 2), Position.Horizontal);
+            var startPoint = new StartPoint(new Point(2, 2), ShipPosition.Horizontal);
             var attackerPoint = new Point(4, 4);
             _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(startPoint);
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(attackerPoint);
@@ -560,7 +561,7 @@
         public void ShouldSunkAllShips()
         {
             // arrange
-            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(2, 2), Position.Horizontal));
+            _getPlaceShipStartPointMock.Setup(x => x(It.IsAny<string>())).Returns(() => new StartPoint(new Point(2, 2), ShipPosition.Horizontal));
             _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
             _callOutPointOnTargetingGridMock.Setup(x => x(It.IsAny<string>())).Returns(new Point(4, 4));
             _printTargetingGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<TargetingGrid>()));

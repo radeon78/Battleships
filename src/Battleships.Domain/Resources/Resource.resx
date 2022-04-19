@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CallOutPositionOnTargetingGrid" xml:space="preserve">
-    <value>{0}, call out a position on your targeting grid.</value>
+    <value>{0}, call out a shipPosition on your targeting grid.</value>
   </data>
   <data name="ErrorFieldMustBeBetween" xml:space="preserve">
     <value>Field must be beetwen {0} and {1}.</value>
   </data>
   <data name="ErrorGetNextPoint" xml:space="preserve">
-    <value>You will have to try choose different starting point or position for {0}. {1}</value>
+    <value>You will have to try choose different starting point or ship position for {0}. {1}</value>
   </data>
   <data name="ErrorNextPointIsOffGrid" xml:space="preserve">
     <value>The next point {0} is off the grid.</value>
@@ -133,10 +133,10 @@
     <value>The point {0} is off the grid.</value>
   </data>
   <data name="ErrorSelectPoint" xml:space="preserve">
-    <value>You will have to try choose different starting point or position for {0}. The point {1} is already selected.</value>
+    <value>You will have to try choose different starting point or ship position for {0}. The point {1} is already selected.</value>
   </data>
   <data name="ErrorStartingPoint" xml:space="preserve">
-    <value>You will have to try choose different starting point or position for {0}. The point {1} is not allowed.</value>
+    <value>You will have to try choose different starting point or ship position for {0}. The point {1} is not allowed.</value>
   </data>
   <data name="ErrorToManyHitsOnShip" xml:space="preserve">
     <value>To many hits on ship {0}.</value>
@@ -145,7 +145,7 @@
     <value>Game ended. {0} won.</value>
   </data>
   <data name="PlaceShipMessage" xml:space="preserve">
-    <value>{0}, place the {1} on the ocean grid. Choose starting point and position horizontal or vertical.</value>
+    <value>{0}, place the {1} on the ocean grid. Choose starting point and ship position horizontal or vertical.</value>
   </data>
   <data name="QuitTheGame" xml:space="preserve">
     <value>If you want to quit the game just press 'q'.</value>

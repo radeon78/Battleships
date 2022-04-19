@@ -7,10 +7,10 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-[assembly: System.Resources.NeutralResourcesLanguage("en")]
+
 namespace Battleships.Domain.Resources {
     using System;
-
+    
     
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
@@ -61,7 +61,7 @@ namespace Battleships.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}, call out a position on your targeting grid..
+        ///   Looks up a localized string similar to {0}, call out a shipPosition on your targeting grid..
         /// </summary>
         internal static string CallOutPositionOnTargetingGrid {
             get {
@@ -79,7 +79,7 @@ namespace Battleships.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You will have to try choose different starting point or position for {0}. {1}.
+        ///   Looks up a localized string similar to You will have to try choose different starting point or ship position for {0}. {1}.
         /// </summary>
         internal static string ErrorGetNextPoint {
             get {
@@ -106,7 +106,7 @@ namespace Battleships.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You will have to try choose different starting point or position for {0}. The point {1} is already selected..
+        ///   Looks up a localized string similar to You will have to try choose different starting point or ship position for {0}. The point {1} is already selected..
         /// </summary>
         internal static string ErrorSelectPoint {
             get {
@@ -115,7 +115,7 @@ namespace Battleships.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You will have to try choose different starting point or position for {0}. The point {1} is not allowed..
+        ///   Looks up a localized string similar to You will have to try choose different starting point or ship position for {0}. The point {1} is not allowed..
         /// </summary>
         internal static string ErrorStartingPoint {
             get {
@@ -142,7 +142,7 @@ namespace Battleships.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}, place the {1} on the ocean grid. Choose starting point and position horizontal or vertical..
+        ///   Looks up a localized string similar to {0}, place the {1} on the ocean grid. Choose starting point and ship position horizontal or vertical..
         /// </summary>
         internal static string PlaceShipMessage {
             get {

@@ -79,7 +79,7 @@ namespace Battleships.UI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type a position a ship will be placed. Choose a H or V (H - horizontal, V - vertical):.
+        ///   Looks up a localized string similar to Type a ship position. Choose a H or V (H - horizontal, V - vertical):.
         /// </summary>
         internal static string TypeDirection {
             get {

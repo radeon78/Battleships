@@ -54,7 +54,7 @@
 
                 if (i == ship.Length) continue;
 
-                var nextPointResult = GetNextPoint(currentPoint, startPoint.Position);
+                var nextPointResult = GetNextPoint(currentPoint, startPoint.ShipPosition);
                 if (nextPointResult.IsSuccess) currentPoint = nextPointResult.Data!;
                 else return Result.Failure(string.Format(Resource.ErrorGetNextPoint, ship, nextPointResult.ErrorMessage));
             }
@@ -114,9 +114,9 @@
         private bool CanSelectPoint(Point currentPoint)
             => OceanPoints[currentPoint.Column, currentPoint.Row].NotFillOut();
 
-        private static Result<Point> GetNextPoint(Point currentPoint, Position position)
+        private static Result<Point> GetNextPoint(Point currentPoint, ShipPosition shipPosition)
         {
-            var nextPoint = position == Position.Horizontal
+            var nextPoint = shipPosition == ShipPosition.Horizontal
                 ? new Point(currentPoint.Column + 1, currentPoint.Row)
                 : new Point(currentPoint.Column, currentPoint.Row + 1);
 
