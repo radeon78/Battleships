@@ -1,8 +1,8 @@
 ﻿namespace Battleships.Domain.Grids
 {
+    using Battleships.Domain.Extensions;
     using Battleships.Domain.Players;
     using Battleships.Domain.Ships;
-    using System;
 
     public class OceanPoint
     {
@@ -17,13 +17,6 @@
             _ship = Ship.CreateEmptyShip();
         }
 
-        internal OceanPoint(OceanPoint oceanPoint)
-        {
-            _fillOut = oceanPoint._fillOut;
-            _hit = oceanPoint._hit;
-            _ship = new Ship(oceanPoint._ship);
-        }
-
         public bool NotFillOut() => !_fillOut;
 
         public bool FillOut() => _fillOut;
@@ -35,12 +28,12 @@
             if (NotFillOut())
                 return Answer.CreateMissAnswer();
 
-            if (!_hit)
+            _hit.IfFalse(() =>
             {
                 _ship.Hit();
                 _hit = true;
-            }
-
+            });
+            
             return _ship.Sunk()
                 ? new Answer(_ship.Length, Reply.Sunk)
                 : new Answer(_ship.Length, Reply.Hit);
@@ -51,19 +44,5 @@
             _ship = ship;
             _fillOut = true;
         }
-
-        public override bool Equals(object? obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-                return false;
-
-            var otherOceanPoint = (OceanPoint)obj;
-            return _fillOut == otherOceanPoint._fillOut &&
-                _hit == otherOceanPoint._hit &&
-                _ship.Equals(otherOceanPoint._ship);
-        }
-
-        public override int GetHashCode() 
-            => HashCode.Combine(_fillOut.GetHashCode(), _hit.GetHashCode(), _ship.GetHashCode());
     }
 }

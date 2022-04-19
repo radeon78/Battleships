@@ -1,5 +1,6 @@
 ﻿namespace Battleships.Domain.Grids
 {
+    using Battleships.Domain.Extensions;
     using Battleships.Domain.Ships;
     using Battleships.Domain.Common;
     using System;
@@ -9,11 +10,11 @@
     {
         public StartPoint(Point point, string directionAsText)
         {
-            if (string.IsNullOrEmpty(directionAsText))
-                throw new ArgumentNullException(nameof(directionAsText));
+            string.IsNullOrEmpty(directionAsText)
+                .IfTrue(() => throw new ArgumentNullException(nameof(directionAsText)));
 
-            if (!Regex.Match(directionAsText, RegexPatterns.DirectionPattern).Success)
-                throw new ArgumentException(directionAsText, nameof(directionAsText));
+            Regex.Match(directionAsText, RegexPatterns.DirectionPattern).Success
+                .IfFalse(() => throw new ArgumentException(directionAsText, nameof(directionAsText)));
 
             Point = point ?? throw new ArgumentNullException(nameof(point));
             ShipPosition = directionAsText.ToUpper() == "H"

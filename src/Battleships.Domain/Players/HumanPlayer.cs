@@ -67,9 +67,9 @@
         }
 
         public override void PrintOceanGrid()
-            => _printOceanGrid(_playerName, new OceanGrid(_oceanGrid));
+            => _printOceanGrid(_playerName, _oceanGrid);
 
         public override void PrintTargetingGrind()
-            => _printTargetingGrid(_playerName, new TargetingGrid(_targetingGrid));
+            => _printTargetingGrid(_playerName, _targetingGrid);
     }
 }

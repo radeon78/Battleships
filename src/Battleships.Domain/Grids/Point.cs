@@ -9,12 +9,12 @@
     {
         public Point(string pointAsText)
         {
-            if (string.IsNullOrEmpty(pointAsText))
-                throw new ArgumentNullException(nameof(pointAsText));
+            string.IsNullOrEmpty(pointAsText)
+                .IfTrue(() => throw new ArgumentNullException(nameof(pointAsText)));
 
-            if (!Regex.Match(pointAsText, RegexPatterns.PointPattern).Success)
-                throw new ArgumentException(pointAsText, nameof(pointAsText));
-
+            Regex.Match(pointAsText, RegexPatterns.PointPattern).Success
+                .IfFalse(() => throw new ArgumentException(pointAsText, nameof(pointAsText)));
+            
             Column = pointAsText[0].ToNumberColumn();
             Row = int.Parse(pointAsText.Remove(0, 1)) - 1;
         }

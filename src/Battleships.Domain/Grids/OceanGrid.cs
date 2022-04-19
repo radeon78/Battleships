@@ -5,39 +5,27 @@
     using Battleships.Domain.Players;
     using Battleships.Domain.Resources;
     using Battleships.Domain.Ships;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     public class OceanGrid
     {
         private readonly List<int> _sunkShips;
+        private readonly OceanPoint[,] _oceanPoints;
 
         internal OceanGrid()
         {
             _sunkShips = new List<int>();
-            OceanPoints = new OceanPoint[Grid.Size, Grid.Size];
+            _oceanPoints = new OceanPoint[Grid.Size, Grid.Size];
 
             for (var i = 0; i < Grid.Size; i++)
             {
                 for (var j = 0; j < Grid.Size; j++)
-                    OceanPoints[i, j] = new OceanPoint();
+                    _oceanPoints[i, j] = new OceanPoint();
             }
         }
 
-        internal OceanGrid(OceanGrid oceanGrid)
-        {
-            _sunkShips = oceanGrid._sunkShips.Select(x => x).ToList();
-            OceanPoints = new OceanPoint[Grid.Size, Grid.Size];
-
-            for (var i = 0; i < Grid.Size; i++)
-            {
-                for (var j = 0; j < Grid.Size; j++)
-                    OceanPoints[i, j] = new OceanPoint(oceanGrid.OceanPoints[i, j]);
-            }
-        }
-
-        public OceanPoint[,] OceanPoints { get; }
+        public OceanPoint this[int column, int row] => _oceanPoints[column, row];
 
         internal Result TryPlaceShip(StartPoint startPoint, Ship ship)
         {
@@ -59,13 +47,13 @@
                 else return Result.Failure(string.Format(Resource.ErrorGetNextPoint, ship, nextPointResult.ErrorMessage));
             }
 
-            pointsToSelect.ForEach(pointToSelect => OceanPoints[pointToSelect.Column, pointToSelect.Row].Put(ship));
+            pointsToSelect.ForEach(pointToSelect => _oceanPoints[pointToSelect.Column, pointToSelect.Row].Put(ship));
             return Result.Success();
         }
 
         internal Answer TryHit(Point point)
         {
-            var answer = OceanPoints[point.Column, point.Row].TryHit();
+            var answer = _oceanPoints[point.Column, point.Row].TryHit();
             (answer.Reply == Reply.Sunk).IfTrue(() => _sunkShips.Add(answer.ShipLength));
 
             return answer;
@@ -74,45 +62,8 @@
         internal bool AllShipsSunk(int[] allowedShipsInPlayRule)
             => allowedShipsInPlayRule.Length <= _sunkShips.Count && !allowedShipsInPlayRule.Except(_sunkShips).Any();
 
-        public override bool Equals(object? obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-                return false;
-
-            var otherOceanGrid = (OceanGrid)obj;
-
-            if (!_sunkShips.SequenceEqual(otherOceanGrid._sunkShips))
-                return false;
-
-            for (var i = 0; i < Grid.Size; i++)
-            {
-                for (var j = 0; j < Grid.Size; j++)
-                {
-                    if (!OceanPoints[i, j].Equals(otherOceanGrid.OceanPoints[i, j]))
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
-        public override int GetHashCode()
-        {
-            var hash = new HashCode();
-
-            _sunkShips.ForEach(sunkShip => hash.Add(sunkShip.GetHashCode()));
-
-            for (var i = 0; i < Grid.Size; i++)
-            {
-                for (var j = 0; j < Grid.Size; j++)
-                    hash.Add(OceanPoints[i, j].GetHashCode());
-            }
-
-            return hash.ToHashCode();
-        }
-
         private bool CanSelectPoint(Point currentPoint)
-            => OceanPoints[currentPoint.Column, currentPoint.Row].NotFillOut();
+            => _oceanPoints[currentPoint.Column, currentPoint.Row].NotFillOut();
 
         private static Result<Point> GetNextPoint(Point currentPoint, ShipPosition shipPosition)
         {

@@ -34,19 +34,19 @@
 
         public static void PrintOceanGrid(string playerName, OceanGrid oceanGrid)
         {
-            const string shipChar = "O";
-            const string shipHitChar = "X";
+            const string ship = "O";
+            const string shipIsHit = "X";
 
             Console.WriteLine(Resource.PlayerOceanGrid, Environment.NewLine, playerName);
             CommonUserInterface.PrintGrid((column, row) =>
             {
                 var pointStatus = string.Empty;
+                
+                oceanGrid[column, row].FillOut()
+                    .IfTrue(() => pointStatus = ship);
 
-                oceanGrid.OceanPoints[column, row].FillOut()
-                    .IfTrue(() => pointStatus = shipChar);
-
-                oceanGrid.OceanPoints[column, row].Hit()
-                    .IfTrue(() => pointStatus = shipHitChar);
+                oceanGrid[column, row].Hit()
+                    .IfTrue(() => pointStatus = shipIsHit);
 
                 return pointStatus;
             });

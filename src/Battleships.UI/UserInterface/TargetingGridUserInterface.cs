@@ -25,18 +25,18 @@
 
         public static void PrintTargetingGrid(string playerName, TargetingGrid targetingGrid)
         {
-            const string missChar = "-";
+            const string shipIsMiss = "-";
 
             Console.WriteLine(Resource.PlayerTargetingGrid, Environment.NewLine, playerName);
             CommonUserInterface.PrintGrid((column, row) =>
             {
                 var pointStatus = string.Empty;
 
-                targetingGrid.TargetingPoints[column, row].Miss()
-                    .IfTrue(() => pointStatus = missChar);
+                targetingGrid[column, row].Miss()
+                    .IfTrue(() => pointStatus = shipIsMiss);
 
-                targetingGrid.TargetingPoints[column, row].Hit()
-                    .IfTrue(() => pointStatus = targetingGrid.TargetingPoints[column, row].DisplayShipLength());
+                targetingGrid[column, row].Hit()
+                    .IfTrue(() => pointStatus = targetingGrid[column, row].DisplayShipLength());
 
                 return pointStatus;
             });

@@ -543,17 +543,17 @@
             // assert
             void PrintTargetingGrid(string playerName, TargetingGrid targetingGrid)
             {
-                targetingGrid.TargetingPoints[attackerPoint.Column, attackerPoint.Row].Hit().Should().Be(expectedHit);
-                targetingGrid.TargetingPoints[attackerPoint.Column, attackerPoint.Row].Miss().Should().Be(expectedMiss);
-                targetingGrid.TargetingPoints[attackerPoint.Column, attackerPoint.Row].DisplayShipLength().Should().Be(defenderAnswerShipLength.ToString());
+                targetingGrid[attackerPoint.Column, attackerPoint.Row].Hit().Should().Be(expectedHit);
+                targetingGrid[attackerPoint.Column, attackerPoint.Row].Miss().Should().Be(expectedMiss);
+                targetingGrid[attackerPoint.Column, attackerPoint.Row].DisplayShipLength().Should().Be(defenderAnswerShipLength.ToString());
             };
 
             void PrintOceanGrid(string playerName, OceanGrid oceanGrid)
             {
-                oceanGrid.OceanPoints[startPoint.Point.Column - 1, startPoint.Point.Row].FillOut().Should().BeFalse();
-                oceanGrid.OceanPoints[startPoint.Point.Column, startPoint.Point.Row].FillOut().Should().BeTrue();
-                oceanGrid.OceanPoints[startPoint.Point.Column + 1, startPoint.Point.Row].FillOut().Should().BeTrue();
-                oceanGrid.OceanPoints[startPoint.Point.Column + 3, startPoint.Point.Row].FillOut().Should().BeFalse();
+                oceanGrid[startPoint.Point.Column - 1, startPoint.Point.Row].FillOut().Should().BeFalse();
+                oceanGrid[startPoint.Point.Column, startPoint.Point.Row].FillOut().Should().BeTrue();
+                oceanGrid[startPoint.Point.Column + 1, startPoint.Point.Row].FillOut().Should().BeTrue();
+                oceanGrid[startPoint.Point.Column + 3, startPoint.Point.Row].FillOut().Should().BeFalse();
             };
         }
 
