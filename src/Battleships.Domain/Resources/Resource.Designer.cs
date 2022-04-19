@@ -61,7 +61,7 @@ namespace Battleships.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}, call out a shipPosition on your targeting grid..
+        ///   Looks up a localized string similar to {0}, call out a position on your targeting grid..
         /// </summary>
         internal static string CallOutPositionOnTargetingGrid {
             get {
@@ -133,7 +133,7 @@ namespace Battleships.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game ended. {0} won..
+        ///   Looks up a localized string similar to Game ended. {0} won!.
         /// </summary>
         internal static string GameEnded {
             get {
@@ -160,7 +160,7 @@ namespace Battleships.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Well done. All ships are on the grid. Let&apos;s start the game..
+        ///   Looks up a localized string similar to Well done. All ships are on the grid. Let&apos;s start the game!.
         /// </summary>
         internal static string ShipsOnGrid {
             get {

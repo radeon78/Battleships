@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CallOutPositionOnTargetingGrid" xml:space="preserve">
-    <value>{0}, call out a shipPosition on your targeting grid.</value>
+    <value>{0}, call out a position on your targeting grid.</value>
   </data>
   <data name="ErrorFieldMustBeBetween" xml:space="preserve">
     <value>Field must be beetwen {0} and {1}.</value>
@@ -142,7 +142,7 @@
     <value>To many hits on ship {0}.</value>
   </data>
   <data name="GameEnded" xml:space="preserve">
-    <value>Game ended. {0} won.</value>
+    <value>Game ended. {0} won!</value>
   </data>
   <data name="PlaceShipMessage" xml:space="preserve">
     <value>{0}, place the {1} on the ocean grid. Choose starting point and ship position horizontal or vertical.</value>
@@ -151,7 +151,7 @@
     <value>If you want to quit the game just press 'q'.</value>
   </data>
   <data name="ShipsOnGrid" xml:space="preserve">
-    <value>Well done. All ships are on the grid. Let's start the game.</value>
+    <value>Well done. All ships are on the grid. Let's start the game!</value>
   </data>
   <data name="WelcomeGame" xml:space="preserve">
     <value>You are welcome in the Battleships Game.</value>
