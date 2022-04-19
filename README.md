@@ -4,7 +4,7 @@ Battleships game for two players a single human player and computer player.
 You can configure the game to play a computer player against a computer player as well. 
 Furthermore you can configure the game to play a human player against another human player.
 
-The game allow to define count of ships and kind of each ship.
+The game allow to define count of ships in your fleet  and kind of each ship.
 
 ## Get Started
 
@@ -24,7 +24,7 @@ dotnet run --project ./battleships/src/battleships.ui/battleships.ui.csproj
 
 ## Custom configuring
 
-### Defining game rule
+### Define own game rule
 
 You can define custom game rule by implementing interface IGameRule
 
@@ -37,7 +37,7 @@ public interface IGameRule
 }
 ```
 
-e.g. defining fleet with two ships one Carrier (5 squares) and one Submarine (3 squares)
+e.g. Defining fleet with two ships one Carrier (5 squares) and one Submarine (3 squares)
 
 ```csharp
 public class TwoShipsGameRule : IGameRule
@@ -62,10 +62,30 @@ Rules for placing ships:
 }
 ```
 
-defined rule you can inject to BattleshipsGame
+Defined rule inject to BattleshipsGame
 
 ```csharp
+...
 var game = new BattleshipsGame(
     gameRule: new TwoShipsGameRule(),
     printMessage: (message) => Console.WriteLine(Environment.NewLine + message));
+...
+```
+
+### Define players
+
+Use PlayerFactory which helps in creating human and computer player. Pass created players to the Start method as parameters.
+
+```csharp
+var tokenSource = new CancellationTokenSource();
+var token = tokenSource.Token;
+
+var game = new BattleshipsGame(
+    gameRule: new TwoShipsGameRule(),
+    printMessage: (message) => Console.WriteLine(Environment.NewLine + message));
+
+game.Start(
+    firstPlayer: PlayerFactory.CreateHumanPlayer(tokenSource),
+    secondPlayer: PlayerFactory.CreateComputerPlayer("Computer"),
+    cancellationToken: token);
 ```
