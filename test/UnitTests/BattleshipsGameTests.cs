@@ -71,7 +71,7 @@
             secondPlayerMock.Setup(x => x.PlayerName).Returns("player2");
 
             var printMessageNumberCalls = 0;
-            var game = new BattleshipsGame(new FakeOneShipGameRule(), printMessage);
+            var game = new BattleshipsGame(new FakeOneShipGameRule(), PrintMessage);
 
             // act
             game.Start(firstPlayerMock.Object, secondPlayerMock.Object, token);
@@ -79,12 +79,12 @@
             // assert
             printMessageNumberCalls.Should().Be(11);
 
-            void printMessage(string message)
+            void PrintMessage(string message)
             {
                 printMessageNumberCalls++;
 
                 if (printMessageNumberCalls == 11)
-                    message.Should().Be("Game ended. player1 won.");
+                    message.Should().Be("Game ended. player1 won!");
             }
 
             firstPlayerMock.Verify(x => x.PrintTargetingGrind(), Times.Exactly(2));
