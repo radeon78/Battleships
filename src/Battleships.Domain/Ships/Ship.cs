@@ -14,11 +14,8 @@
 
         public Ship(int length)
         {
-            if (length is < _minLength or > _maxLength)
-            {
-                throw new ArgumentException(
-                    string.Format(Resource.ErrorFieldMustBeBetween, _minLength, _maxLength), nameof(length));
-            }
+            (length is < _minLength or > _maxLength)
+                .IfTrue(() => throw new ArgumentException(string.Format(Resource.ErrorFieldMustBeBetween, _minLength, _maxLength), nameof(length)));
 
             Length = length;
         }

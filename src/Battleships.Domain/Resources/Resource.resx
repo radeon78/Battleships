@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AttackerCalledOutPoint" xml:space="preserve">
+    <value>{0} (attacker) called out {1}</value>
+  </data>
   <data name="CallOutPositionOnTargetingGrid" xml:space="preserve">
     <value>{0}, call out a position on your targeting grid.</value>
+  </data>
+  <data name="DefenderAnswered" xml:space="preserve">
+    <value>{0} (defender) answered {1}</value>
   </data>
   <data name="ErrorFieldMustBeBetween" xml:space="preserve">
     <value>Field must be beetwen {0} and {1}.</value>

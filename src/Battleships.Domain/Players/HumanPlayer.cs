@@ -59,7 +59,8 @@
             {
                 point = _callOutPointOnTargetingGrid(string.Format(Resource.CallOutPositionOnTargetingGrid, _playerName));
                 pointOutOfGrid = point.PointIsOutOfGrid();
-                if (pointOutOfGrid) _printErrorMessage(string.Format(Resource.ErrorPointIsOffGrid, point));
+                pointOutOfGrid
+                    .IfTrue(() => _printErrorMessage(string.Format(Resource.ErrorPointIsOffGrid, point)));
             }
             while (pointOutOfGrid);
 

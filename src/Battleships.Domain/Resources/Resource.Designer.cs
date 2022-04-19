@@ -61,11 +61,29 @@ namespace Battleships.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} (attacker) called out {1}.
+        /// </summary>
+        internal static string AttackerCalledOutPoint {
+            get {
+                return ResourceManager.GetString("AttackerCalledOutPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}, call out a position on your targeting grid..
         /// </summary>
         internal static string CallOutPositionOnTargetingGrid {
             get {
                 return ResourceManager.GetString("CallOutPositionOnTargetingGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} (defender) answered {1}.
+        /// </summary>
+        internal static string DefenderAnswered {
+            get {
+                return ResourceManager.GetString("DefenderAnswered", resourceCulture);
             }
         }
         
