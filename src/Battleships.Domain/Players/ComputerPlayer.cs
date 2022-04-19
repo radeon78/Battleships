@@ -10,10 +10,17 @@
         public override Point CallOutPointOnTargetingGrid()
         {
             var random = new Random();
+            Point point;
 
-            return new Point(
-                random.Next(0, Grid.Size),
-                random.Next(0, Grid.Size));
+            do
+            {
+                point = new Point(
+                    random.Next(0, Grid.Size),
+                    random.Next(0, Grid.Size));
+
+            } while (_targetingGrid.CalledOut(point));
+
+            return point;
         }
     }
 }

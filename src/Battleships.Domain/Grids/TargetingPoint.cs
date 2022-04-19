@@ -32,6 +32,8 @@
 
         public bool Miss() => _calledOut && !_hit;
 
+        internal bool CalledOut() => _calledOut;
+
         internal void SetAnswer(Answer answer)
         {
             _calledOut = true;

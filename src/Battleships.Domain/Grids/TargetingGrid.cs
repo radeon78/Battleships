@@ -32,6 +32,9 @@
         internal void SetAnswer(Point attackerPoint, Answer answer)
             => TargetingPoints[attackerPoint.Column, attackerPoint.Row].SetAnswer(answer);
 
+        internal bool CalledOut(Point point)
+            => TargetingPoints[point.Column, point.Row].CalledOut();
+
         public override bool Equals(object? obj)
         {
             if (obj == null || GetType() != obj.GetType())
