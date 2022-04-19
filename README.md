@@ -6,6 +6,10 @@ Furthermore you can configure the game to play a human player against another hu
 
 The game allow to define count of ships in your fleet  and kind of each ship.
 
+## Pre-requisites
+
+Application requires .NET 5 installed. You can download it from https://dotnet.microsoft.com/en-us/download/dotnet/5.0
+
 ## Get Started
 
 ### Clone repo locally
@@ -74,7 +78,7 @@ var game = new BattleshipsGame(
 
 ### Define players
 
-Use PlayerFactory which helps in creating human and computer player. Pass created players to the Start method as parameters.
+Use PlayerFactory which helps in creating human and computer players. Pass created players to the Start method as parameters.
 
 ```csharp
 var tokenSource = new CancellationTokenSource();
