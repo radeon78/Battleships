@@ -56,7 +56,7 @@ public class TwoShipsGameRule : IGameRule
     public string GetGameRuleDescription()
         => @"Secretly place your fleet of two on your ocean grid. Your opponent does the same.
 Rules for placing ships:
-  - Place each ship in any horizontal or vertical position. For each ship you be asked to type a starting point and position then application calculate and select the rest points on ocean grid
+  - Place each ship in any horizontal or vertical position. For each ship you will be asked to type a starting point and position then application calculate and select the rest points on ocean grid
   - Do not place a ship so that any part of it overlaps letters, numbers, the edge of the grid or another ship
   - If you are the first player to sink your opponent's entire fleet of two ships, you win the game!";
 
