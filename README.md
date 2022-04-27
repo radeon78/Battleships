@@ -8,7 +8,7 @@ The game allow to define count of ships in your fleet  and kind of each ship.
 
 ## Pre-requisites
 
-Application requires .NET 5 installed. You can download it from https://dotnet.microsoft.com/en-us/download/dotnet/5.0
+Application requires .NET 6 installed. You can download it from https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
 ## Get Started
 

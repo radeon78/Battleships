@@ -12,3 +12,7 @@
 /.vs/Battleships/DesignTimeBuild
 /Battleships.sln.DotSettings.user
 /src/Battleships.Domain/Battleships.Domain.csproj.user
+/.vs/Battleships/v17
+/src/Battleships.Domain/bin/Debug/net6.0
+/src/Battleships.UI/bin/Debug/net6.0
+/test/UnitTests/bin/Debug/net6.0

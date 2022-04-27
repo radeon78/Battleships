@@ -1,24 +1,14 @@
-﻿namespace Battleships.UI
-{
-    using Battleships.Domain;
-    using System;
-    using System.Threading;
+﻿using Battleships.Domain;
+using Battleships.UI;
 
-    internal static class Program
-    {
-        internal static void Main()
-        {
-            var tokenSource = new CancellationTokenSource();
-            var token = tokenSource.Token;
+var tokenSource = new CancellationTokenSource();
+var token = tokenSource.Token;
 
-            var game = new BattleshipsGame(
-                gameRule: new ThreeShipsGameRule(),
-                printMessage: (message) => Console.WriteLine(Environment.NewLine + message));
+var game = new BattleshipsGame(
+    gameRule: new ThreeShipsGameRule(),
+    printMessage: (message) => Console.WriteLine(Environment.NewLine + message));
 
-            game.Start(
-                firstPlayer: PlayerFactory.CreateHumanPlayer(tokenSource),
-                secondPlayer: PlayerFactory.CreateComputerPlayer("Computer"),
-                cancellationToken: token);
-        }
-    }
-}
+game.Start(
+    firstPlayer: PlayerFactory.CreateHumanPlayer(tokenSource),
+    secondPlayer: PlayerFactory.CreateComputerPlayer("Computer"),
+    cancellationToken: token);
