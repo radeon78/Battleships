@@ -85,7 +85,7 @@
         public void ShouldGenerateRandomPlaceShipStartPoint()
         {
             // act
-            var startPoint = Player.GenerateRandomPlaceShipStartPoint();
+            var startPoint = ComputerPlayer.GenerateRandomPlaceShipStartPoint();
 
             // assert
             startPoint.Point.Column.Should().BeGreaterThanOrEqualTo(0);

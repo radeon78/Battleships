@@ -67,10 +67,10 @@
             return point;
         }
 
-        public override void PrintOceanGrid()
-            => _printOceanGrid(_playerName, _oceanGrid);
-
         public override void PrintTargetingGrind()
             => _printTargetingGrid(_playerName, _targetingGrid);
+
+        public override void PrintOceanGrid()
+            => _printOceanGrid(_playerName, _oceanGrid);
     }
 }

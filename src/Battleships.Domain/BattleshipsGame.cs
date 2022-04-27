@@ -20,8 +20,8 @@
         }
 
         public void Start(
-            Player firstPlayer,
-            Player secondPlayer,
+            IPlayer firstPlayer,
+            IPlayer secondPlayer,
             CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested) return;
@@ -40,12 +40,15 @@
 
             _printMessage(Resource.ShipsOnGrid);
 
-            Play(firstPlayer, secondPlayer, cancellationToken);
+            PlayRound(
+                attacker: firstPlayer,
+                defender: secondPlayer,
+                cancellationToken: cancellationToken);
         }
 
-        private void Play(
-            IAttackerPlayer attacker,
-            IDefenderPlayer defender,
+        private void PlayRound(
+            IPlayer attacker,
+            IPlayer defender,
             CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested) return;
@@ -63,14 +66,17 @@
 
             _printMessage(string.Format(Resource.AttackerCalledOutPoint, attacker.PlayerName, attackerPoint));
             _printMessage(string.Format(Resource.DefenderAnswered, defender.PlayerName, defenderAnswer));
-            
+
             if (defender.AllShipsSunk())
             {
                 _printMessage(string.Format(Resource.GameEnded, attacker.PlayerName));
                 return;
             }
 
-            Play((IAttackerPlayer)defender, (IDefenderPlayer)attacker, cancellationToken);
+            PlayRound(
+                attacker: defender,
+                defender: attacker,
+                cancellationToken: cancellationToken);
         }
     }
 }

@@ -48,7 +48,7 @@
             // arrange
             var token = CancellationToken.None;
 
-            var firstPlayerMock = new Mock<Player>("player1");
+            var firstPlayerMock = new Mock<IPlayer>();
             firstPlayerMock.Setup(x => x.ApplyGameRule(It.IsAny<IGameRule>()));
             firstPlayerMock.Setup(x => x.PlaceShipsOnOceanGrid(token));
             firstPlayerMock.Setup(x => x.PrintOceanGrid());
@@ -59,7 +59,7 @@
             firstPlayerMock.SetupSequence(x => x.AllShipsSunk()).Returns(false).Returns(true);
             firstPlayerMock.Setup(x => x.PlayerName).Returns("player1");
 
-            var secondPlayerMock = new Mock<Player>("player2");
+            var secondPlayerMock = new Mock<IPlayer>();
             secondPlayerMock.Setup(x => x.ApplyGameRule(It.IsAny<IGameRule>()));
             secondPlayerMock.Setup(x => x.PlaceShipsOnOceanGrid(token));
             secondPlayerMock.Setup(x => x.PrintOceanGrid());
