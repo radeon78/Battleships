@@ -11,8 +11,8 @@ public class ThreeShipsGameRule : IGameRule
         => Array.AsReadOnly(
             new Ship[]
             {
+                CreateCarrier(),
                 CreateBattleship(),
-                CreateDestroyer(),
                 CreateDestroyer()
             });
     public string GetGameRuleDescription()
@@ -22,7 +22,9 @@ Rules for placing ships:
   - Do not place a ship so that any part of it overlaps letters, numbers, the edge of the grid or another ship
   - If you are the first player to sink your opponent's entire fleet of three ships, you win the game!";
 
-    private static Ship CreateBattleship() => new(5);
+    private static Ship CreateCarrier() => new(5);
 
-    private static Ship CreateDestroyer() => new(4);
+    private static Ship CreateBattleship() => new(4);
+
+    private static Ship CreateDestroyer() => new(2);
 }
