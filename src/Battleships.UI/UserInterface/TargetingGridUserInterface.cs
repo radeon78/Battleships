@@ -1,45 +1,44 @@
-﻿namespace Battleships.UI.UserInterface
+﻿namespace Battleships.UI.UserInterface;
+
+using Battleships.UI.Resources;
+using Battleships.Domain.Common;
+using System.Text.RegularExpressions;
+using Battleships.Domain.Extensions;
+using Battleships.Domain.Grids;
+using System;
+using System.Threading;
+
+public static class TargetingGridUserInterface
 {
-    using Battleships.UI.Resources;
-    using Battleships.Domain.Common;
-    using System.Text.RegularExpressions;
-    using Battleships.Domain.Extensions;
-    using Battleships.Domain.Grids;
-    using System;
-    using System.Threading;
-
-    public static class TargetingGridUserInterface
+    public static Point CallOutPointOnTargetingGrid(string message, CancellationTokenSource tokenSource)
     {
-        public static Point CallOutPointOnTargetingGrid(string message, CancellationTokenSource tokenSource)
+        Console.WriteLine(Environment.NewLine + message);
+        var pointAsText = CommonUserInterface.GetInputDataFromUser(
+            displayMessageToUser: Resource.TypePoint,
+            inputValid: input => Regex.Match(input, RegexPatterns.PointPattern).Success,
+            tokenSource: tokenSource);
+
+        return tokenSource.IsCancellationRequested
+            ? Point.CreateEmptyPoint()
+            : new Point(pointAsText);
+    }
+
+    public static void PrintTargetingGrid(string playerName, TargetingGrid targetingGrid)
+    {
+        const string shipIsMiss = "-";
+
+        Console.WriteLine(Resource.PlayerTargetingGrid, Environment.NewLine, playerName);
+        CommonUserInterface.PrintGrid((column, row) =>
         {
-            Console.WriteLine(Environment.NewLine + message);
-            var pointAsText = CommonUserInterface.GetInputDataFromUser(
-                displayMessageToUser: Resource.TypePoint,
-                inputValid: input => Regex.Match(input, RegexPatterns.PointPattern).Success,
-                tokenSource: tokenSource);
+            var pointStatus = string.Empty;
 
-            return tokenSource.IsCancellationRequested
-                ? Point.CreateEmptyPoint()
-                : new Point(pointAsText);
-        }
+            targetingGrid[column, row].Miss()
+                .WhenTrue(() => pointStatus = shipIsMiss);
 
-        public static void PrintTargetingGrid(string playerName, TargetingGrid targetingGrid)
-        {
-            const string shipIsMiss = "-";
+            targetingGrid[column, row].Hit()
+                .WhenTrue(() => pointStatus = targetingGrid[column, row].DisplayShipLength());
 
-            Console.WriteLine(Resource.PlayerTargetingGrid, Environment.NewLine, playerName);
-            CommonUserInterface.PrintGrid((column, row) =>
-            {
-                var pointStatus = string.Empty;
-
-                targetingGrid[column, row].Miss()
-                    .WhenTrue(() => pointStatus = shipIsMiss);
-
-                targetingGrid[column, row].Hit()
-                    .WhenTrue(() => pointStatus = targetingGrid[column, row].DisplayShipLength());
-
-                return pointStatus;
-            });
-        }
+            return pointStatus;
+        });
     }
 }

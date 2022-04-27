@@ -1,9 +1,8 @@
-﻿namespace Battleships.Domain.Players
+﻿namespace Battleships.Domain.Players;
+
+public enum Reply
 {
-    public enum Reply
-    {
-        Miss,
-        Hit,
-        Sunk,
-    }
+    Miss,
+    Hit,
+    Sunk,
 }

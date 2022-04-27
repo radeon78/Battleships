@@ -1,8 +1,7 @@
-﻿namespace Battleships.Domain.Ships
+﻿namespace Battleships.Domain.Ships;
+
+public enum ShipPosition
 {
-    public enum ShipPosition
-    {
-        Horizontal = 0,
-        Vertical = 1
-    }
+    Horizontal = 0,
+    Vertical = 1
 }

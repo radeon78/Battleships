@@ -1,36 +1,35 @@
-﻿namespace Battleships.Domain.Grids
+﻿namespace Battleships.Domain.Grids;
+
+using Battleships.Domain.Players;
+
+public class TargetingPoint
 {
-    using Battleships.Domain.Players;
+    private bool _hit;
+    private bool _calledOut;
+    private int _shipLength;
 
-    public class TargetingPoint
+    internal TargetingPoint()
     {
-        private bool _hit;
-        private bool _calledOut;
-        private int _shipLength;
+        _hit = false;
+        _calledOut = false;
+        _shipLength = 0;
+    }
 
-        internal TargetingPoint()
-        {
-            _hit = false;
-            _calledOut = false;
-            _shipLength = 0;
-        }
+    public bool Hit() => _hit;
 
-        public bool Hit() => _hit;
+    public string DisplayShipLength() => _shipLength.ToString();
 
-        public string DisplayShipLength() => _shipLength.ToString();
+    public bool Miss() => _calledOut && !_hit;
 
-        public bool Miss() => _calledOut && !_hit;
+    internal bool CalledOut() => _calledOut;
 
-        internal bool CalledOut() => _calledOut;
+    internal void SetAnswer(Answer answer)
+    {
+        _calledOut = true;
 
-        internal void SetAnswer(Answer answer)
-        {
-            _calledOut = true;
+        if (answer.Reply == Reply.Miss) return;
 
-            if (answer.Reply == Reply.Miss) return;
-
-            _hit = true;
-            _shipLength = answer.ShipLength;
-        }
+        _hit = true;
+        _shipLength = answer.ShipLength;
     }
 }

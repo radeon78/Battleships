@@ -1,56 +1,55 @@
-﻿namespace Battleships.Domain.Players
+﻿namespace Battleships.Domain.Players;
+
+using Battleships.Domain.Ships;
+using System.Threading;
+using Battleships.Domain.Extensions;
+using Battleships.Domain.Grids;
+using System;
+
+public class ComputerPlayer : Player
 {
-    using Battleships.Domain.Ships;
-    using System.Threading;
-    using Battleships.Domain.Extensions;
-    using Battleships.Domain.Grids;
-    using System;
+    public ComputerPlayer(string playerName) : base(playerName) { }
 
-    public class ComputerPlayer : Player
+    public override void PlaceShipsOnOceanGrid(CancellationToken cancellationToken)
     {
-        public ComputerPlayer(string playerName) : base(playerName) { }
-
-        public override void PlaceShipsOnOceanGrid(CancellationToken cancellationToken)
+        _allowedShips.ForEach(ship =>
         {
-            _allowedShips.ForEach(ship =>
-            {
-                StartPoint startPoint;
-                do
-                {
-                    if (cancellationToken.IsCancellationRequested) return;
-                    startPoint = GenerateRandomPlaceShipStartPoint();
-                }
-                while (_oceanGrid.TryPlaceShip(startPoint, ship).IsFailure);
-            }, cancellationToken);
-        }
-
-        public override Point CallOutPointOnTargetingGrid()
-        {
-            var random = new Random();
-            Point point;
-
+            StartPoint startPoint;
             do
             {
-                point = new Point(
-                    random.Next(0, Grid.Size),
-                    random.Next(0, Grid.Size));
+                if (cancellationToken.IsCancellationRequested) return;
+                startPoint = GenerateRandomPlaceShipStartPoint();
+            }
+            while (_oceanGrid.TryPlaceShip(startPoint, ship).IsFailure);
+        }, cancellationToken);
+    }
 
-            } while (_targetingGrid.CalledOut(point));
+    public override Point CallOutPointOnTargetingGrid()
+    {
+        var random = new Random();
+        Point point;
 
-            return point;
-        }
-
-        internal static StartPoint GenerateRandomPlaceShipStartPoint()
+        do
         {
-            var random = new Random();
-
-            var point = new Point(
+            point = new Point(
                 random.Next(0, Grid.Size),
                 random.Next(0, Grid.Size));
 
-            var direction = (ShipPosition)random.Next(0, 1);
+        } while (_targetingGrid.CalledOut(point));
 
-            return new StartPoint(point, direction);
-        }
+        return point;
+    }
+
+    internal static StartPoint GenerateRandomPlaceShipStartPoint()
+    {
+        var random = new Random();
+
+        var point = new Point(
+            random.Next(0, Grid.Size),
+            random.Next(0, Grid.Size));
+
+        var direction = (ShipPosition)random.Next(0, 1);
+
+        return new StartPoint(point, direction);
     }
 }

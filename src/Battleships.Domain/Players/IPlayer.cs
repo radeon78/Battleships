@@ -1,27 +1,26 @@
-﻿namespace Battleships.Domain.Players
+﻿namespace Battleships.Domain.Players;
+
+using Battleships.Domain.Grids;
+using Battleships.Domain;
+using System.Threading;
+
+public interface IPlayer
 {
-    using Battleships.Domain.Grids;
-    using Battleships.Domain;
-    using System.Threading;
+    string PlayerName { get; }
 
-    public interface IPlayer
-    {
-        string PlayerName { get; }
+    void ApplyGameRule(IGameRule gameRule);
 
-        void ApplyGameRule(IGameRule gameRule);
+    void PlaceShipsOnOceanGrid(CancellationToken cancellationToken);
 
-        void PlaceShipsOnOceanGrid(CancellationToken cancellationToken);
+    Point CallOutPointOnTargetingGrid();
 
-        Point CallOutPointOnTargetingGrid();
+    void SetDefenderAnswer(Point attackerPoint, Answer answer);
 
-        void SetDefenderAnswer(Point attackerPoint, Answer answer);
+    void PrintTargetingGrind();
 
-        void PrintTargetingGrind();
+    Answer AnswerToAttacker(Point attackerPoint);
 
-        Answer AnswerToAttacker(Point attackerPoint);
+    bool AllShipsSunk();
 
-        bool AllShipsSunk();
-
-        void PrintOceanGrid();
-    }
+    void PrintOceanGrid();
 }

@@ -1,13 +1,12 @@
-﻿namespace Battleships.Domain.Grids
-{
-    public static class Grid
-    {
-        public static int Size => 10;
+﻿namespace Battleships.Domain.Grids;
 
-        internal static bool PointIsOutOfGrid(this Point point)
-            => point.Column > Size - 1 ||
-               point.Column < 0 ||
-               point.Row > Size - 1 ||
-               point.Row < 0;
-    }
+public static class Grid
+{
+    public static int Size => 10;
+
+    internal static bool PointIsOutOfGrid(this Point point)
+        => point.Column > Size - 1 ||
+           point.Column < 0 ||
+           point.Row > Size - 1 ||
+           point.Row < 0;
 }

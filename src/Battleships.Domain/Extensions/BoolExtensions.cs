@@ -1,19 +1,18 @@
-﻿namespace Battleships.Domain.Extensions
+﻿namespace Battleships.Domain.Extensions;
+
+using System;
+
+public static class BoolExtensions
 {
-    using System;
-
-    public static class BoolExtensions
+    public static bool WhenTrue(this bool source, Action action)
     {
-        public static bool WhenTrue(this bool source, Action action)
-        {
-            if (source) action();
-            return source;
-        }
+        if (source) action();
+        return source;
+    }
 
-        public static bool WhenFalse(this bool source, Action action)
-        {
-            if (!source) action();
-            return source;
-        }
+    public static bool WhenFalse(this bool source, Action action)
+    {
+        if (!source) action();
+        return source;
     }
 }

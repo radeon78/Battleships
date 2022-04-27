@@ -1,28 +1,27 @@
-﻿namespace Battleships.Domain.Grids
+﻿namespace Battleships.Domain.Grids;
+
+using Battleships.Domain.Players;
+
+public class TargetingGrid
 {
-    using Battleships.Domain.Players;
+    private readonly TargetingPoint[,] _targetingPoints;
 
-    public class TargetingGrid
+    internal TargetingGrid()
     {
-        private readonly TargetingPoint[,] _targetingPoints;
+        _targetingPoints = new TargetingPoint[Grid.Size, Grid.Size];
 
-        internal TargetingGrid()
+        for (var i = 0; i < Grid.Size; i++)
         {
-            _targetingPoints = new TargetingPoint[Grid.Size, Grid.Size];
-
-            for (var i = 0; i < Grid.Size; i++)
-            {
-                for (var j = 0; j < Grid.Size; j++)
-                    _targetingPoints[i, j] = new TargetingPoint();
-            }
+            for (var j = 0; j < Grid.Size; j++)
+                _targetingPoints[i, j] = new TargetingPoint();
         }
-
-        public TargetingPoint this[int column, int row] => _targetingPoints[column, row];
-        
-        internal void SetAnswer(Point attackerPoint, Answer answer)
-            => _targetingPoints[attackerPoint.Column, attackerPoint.Row].SetAnswer(answer);
-
-        internal bool CalledOut(Point point)
-            => _targetingPoints[point.Column, point.Row].CalledOut();
     }
+
+    public TargetingPoint this[int column, int row] => _targetingPoints[column, row];
+        
+    internal void SetAnswer(Point attackerPoint, Answer answer)
+        => _targetingPoints[attackerPoint.Column, attackerPoint.Row].SetAnswer(answer);
+
+    internal bool CalledOut(Point point)
+        => _targetingPoints[point.Column, point.Row].CalledOut();
 }
