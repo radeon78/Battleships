@@ -25,7 +25,7 @@
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void ShouldThrowArgumentNullExceptionWhenDirectionIsNullOrEmpty(string directionAsText)
+        public void ShouldThrowExceptionWhenDirectionIsNullOrEmpty(string directionAsText)
         {
             // act
             Action action = () => _ = new StartPoint(new Point(0, 0), directionAsText);
@@ -35,7 +35,7 @@
         }
 
         [Fact]
-        public void ShouldThrowArgumentNullExceptionWhenPointIsNull()
+        public void ShouldThrowExceptionWhenPointIsNull()
         {
             // act
             Action action = () => _ = new StartPoint(null, "H");

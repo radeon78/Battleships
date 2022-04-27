@@ -15,8 +15,8 @@
             IGameRule gameRule,
             Action<string> printMessage)
         {
-            _gameRule = gameRule ?? throw new ArgumentNullException(nameof(gameRule));
-            _printMessage = printMessage ?? throw new ArgumentNullException(nameof(printMessage));
+            _gameRule = gameRule.NonNull(nameof(gameRule));
+            _printMessage = printMessage.NonNull(nameof(printMessage));
         }
 
         public void Start(

@@ -1,5 +1,6 @@
 ﻿namespace Battleships.Domain.Players
 {
+    using Battleships.Domain.Extensions;
     using Battleships.Domain;
     using Battleships.Domain.Grids;
     using Battleships.Domain.Ships;
@@ -17,7 +18,7 @@
 
         protected Player(string playerName)
         {
-            _playerName = playerName ?? throw new ArgumentNullException(nameof(playerName));
+            _playerName = playerName.NonEmpty(nameof(playerName));
             _oceanGrid = new OceanGrid();
             _targetingGrid = new TargetingGrid();
             _allowedShips = Array.Empty<Ship>();
@@ -35,7 +36,7 @@
         public void SetDefenderAnswer(Point attackerPoint, Answer answer) =>
             _targetingGrid.SetAnswer(attackerPoint, answer);
 
-        public virtual void PrintTargetingGrind() {}
+        public virtual void PrintTargetingGrind() { }
 
         public Answer AnswerToAttacker(Point attackerPoint)
             => _oceanGrid.TryHit(attackerPoint);
@@ -43,6 +44,6 @@
         public bool AllShipsSunk()
             => _oceanGrid.AllShipsSunk(_allowedShips.Select(s => s.Length).ToArray());
 
-        public virtual void PrintOceanGrid() {}
+        public virtual void PrintOceanGrid() { }
     }
 }

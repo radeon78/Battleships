@@ -13,7 +13,7 @@
         [InlineData("M1")]
         [InlineData("1")]
         [InlineData("A")]
-        public void ShouldThrowArgumentException(string pointAsText)
+        public void ShouldThrowArgumentExceptionWhenPointIsNotCorrect(string pointAsText)
         {
             // act
             Action action = () => _ = new Point(pointAsText);
@@ -25,7 +25,7 @@
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        public void ShouldThrowArgumentNullException(string pointAsText)
+        public void ShouldThrowExceptionWhenPointIsNullOrEmpty(string pointAsText)
         {
             // act
             Action action = () => _ = new Point(pointAsText);

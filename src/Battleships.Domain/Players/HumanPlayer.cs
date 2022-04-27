@@ -23,11 +23,11 @@
             Action<string, TargetingGrid> printTargetingGrid,
             Action<string> printErrorMessage) : base(playerName)
         {
-            _getPlaceShipStartPoint = getPlaceShipStartPoint ?? throw new ArgumentNullException(nameof(getPlaceShipStartPoint));
-            _printOceanGrid = printOceanGrid ?? throw new ArgumentNullException(nameof(printOceanGrid));
-            _callOutPointOnTargetingGrid = callOutPointOnTargetingGrid ?? throw new ArgumentNullException(nameof(callOutPointOnTargetingGrid));
-            _printTargetingGrid = printTargetingGrid ?? throw new ArgumentNullException(nameof(printTargetingGrid));
-            _printErrorMessage = printErrorMessage ?? throw new ArgumentNullException(nameof(printErrorMessage));
+            _getPlaceShipStartPoint = getPlaceShipStartPoint.NonNull(nameof(getPlaceShipStartPoint));
+            _printOceanGrid = printOceanGrid.NonNull(nameof(printOceanGrid));
+            _callOutPointOnTargetingGrid = callOutPointOnTargetingGrid.NonNull(nameof(callOutPointOnTargetingGrid));
+            _printTargetingGrid = printTargetingGrid.NonNull(nameof(printTargetingGrid));
+            _printErrorMessage = printErrorMessage.NonNull(nameof(printErrorMessage));
         }
 
         public override void PlaceShipsOnOceanGrid(CancellationToken cancellationToken)

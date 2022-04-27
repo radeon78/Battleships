@@ -10,7 +10,7 @@
     public class ComputerPlayerTests
     {
         [Fact]
-        public void ShouldThrowWhenPlayerNameIsNull()
+        public void ShouldThrowExceptionWhenPlayerNameIsNull()
         {
             // act
 
@@ -21,13 +21,13 @@
         }
 
         [Fact]
-        public void ShouldNotThrowWhenPlayerNameIsEmpty()
+        public void ShouldThrowExceptionWhenPlayerNameIsEmpty()
         {
             // act
             Action action = () => _ = new ComputerPlayer(string.Empty);
 
             // assert
-            action.Should().NotThrow();
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Fact]

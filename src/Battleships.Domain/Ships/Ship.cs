@@ -14,10 +14,10 @@
 
         public Ship(int length)
         {
-            (length is < _minLength or > _maxLength)
-                .IfTrue(() => throw new ArgumentException(string.Format(Resource.ErrorFieldMustBeBetween, _minLength, _maxLength), nameof(length)));
-
-            Length = length;
+            Length = length.InRange(
+                _minLength,
+                _maxLength,
+                string.Format(Resource.ErrorFieldMustBeBetween, _minLength, _maxLength));
         }
 
         internal int Length { get; } = 0;
