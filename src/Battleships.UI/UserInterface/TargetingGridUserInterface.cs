@@ -33,10 +33,10 @@
                 var pointStatus = string.Empty;
 
                 targetingGrid[column, row].Miss()
-                    .IfTrue(() => pointStatus = shipIsMiss);
+                    .WhenTrue(() => pointStatus = shipIsMiss);
 
                 targetingGrid[column, row].Hit()
-                    .IfTrue(() => pointStatus = targetingGrid[column, row].DisplayShipLength());
+                    .WhenTrue(() => pointStatus = targetingGrid[column, row].DisplayShipLength());
 
                 return pointStatus;
             });

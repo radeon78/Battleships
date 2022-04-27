@@ -28,7 +28,7 @@
             if (NotFillOut())
                 return Answer.CreateMissAnswer();
 
-            _hit.IfFalse(() =>
+            _hit.WhenFalse(() =>
             {
                 _ship.Hit();
                 _hit = true;

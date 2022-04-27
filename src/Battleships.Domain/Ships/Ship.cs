@@ -25,8 +25,8 @@
         internal void Hit()
         {
             (_hits < Length)
-                .IfTrue(() => _hits++)
-                .IfFalse(() => throw new ArgumentOutOfRangeException(string.Format(Resource.ErrorToManyHitsOnShip, this)));
+                .WhenTrue(() => _hits++)
+                .WhenFalse(() => throw new ArgumentOutOfRangeException(string.Format(Resource.ErrorToManyHitsOnShip, this)));
         }
 
         internal bool Sunk() => _hits == Length;

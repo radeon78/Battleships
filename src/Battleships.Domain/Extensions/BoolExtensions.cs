@@ -4,13 +4,13 @@
 
     public static class BoolExtensions
     {
-        public static bool IfTrue(this bool source, Action action)
+        public static bool WhenTrue(this bool source, Action action)
         {
             if (source) action();
             return source;
         }
 
-        public static bool IfFalse(this bool source, Action action)
+        public static bool WhenFalse(this bool source, Action action)
         {
             if (!source) action();
             return source;

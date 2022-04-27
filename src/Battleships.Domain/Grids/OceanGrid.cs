@@ -54,7 +54,7 @@
         internal Answer TryHit(Point point)
         {
             var answer = _oceanPoints[point.Column, point.Row].TryHit();
-            (answer.Reply == Reply.Sunk).IfTrue(() => _sunkShips.Add(answer.ShipLength));
+            (answer.Reply == Reply.Sunk).WhenTrue(() => _sunkShips.Add(answer.ShipLength));
 
             return answer;
         }

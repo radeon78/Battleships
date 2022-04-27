@@ -62,7 +62,7 @@
             attacker.SetDefenderAnswer(attackerPoint, defenderAnswer);
 
             (defenderAnswer.Reply is Reply.Hit or Reply.Sunk)
-                .IfTrue(() => defender.PrintOceanGrid());
+                .WhenTrue(() => defender.PrintOceanGrid());
 
             _printMessage(string.Format(Resource.AttackerCalledOutPoint, attacker.PlayerName, attackerPoint));
             _printMessage(string.Format(Resource.DefenderAnswered, defender.PlayerName, defenderAnswer));

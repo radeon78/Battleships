@@ -43,10 +43,10 @@
                 var pointStatus = string.Empty;
                 
                 oceanGrid[column, row].FillOut()
-                    .IfTrue(() => pointStatus = ship);
+                    .WhenTrue(() => pointStatus = ship);
 
                 oceanGrid[column, row].Hit()
-                    .IfTrue(() => pointStatus = shipIsHit);
+                    .WhenTrue(() => pointStatus = shipIsHit);
 
                 return pointStatus;
             });

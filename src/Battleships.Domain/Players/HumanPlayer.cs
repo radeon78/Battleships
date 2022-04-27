@@ -43,8 +43,8 @@
                     if (cancellationToken.IsCancellationRequested) return;
 
                     result.IsSuccess
-                        .IfTrue(() => PrintOceanGrid())
-                        .IfFalse(() => _printErrorMessage(result.ErrorMessage));
+                        .WhenTrue(() => PrintOceanGrid())
+                        .WhenFalse(() => _printErrorMessage(result.ErrorMessage));
                 }
                 while (result.IsFailure);
             }, cancellationToken);
@@ -60,7 +60,7 @@
                 point = _callOutPointOnTargetingGrid(string.Format(Resource.CallOutPositionOnTargetingGrid, _playerName));
                 pointOutOfGrid = point.PointIsOutOfGrid();
                 pointOutOfGrid
-                    .IfTrue(() => _printErrorMessage(string.Format(Resource.ErrorPointIsOffGrid, point)));
+                    .WhenTrue(() => _printErrorMessage(string.Format(Resource.ErrorPointIsOffGrid, point)));
             }
             while (pointOutOfGrid);
 
