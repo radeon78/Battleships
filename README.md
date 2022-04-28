@@ -20,7 +20,7 @@ git clone https://github.com/radeon78/Battleships.git
 
 ### Run the game
 
-The default configuration is to game a single human player and computer player with fleet of three ships one Battleship (5 squares) and two Destroyers (4 squares).
+The default configuration is to game a single human player and computer player with fleet of three ships one Carrier (5 squares) one Battleship (4 squares) and one Destroyer (2 squares).
 
 ```powershell
 dotnet run --project ./battleships/src/battleships.ui/battleships.ui.csproj
