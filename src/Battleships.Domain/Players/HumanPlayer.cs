@@ -42,9 +42,10 @@ public class HumanPlayer : Player
 
                 if (cancellationToken.IsCancellationRequested) return;
 
-                result.IsSuccess
-                    .WhenTrue(() => PrintOceanGrid())
-                    .WhenFalse(() => _printErrorMessage(result.ErrorMessage));
+                if (result.IsSuccess)
+                    PrintOceanGrid();
+                else
+                    _printErrorMessage(result.ErrorMessage);
             }
             while (result.IsFailure);
         }, cancellationToken);
@@ -59,10 +60,9 @@ public class HumanPlayer : Player
         {
             point = _callOutPointOnTargetingGrid(string.Format(Resource.CallOutPositionOnTargetingGrid, _playerName));
             pointOutOfGrid = point.PointIsOutOfGrid();
-            pointOutOfGrid
-                .WhenTrue(() => _printErrorMessage(string.Format(Resource.ErrorPointIsOffGrid, point)));
-        }
-        while (pointOutOfGrid);
+            if (pointOutOfGrid)
+                _printErrorMessage(string.Format(Resource.ErrorPointIsOffGrid, point));
+        } while (pointOutOfGrid);
 
         return point;
     }

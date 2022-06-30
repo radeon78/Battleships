@@ -24,9 +24,10 @@ public class Ship
 
     internal void Hit()
     {
-        (_hits < Length)
-            .WhenTrue(() => _hits++)
-            .WhenFalse(() => throw new ArgumentOutOfRangeException(string.Format(Resource.ErrorToManyHitsOnShip, this)));
+        if (_hits < Length)
+            _hits++;
+        else
+            throw new ArgumentOutOfRangeException(string.Format(Resource.ErrorToManyHitsOnShip, this));
     }
 
     internal bool Sunk() => _hits == Length;

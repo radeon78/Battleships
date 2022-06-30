@@ -54,7 +54,8 @@ public class OceanGrid
     internal Answer TryHit(Point point)
     {
         var answer = _oceanPoints[point.Column, point.Row].TryHit();
-        (answer.Reply == Reply.Sunk).WhenTrue(() => _sunkShips.Add(answer.ShipLength));
+        if(answer.Reply == Reply.Sunk)
+            _sunkShips.Add(answer.ShipLength);
 
         return answer;
     }

@@ -28,11 +28,11 @@ public class OceanPoint
         if (NotFillOut())
             return Answer.CreateMissAnswer();
 
-        _hit.WhenFalse(() =>
+        if(!_hit)
         {
             _ship.Hit();
             _hit = true;
-        });
+        }
             
         return _ship.Sunk()
             ? new Answer(_ship.Length, Reply.Sunk)

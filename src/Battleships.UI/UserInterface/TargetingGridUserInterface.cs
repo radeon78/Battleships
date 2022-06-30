@@ -32,11 +32,11 @@ public static class TargetingGridUserInterface
         {
             var pointStatus = string.Empty;
 
-            targetingGrid[column, row].Miss()
-                .WhenTrue(() => pointStatus = shipIsMiss);
+            if (targetingGrid[column, row].Miss())
+                pointStatus = shipIsMiss;
 
-            targetingGrid[column, row].Hit()
-                .WhenTrue(() => pointStatus = targetingGrid[column, row].DisplayShipLength());
+            if (targetingGrid[column, row].Hit())
+                pointStatus = targetingGrid[column, row].DisplayShipLength();
 
             return pointStatus;
         });

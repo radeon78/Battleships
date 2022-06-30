@@ -61,8 +61,8 @@ public class BattleshipsGame
         var defenderAnswer = defender.AnswerToAttacker(attackerPoint);
         attacker.SetDefenderAnswer(attackerPoint, defenderAnswer);
 
-        (defenderAnswer.Reply is Reply.Hit or Reply.Sunk)
-            .WhenTrue(() => defender.PrintOceanGrid());
+        if (defenderAnswer.Reply is Reply.Hit or Reply.Sunk)
+            defender.PrintOceanGrid();
 
         _printMessage(string.Format(Resource.AttackerCalledOutPoint, attacker.PlayerName, attackerPoint));
         _printMessage(string.Format(Resource.DefenderAnswered, defender.PlayerName, defenderAnswer));

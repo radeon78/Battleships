@@ -41,12 +41,12 @@ public static class OceanGridUserInterface
         CommonUserInterface.PrintGrid((column, row) =>
         {
             var pointStatus = string.Empty;
-                
-            oceanGrid[column, row].FillOut()
-                .WhenTrue(() => pointStatus = ship);
 
-            oceanGrid[column, row].Hit()
-                .WhenTrue(() => pointStatus = shipIsHit);
+            if (oceanGrid[column, row].FillOut())
+                pointStatus = ship;
+
+            if (oceanGrid[column, row].Hit())
+                pointStatus = shipIsHit;
 
             return pointStatus;
         });
