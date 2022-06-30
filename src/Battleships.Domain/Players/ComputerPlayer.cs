@@ -34,8 +34,8 @@ public class ComputerPlayer : Player
             point = new Point(
                 random.Next(0, Grid.Size),
                 random.Next(0, Grid.Size));
-
-        } while (_targetingGrid.CalledOut(point));
+        }
+        while (_targetingGrid.CalledOut(point));
 
         return point;
     }
