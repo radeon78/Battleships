@@ -46,36 +46,32 @@ public class BattleshipsGame
             cancellationToken: cancellationToken);
     }
 
-    private void PlayRound(
-        IPlayer attacker,
-        IPlayer defender,
-        CancellationToken cancellationToken)
+    private void PlayRound(IPlayer attacker, IPlayer defender, CancellationToken cancellationToken)
     {
-        if (cancellationToken.IsCancellationRequested) return;
-
-        attacker.PrintTargetingGrind();
-
-        var attackerPoint = attacker.CallOutPointOnTargetingGrid();
-        if (cancellationToken.IsCancellationRequested) return;
-
-        var defenderAnswer = defender.AnswerToAttacker(attackerPoint);
-        attacker.SetDefenderAnswer(attackerPoint, defenderAnswer);
-
-        if (defenderAnswer.Reply is Reply.Hit or Reply.Sunk)
-            defender.PrintOceanGrid();
-
-        _printMessage(string.Format(Resource.AttackerCalledOutPoint, attacker.PlayerName, attackerPoint));
-        _printMessage(string.Format(Resource.DefenderAnswered, defender.PlayerName, defenderAnswer));
-
-        if (defender.AllShipsSunk())
+        while (true)
         {
-            _printMessage(string.Format(Resource.GameEnded, attacker.PlayerName));
-            return;
-        }
+            if (cancellationToken.IsCancellationRequested) return;
 
-        PlayRound(
-            attacker: defender,
-            defender: attacker,
-            cancellationToken: cancellationToken);
+            attacker.PrintTargetingGrind();
+
+            var attackerPoint = attacker.CallOutPointOnTargetingGrid();
+            if (cancellationToken.IsCancellationRequested) return;
+
+            var defenderAnswer = defender.AnswerToAttacker(attackerPoint);
+            attacker.SetDefenderAnswer(attackerPoint, defenderAnswer);
+
+            if (defenderAnswer.Reply is Reply.Hit or Reply.Sunk) defender.PrintOceanGrid();
+
+            _printMessage(string.Format(Resource.AttackerCalledOutPoint, attacker.PlayerName, attackerPoint));
+            _printMessage(string.Format(Resource.DefenderAnswered, defender.PlayerName, defenderAnswer));
+
+            if (defender.AllShipsSunk())
+            {
+                _printMessage(string.Format(Resource.GameEnded, attacker.PlayerName));
+                return;
+            }
+
+            (attacker, defender) = (defender, attacker);
+        }
     }
 }
