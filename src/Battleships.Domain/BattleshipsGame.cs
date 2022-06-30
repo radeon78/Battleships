@@ -40,13 +40,13 @@ public class BattleshipsGame
 
         _printMessage(Resource.ShipsOnGrid);
 
-        PlayRound(
+        StartRounds(
             attacker: firstPlayer,
             defender: secondPlayer,
             cancellationToken: cancellationToken);
     }
 
-    private void PlayRound(IPlayer attacker, IPlayer defender, CancellationToken cancellationToken)
+    private void StartRounds(IPlayer attacker, IPlayer defender, CancellationToken cancellationToken)
     {
         while (true)
         {
