@@ -1,8 +1,6 @@
-﻿namespace Battleships.Domain.Players;
+﻿using Battleships.Domain.Grids;
 
-using Battleships.Domain.Grids;
-using Battleships.Domain;
-using System.Threading;
+namespace Battleships.Domain.Players;
 
 public interface IPlayer
 {

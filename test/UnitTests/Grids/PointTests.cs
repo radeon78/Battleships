@@ -1,9 +1,8 @@
-﻿namespace UnitTests.Grids;
-
+﻿using Battleships.Domain.Grids;
 using FluentAssertions;
 using Xunit;
-using Battleships.Domain.Grids;
-using System;
+
+namespace UnitTests.Grids;
 
 public class PointTests
 {

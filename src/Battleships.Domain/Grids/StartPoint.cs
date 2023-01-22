@@ -1,8 +1,8 @@
-﻿namespace Battleships.Domain.Grids;
-
+﻿using Battleships.Domain.Common;
 using Battleships.Domain.Extensions;
 using Battleships.Domain.Ships;
-using Battleships.Domain.Common;
+
+namespace Battleships.Domain.Grids;
 
 public class StartPoint
 {

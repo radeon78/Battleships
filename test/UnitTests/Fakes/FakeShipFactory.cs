@@ -1,6 +1,6 @@
-﻿namespace UnitTests.Fakes;
+﻿using Battleships.Domain.Ships;
 
-using Battleships.Domain.Ships;
+namespace UnitTests.Fakes;
 
 public static class FakeShipFactory
 {

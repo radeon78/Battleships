@@ -1,8 +1,7 @@
-﻿namespace Battleships.UI;
-
-using Battleships.Domain.Players;
+﻿using Battleships.Domain.Players;
 using Battleships.UI.UserInterface;
-using System.Threading;
+
+namespace Battleships.UI;
 
 public static class PlayerFactory
 {
@@ -12,9 +11,9 @@ public static class PlayerFactory
     public static Player CreateHumanPlayer(CancellationTokenSource tokenSource)
         => new HumanPlayer(
             playerName: CommonUserInterface.GetHumanPlayerName(tokenSource),
-            getPlaceShipStartPoint: (message) => OceanGridUserInterface.GetPlaceShipStartPoint(message, tokenSource),
+            getPlaceShipStartPoint: message => OceanGridUserInterface.GetPlaceShipStartPoint(message, tokenSource),
             printOceanGrid: (playerName, oceanGrid) => OceanGridUserInterface.PrintOceanGrid(playerName, oceanGrid),
-            callOutPointOnTargetingGrid: (message) => TargetingGridUserInterface.CallOutPointOnTargetingGrid(message, tokenSource),
+            callOutPointOnTargetingGrid: message => TargetingGridUserInterface.CallOutPointOnTargetingGrid(message, tokenSource),
             printTargetingGrid: (playerName, targetingGrid) => TargetingGridUserInterface.PrintTargetingGrid(playerName, targetingGrid),
-            printErrorMessage: (message) => CommonUserInterface.PrintErrorMessage(message));
+            printErrorMessage: message => CommonUserInterface.PrintErrorMessage(message));
 }

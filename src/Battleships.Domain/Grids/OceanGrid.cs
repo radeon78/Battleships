@@ -1,12 +1,9 @@
-﻿namespace Battleships.Domain.Grids;
-
-using Battleships.Domain.Common;
-using Battleships.Domain.Extensions;
+﻿using Battleships.Domain.Common;
 using Battleships.Domain.Players;
 using Battleships.Domain.Resources;
 using Battleships.Domain.Ships;
-using System.Collections.Generic;
-using System.Linq;
+
+namespace Battleships.Domain.Grids;
 
 public class OceanGrid
 {

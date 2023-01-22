@@ -1,7 +1,6 @@
-﻿namespace Battleships.Domain;
+﻿using Battleships.Domain.Ships;
 
-using Battleships.Domain.Ships;
-using System.Collections.Generic;
+namespace Battleships.Domain;
 
 public interface IGameRule
 {

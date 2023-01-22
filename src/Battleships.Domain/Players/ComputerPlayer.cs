@@ -1,10 +1,8 @@
-﻿namespace Battleships.Domain.Players;
-
-using Battleships.Domain.Ships;
-using System.Threading;
-using Battleships.Domain.Extensions;
+﻿using Battleships.Domain.Extensions;
 using Battleships.Domain.Grids;
-using System;
+using Battleships.Domain.Ships;
+
+namespace Battleships.Domain.Players;
 
 public class ComputerPlayer : Player
 {

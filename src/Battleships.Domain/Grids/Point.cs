@@ -1,7 +1,7 @@
-﻿namespace Battleships.Domain.Grids;
-
-using Battleships.Domain.Common;
+﻿using Battleships.Domain.Common;
 using Battleships.Domain.Extensions;
+
+namespace Battleships.Domain.Grids;
 
 public class Point
 {

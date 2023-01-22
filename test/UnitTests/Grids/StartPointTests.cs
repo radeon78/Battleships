@@ -1,10 +1,9 @@
-﻿namespace UnitTests.Grids;
-
+﻿using Battleships.Domain.Grids;
 using Battleships.Domain.Ships;
-using Battleships.Domain.Grids;
 using FluentAssertions;
 using Xunit;
-using System;
+
+namespace UnitTests.Grids;
 
 public class StartPointTests
 {
@@ -38,7 +37,7 @@ public class StartPointTests
     public void ShouldThrowExceptionWhenPointIsNull()
     {
         // act
-        Action action = () => _ = new StartPoint(null, "H");
+        Action action = () => _ = new StartPoint(null!, "H");
 
         // assert
         action.Should().ThrowExactly<ArgumentNullException>();

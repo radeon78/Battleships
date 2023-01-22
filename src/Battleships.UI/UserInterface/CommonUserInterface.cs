@@ -1,11 +1,9 @@
-﻿namespace Battleships.UI.UserInterface;
-
-using Battleships.UI.Resources;
-using Battleships.Domain.Extensions;
+﻿using Battleships.Domain.Extensions;
 using Battleships.Domain.Grids;
+using Battleships.UI.Resources;
 using ConsoleTables;
-using System;
-using System.Threading;
+
+namespace Battleships.UI.UserInterface;
 
 public static class CommonUserInterface
 {

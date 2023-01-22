@@ -1,8 +1,7 @@
-﻿namespace Battleships.Domain.Grids;
-
-using Battleships.Domain.Extensions;
-using Battleships.Domain.Players;
+﻿using Battleships.Domain.Players;
 using Battleships.Domain.Ships;
+
+namespace Battleships.Domain.Grids;
 
 public class OceanPoint
 {

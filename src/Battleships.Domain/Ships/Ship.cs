@@ -1,14 +1,13 @@
-﻿namespace Battleships.Domain.Ships;
-
-using Battleships.Domain.Extensions;
+﻿using Battleships.Domain.Extensions;
 using Battleships.Domain.Resources;
-using System;
+
+namespace Battleships.Domain.Ships;
 
 public class Ship
 {
     private const int _minLength = 1;
     private const int _maxLength = 5;
-    private int _hits = 0;
+    private int _hits;
 
     private Ship() { }
 
@@ -20,7 +19,7 @@ public class Ship
             string.Format(Resource.ErrorFieldMustBeBetween, _minLength, _maxLength));
     }
 
-    internal int Length { get; } = 0;
+    internal int Length { get; }
 
     internal void Hit()
     {

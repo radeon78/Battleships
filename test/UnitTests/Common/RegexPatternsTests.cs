@@ -1,9 +1,9 @@
-﻿namespace UnitTests.Common;
-
+﻿using System.Text.RegularExpressions;
 using Battleships.Domain.Common;
-using System.Text.RegularExpressions;
 using FluentAssertions;
 using Xunit;
+
+namespace UnitTests.Common;
 
 public class RegexPatternsTests
 {

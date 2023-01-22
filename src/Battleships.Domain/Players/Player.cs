@@ -1,13 +1,8 @@
-﻿namespace Battleships.Domain.Players;
-
-using Battleships.Domain.Extensions;
-using Battleships.Domain;
+﻿using Battleships.Domain.Extensions;
 using Battleships.Domain.Grids;
 using Battleships.Domain.Ships;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+
+namespace Battleships.Domain.Players;
 
 public abstract class Player : IPlayer
 {

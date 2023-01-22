@@ -1,14 +1,12 @@
-﻿namespace UnitTests;
-
-using Battleships.Domain;
+﻿using Battleships.Domain;
 using Battleships.Domain.Grids;
 using Battleships.Domain.Players;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading;
 using UnitTests.Fakes;
 using Xunit;
+
+namespace UnitTests;
 
 public class BattleshipsGameTests
 {
@@ -16,7 +14,7 @@ public class BattleshipsGameTests
     public void ShouldThrowWhenPlayRuleIsNull()
     {
         // act
-        Action action = () => _ = new BattleshipsGame(null, (message) => { });
+        Action action = () => _ = new BattleshipsGame(null!, message => { });
 
         // assert
         action.Should().ThrowExactly<ArgumentNullException>();
@@ -26,7 +24,7 @@ public class BattleshipsGameTests
     public void ShouldThrowWhenPrintMessageIsNull()
     {
         // act
-        Action action = () => _ = new BattleshipsGame(new FakeOneShipGameRule(), null);
+        Action action = () => _ = new BattleshipsGame(new FakeOneShipGameRule(), null!);
 
         // assert
         action.Should().ThrowExactly<ArgumentNullException>();
@@ -36,7 +34,7 @@ public class BattleshipsGameTests
     public void ShouldNotThrow()
     {
         // act
-        Action action = () => _ = new BattleshipsGame(new FakeOneShipGameRule(), (message) => { });
+        Action action = () => _ = new BattleshipsGame(new FakeOneShipGameRule(), message => { });
 
         // assert
         action.Should().NotThrow();

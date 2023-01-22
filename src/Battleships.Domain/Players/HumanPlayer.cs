@@ -1,11 +1,9 @@
-﻿namespace Battleships.Domain.Players;
-
-using Battleships.Domain.Common;
+﻿using Battleships.Domain.Common;
 using Battleships.Domain.Extensions;
 using Battleships.Domain.Grids;
 using Battleships.Domain.Resources;
-using System;
-using System.Threading;
+
+namespace Battleships.Domain.Players;
 
 public class HumanPlayer : Player
 {

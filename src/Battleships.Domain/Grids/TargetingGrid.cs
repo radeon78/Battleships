@@ -1,6 +1,6 @@
-﻿namespace Battleships.Domain.Grids;
+﻿using Battleships.Domain.Players;
 
-using Battleships.Domain.Players;
+namespace Battleships.Domain.Grids;
 
 public class TargetingGrid
 {

@@ -1,11 +1,9 @@
-﻿namespace UnitTests.Players;
-
-using Battleships.Domain.Players;
+﻿using Battleships.Domain.Players;
 using FluentAssertions;
-using System;
-using System.Threading;
 using UnitTests.Fakes;
 using Xunit;
+
+namespace UnitTests.Players;
 
 public class ComputerPlayerTests
 {
@@ -14,7 +12,7 @@ public class ComputerPlayerTests
     {
         // act
 
-        Action action = () => _ = new ComputerPlayer(null);
+        Action action = () => _ = new ComputerPlayer(null!);
 
         // assert
         action.Should().ThrowExactly<ArgumentNullException>();

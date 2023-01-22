@@ -1,8 +1,8 @@
-﻿namespace UnitTests.Extensions;
-
-using Battleships.Domain.Extensions;
+﻿using Battleships.Domain.Extensions;
 using FluentAssertions;
 using Xunit;
+
+namespace UnitTests.Extensions;
 
 public class NumberExtensionsTests
 {

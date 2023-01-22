@@ -1,9 +1,8 @@
-namespace UnitTests.Ships;
-
 using Battleships.Domain.Ships;
 using FluentAssertions;
-using System;
 using Xunit;
+
+namespace UnitTests.Ships;
 
 public class ShipTests
 {

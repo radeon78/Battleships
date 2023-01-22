@@ -1,15 +1,13 @@
-﻿namespace UnitTests.Fakes;
-
-using Battleships.Domain;
+﻿using Battleships.Domain;
 using Battleships.Domain.Ships;
-using System;
-using System.Collections.Generic;
+
+namespace UnitTests.Fakes;
 
 public class FakeOneShipGameRule : IGameRule
 {
     public IReadOnlyCollection<Ship> GetAllowedShips()
         => Array.AsReadOnly(
-            new Ship[]
+            new[]
             {
                 FakeShipFactory.CreateSubmarine()
             });

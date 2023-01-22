@@ -1,7 +1,6 @@
-﻿namespace Battleships.Domain.Extensions;
+﻿using System.Text.RegularExpressions;
 
-using System.Text.RegularExpressions;
-using System;
+namespace Battleships.Domain.Extensions;
 
 public static class ArgumentExtensions
 {

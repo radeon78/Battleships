@@ -1,10 +1,8 @@
-﻿namespace Battleships.Domain;
-
-using Battleships.Domain.Extensions;
+﻿using Battleships.Domain.Extensions;
 using Battleships.Domain.Players;
 using Battleships.Domain.Resources;
-using System;
-using System.Threading;
+
+namespace Battleships.Domain;
 
 public class BattleshipsGame
 {

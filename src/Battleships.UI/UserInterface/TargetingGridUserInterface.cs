@@ -1,12 +1,9 @@
-﻿namespace Battleships.UI.UserInterface;
-
-using Battleships.UI.Resources;
+﻿using System.Text.RegularExpressions;
 using Battleships.Domain.Common;
-using System.Text.RegularExpressions;
-using Battleships.Domain.Extensions;
 using Battleships.Domain.Grids;
-using System;
-using System.Threading;
+using Battleships.UI.Resources;
+
+namespace Battleships.UI.UserInterface;
 
 public static class TargetingGridUserInterface
 {

@@ -1,14 +1,12 @@
-﻿namespace UnitTests.Players;
-
-using Battleships.Domain.Ships;
-using Moq;
-using Battleships.Domain.Grids;
+﻿using Battleships.Domain.Grids;
 using Battleships.Domain.Players;
+using Battleships.Domain.Ships;
 using FluentAssertions;
-using System;
-using System.Threading;
+using Moq;
 using UnitTests.Fakes;
 using Xunit;
+
+namespace UnitTests.Players;
 
 public class HumanPlayerTests
 {
@@ -181,7 +179,7 @@ public class HumanPlayerTests
             .Setup(x => x(It.IsAny<string>()))
             .Returns(() =>
             {
-                source!.Cancel();
+                source.Cancel();
                 return new StartPoint(new Point(1, 1), ShipPosition.Horizontal);
             });
         _printOceanGridMock.Setup(x => x(It.IsAny<string>(), It.IsAny<OceanGrid>()));
@@ -407,7 +405,7 @@ public class HumanPlayerTests
         // act
         Action action = () => _ = new HumanPlayer(
             playerName,
-            null,
+            null!,
             _printOceanGridMock.Object,
             _callOutPointOnTargetingGridMock.Object,
             _printTargetingGridMock.Object,
@@ -431,7 +429,7 @@ public class HumanPlayerTests
         Action action = () => _ = new HumanPlayer(
             playerName,
             _getPlaceShipStartPointMock.Object,
-            null,
+            null!,
             _callOutPointOnTargetingGridMock.Object,
             _printTargetingGridMock.Object,
             _printErrorMessageMock.Object);
@@ -455,7 +453,7 @@ public class HumanPlayerTests
             playerName,
             _getPlaceShipStartPointMock.Object,
             _printOceanGridMock.Object,
-            null,
+            null!,
             _printTargetingGridMock.Object,
             _printErrorMessageMock.Object);
 
@@ -479,7 +477,7 @@ public class HumanPlayerTests
             _getPlaceShipStartPointMock.Object,
             _printOceanGridMock.Object,
             _callOutPointOnTargetingGridMock.Object,
-            null,
+            null!,
             _printErrorMessageMock.Object);
 
         // assert
@@ -503,7 +501,7 @@ public class HumanPlayerTests
             _printOceanGridMock.Object,
             _callOutPointOnTargetingGridMock.Object,
             _printTargetingGridMock.Object,
-            null);
+            null!);
 
         // assert
         action.Should().ThrowExactly<ArgumentNullException>();
@@ -546,7 +544,7 @@ public class HumanPlayerTests
             targetingGrid[attackerPoint.Column, attackerPoint.Row].Hit().Should().Be(expectedHit);
             targetingGrid[attackerPoint.Column, attackerPoint.Row].Miss().Should().Be(expectedMiss);
             targetingGrid[attackerPoint.Column, attackerPoint.Row].DisplayShipLength().Should().Be(defenderAnswerShipLength.ToString());
-        };
+        }
 
         void PrintOceanGrid(string playerName, OceanGrid oceanGrid)
         {
@@ -554,7 +552,7 @@ public class HumanPlayerTests
             oceanGrid[startPoint.Point.Column, startPoint.Point.Row].FillOut().Should().BeTrue();
             oceanGrid[startPoint.Point.Column + 1, startPoint.Point.Row].FillOut().Should().BeTrue();
             oceanGrid[startPoint.Point.Column + 3, startPoint.Point.Row].FillOut().Should().BeFalse();
-        };
+        }
     }
 
     [Fact]

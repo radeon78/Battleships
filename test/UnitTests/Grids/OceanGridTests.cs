@@ -1,11 +1,11 @@
-﻿namespace UnitTests.Grids;
-
-using Battleships.Domain.Grids;
+﻿using Battleships.Domain.Grids;
 using Battleships.Domain.Players;
 using Battleships.Domain.Ships;
 using FluentAssertions;
 using UnitTests.Fakes;
 using Xunit;
+
+namespace UnitTests.Grids;
 
 public class OceanGridTests
 {
