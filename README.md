@@ -15,7 +15,7 @@ Application requires .NET 6 installed. You can download it from https://dotnet.m
 ### Clone repo locally
 
 ```powershell
-git clone https://github.com/radeon78/Battleships.git
+git clone https://github.com/radeon78/battleships.git
 ```
 
 ### Run the game
@@ -23,7 +23,8 @@ git clone https://github.com/radeon78/Battleships.git
 The default configuration is to game a single human player and computer player with fleet of three ships one Carrier (5 squares) one Battleship (4 squares) and one Destroyer (2 squares).
 
 ```powershell
-dotnet run --project ./battleships/src/battleships.ui/battleships.ui.csproj
+dotnet build ./battleships
+dotnet ./battleships/src/battleships.ui/bin/debug/net6.0/battleships.ui.dll
 ```
 
 ## Custom configuring
